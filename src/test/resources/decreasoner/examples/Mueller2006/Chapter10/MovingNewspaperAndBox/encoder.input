@@ -1,0 +1,70 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort object na
+sort agent object
+sort physobj object
+sort room object
+reified constant fluent IN boolean object object
+reified constant fluent INROOM boolean object room
+noninertial INROOM
+reified constant event MOVE boolean agent object object object
+constant agent Lisa
+constant physobj Box
+constant physobj Newspaper
+constant room Kitchen
+constant room LivingRoom
+completion * Happens
+range time 0 5
+range offset 1 1
+formula [1 -1 [$ForAll [$List agent physobj1 physobj2 room time] [$Implies [$And [$And [HoldsAt [IN agent room] time] [HoldsAt [IN physobj1 room] time]] [HoldsAt [INROOM physobj2 room] time]] [$Implies [Happens [MOVE agent physobj1 room physobj2] time] [$And [HoldsAt [IN physobj1 physobj2] [$Plus time 1]] [$Not [ReleasedAt [IN physobj1 physobj2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent physobj1 physobj2 room time] [$Implies [$And [$And [HoldsAt [IN agent room] time] [HoldsAt [IN physobj1 room] time]] [HoldsAt [INROOM physobj2 room] time]] [Initiates [MOVE agent physobj1 room physobj2] [IN physobj1 physobj2] time]]]]
+formula [1 -1 [$ForAll [$List agent physobj1 physobj2 room time] [$Implies [$And [$And [HoldsAt [IN agent room] time] [HoldsAt [IN physobj1 room] time]] [HoldsAt [INROOM physobj2 room] time]] [$Implies [Happens [MOVE agent physobj1 room physobj2] time] [$And [$Not [HoldsAt [IN physobj1 room] [$Plus time 1]]] [$Not [ReleasedAt [IN physobj1 room] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent physobj1 physobj2 room time] [$Implies [$And [$And [HoldsAt [IN agent room] time] [HoldsAt [IN physobj1 room] time]] [HoldsAt [INROOM physobj2 room] time]] [Terminates [MOVE agent physobj1 room physobj2] [IN physobj1 room] time]]]]
+formula [1 -1 [$ForAll [$List agent physobj1 physobj2 room time] [$Implies [HoldsAt [IN agent room] time] [$Implies [Happens [MOVE agent physobj1 physobj2 room] time] [$And [HoldsAt [IN physobj1 room] [$Plus time 1]] [$Not [ReleasedAt [IN physobj1 room] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent physobj1 physobj2 room time] [$Implies [HoldsAt [IN agent room] time] [Initiates [MOVE agent physobj1 physobj2 room] [IN physobj1 room] time]]]]
+formula [1 -1 [$ForAll [$List agent physobj1 physobj2 room time] [$Implies [HoldsAt [IN agent room] time] [$Implies [Happens [MOVE agent physobj1 physobj2 room] time] [$And [$Not [HoldsAt [IN physobj1 physobj2] [$Plus time 1]]] [$Not [ReleasedAt [IN physobj1 physobj2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent physobj1 physobj2 room time] [$Implies [HoldsAt [IN agent room] time] [Terminates [MOVE agent physobj1 physobj2 room] [IN physobj1 physobj2] time]]]]
+formula [1 -1 [$ForAll [$List agent room1 room2 time] [$Implies [HoldsAt [IN agent room1] time] [$Implies [Happens [MOVE agent agent room1 room2] time] [$And [HoldsAt [IN agent room2] [$Plus time 1]] [$Not [ReleasedAt [IN agent room2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent room1 room2 time] [$Implies [HoldsAt [IN agent room1] time] [Initiates [MOVE agent agent room1 room2] [IN agent room2] time]]]]
+formula [1 -1 [$ForAll [$List agent room1 room2 time] [$Implies [HoldsAt [IN agent room1] time] [$Implies [Happens [MOVE agent agent room1 room2] time] [$And [$Not [HoldsAt [IN agent room1] [$Plus time 1]]] [$Not [ReleasedAt [IN agent room1] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent room1 room2 time] [$Implies [HoldsAt [IN agent room1] time] [Terminates [MOVE agent agent room1 room2] [IN agent room1] time]]]]
+formula [1 -1 [$ForAll [$List agent physobj room time] [$Implies [$And [HoldsAt [IN agent room] time] [HoldsAt [IN physobj room] time]] [$Implies [Happens [MOVE agent physobj room agent] time] [$And [HoldsAt [IN physobj agent] [$Plus time 1]] [$Not [ReleasedAt [IN physobj agent] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent physobj room time] [$Implies [$And [HoldsAt [IN agent room] time] [HoldsAt [IN physobj room] time]] [Initiates [MOVE agent physobj room agent] [IN physobj agent] time]]]]
+formula [1 -1 [$ForAll [$List agent physobj room time] [$Implies [$And [HoldsAt [IN agent room] time] [HoldsAt [IN physobj room] time]] [$Implies [Happens [MOVE agent physobj room agent] time] [$And [$Not [HoldsAt [IN physobj room] [$Plus time 1]]] [$Not [ReleasedAt [IN physobj room] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent physobj room time] [$Implies [$And [HoldsAt [IN agent room] time] [HoldsAt [IN physobj room] time]] [Terminates [MOVE agent physobj room agent] [IN physobj room] time]]]]
+formula [1 -1 [$ForAll [$List agent physobj room time] [$Implies [$And [HoldsAt [IN physobj agent] time] [HoldsAt [IN agent room] time]] [$Implies [Happens [MOVE agent physobj agent room] time] [$And [HoldsAt [IN physobj room] [$Plus time 1]] [$Not [ReleasedAt [IN physobj room] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent physobj room time] [$Implies [$And [HoldsAt [IN physobj agent] time] [HoldsAt [IN agent room] time]] [Initiates [MOVE agent physobj agent room] [IN physobj room] time]]]]
+formula [1 -1 [$ForAll [$List agent physobj room time] [$Implies [$And [HoldsAt [IN physobj agent] time] [HoldsAt [IN agent room] time]] [$Implies [Happens [MOVE agent physobj agent room] time] [$And [$Not [HoldsAt [IN physobj agent] [$Plus time 1]]] [$Not [ReleasedAt [IN physobj agent] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent physobj room time] [$Implies [$And [HoldsAt [IN physobj agent] time] [HoldsAt [IN agent room] time]] [Terminates [MOVE agent physobj agent room] [IN physobj agent] time]]]]
+formula [0 -1 [Happens [MOVE Lisa Newspaper LivingRoom Box] 0]]
+formula [0 -1 [Happens [MOVE Lisa Box LivingRoom Lisa] 1]]
+formula [0 -1 [Happens [MOVE Lisa Lisa LivingRoom Kitchen] 2]]
+formula [0 -1 [Happens [MOVE Lisa Box Lisa Kitchen] 3]]
+formula [0 -1 [Happens [MOVE Lisa Lisa Kitchen LivingRoom] 4]]
+formula [0 -1 [$ForAll [$List object time] [$Not [HoldsAt [IN object object] time]]]]
+formula [0 -1 [$ForAll [$List object1 object2 time] [$Implies [HoldsAt [IN object1 object2] time] [$Not [HoldsAt [IN object2 object1] time]]]]]
+formula [0 -1 [$ForAll [$List object1 object2 object3 time] [$Implies [$And [HoldsAt [IN object1 object2] time] [HoldsAt [IN object2 object3] time]] [$Not [HoldsAt [IN object1 object3] time]]]]]
+formula [0 -1 [$ForAll [$List object object1 object2 time] [$Implies [$And [HoldsAt [IN object object1] time] [HoldsAt [IN object object2] time]] [$EQ object1 object2]]]]
+formula [0 -1 [$ForAll [$List object room time] [$Implies [HoldsAt [IN object room] time] [HoldsAt [INROOM object room] time]]]]
+formula [0 -1 [$ForAll [$List object1 object2 room time] [$Implies [$And [HoldsAt [IN object1 object2] time] [HoldsAt [INROOM object2 room] time]] [HoldsAt [INROOM object1 room] time]]]]
+formula [0 -1 [$ForAll [$List object room1 room2 time] [$Implies [$And [HoldsAt [INROOM object room1] time] [HoldsAt [INROOM object room2] time]] [$EQ room1 room2]]]]
+formula [0 -1 [HoldsAt [IN Lisa LivingRoom] 0]]
+formula [0 -1 [HoldsAt [IN Newspaper LivingRoom] 0]]
+formula [0 -1 [HoldsAt [IN Box LivingRoom] 0]]
+formula [0 -1 [$ForAll [$List room1 room2 time] [$Not [HoldsAt [INROOM room1 room2] time]]]]
+formula [0 -1 [$ForAll [$List room object time] [$Not [HoldsAt [IN room object] time]]]]
+formula [0 -1 [$ForAll [$List object1 object2] [$Not [ReleasedAt [IN object1 object2] 0]]]]
+formula [0 -1 [$ForAll [$List object room time] [ReleasedAt [INROOM object room] time]]]

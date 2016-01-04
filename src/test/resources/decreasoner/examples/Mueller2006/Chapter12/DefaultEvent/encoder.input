@@ -1,0 +1,53 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort agent na
+sort clock na
+reified constant fluent Beeping boolean clock
+reified constant fluent AlarmTime boolean clock time
+reified constant fluent AlarmOn boolean clock
+reified constant event SetAlarmTime boolean agent clock time
+reified constant event StartBeeping boolean clock
+reified constant event TurnOnAlarm boolean agent clock
+reified constant event TurnOffAlarm boolean agent clock
+reified constant predicate Ab1 boolean clock time
+constant agent Nathan
+constant clock Clock
+completion * Happens
+completion 5 Ab1
+range time 0 3
+range offset 1 1
+formula [1 -1 [$ForAll [$List agent clock time1 time2 time] [$Implies [$And [HoldsAt [AlarmTime clock time1] time] [$NE time1 time2]] [$Implies [Happens [SetAlarmTime agent clock time2] time] [$And [HoldsAt [AlarmTime clock time2] [$Plus time 1]] [$Not [ReleasedAt [AlarmTime clock time2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent clock time1 time2 time] [$Implies [$And [HoldsAt [AlarmTime clock time1] time] [$NE time1 time2]] [Initiates [SetAlarmTime agent clock time2] [AlarmTime clock time2] time]]]]
+formula [1 -1 [$ForAll [$List agent clock time1 time2 time] [$Implies [$And [HoldsAt [AlarmTime clock time1] time] [$NE time1 time2]] [$Implies [Happens [SetAlarmTime agent clock time2] time] [$And [$Not [HoldsAt [AlarmTime clock time1] [$Plus time 1]]] [$Not [ReleasedAt [AlarmTime clock time1] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent clock time1 time2 time] [$Implies [$And [HoldsAt [AlarmTime clock time1] time] [$NE time1 time2]] [Terminates [SetAlarmTime agent clock time2] [AlarmTime clock time1] time]]]]
+formula [1 -1 [$ForAll [$List agent clock time] [$Implies [Happens [TurnOnAlarm agent clock] time] [$And [HoldsAt [AlarmOn clock] [$Plus time 1]] [$Not [ReleasedAt [AlarmOn clock] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List agent clock time] [Initiates [TurnOnAlarm agent clock] [AlarmOn clock] time]]]
+formula [1 -1 [$ForAll [$List agent clock time] [$Implies [Happens [TurnOffAlarm agent clock] time] [$And [$Not [HoldsAt [AlarmOn clock] [$Plus time 1]]] [$Not [ReleasedAt [AlarmOn clock] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List agent clock time] [Terminates [TurnOffAlarm agent clock] [AlarmOn clock] time]]]
+formula [1 -1 [$ForAll [$List clock time] [$Implies [Happens [StartBeeping clock] time] [$And [HoldsAt [Beeping clock] [$Plus time 1]] [$Not [ReleasedAt [Beeping clock] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List clock time] [Initiates [StartBeeping clock] [Beeping clock] time]]]
+formula [1 -1 [$ForAll [$List agent clock time] [$Implies [Happens [TurnOffAlarm agent clock] time] [$And [$Not [HoldsAt [Beeping clock] [$Plus time 1]]] [$Not [ReleasedAt [Beeping clock] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List agent clock time] [Terminates [TurnOffAlarm agent clock] [Beeping clock] time]]]
+formula [0 -1 [$ForAll [$List clock time] [$Implies [$And [$And [HoldsAt [AlarmTime clock time] time] [HoldsAt [AlarmOn clock] time]] [$Not [Ab1 clock time]]] [Happens [StartBeeping clock] time]]]]
+formula [0 -1 [Happens [SetAlarmTime Nathan Clock 2] 0]]
+formula [0 -1 [Happens [TurnOnAlarm Nathan Clock] 1]]
+formula [0 -1 [$ForAll [$List clock time1 time2 time] [$Implies [$And [HoldsAt [AlarmTime clock time1] time] [HoldsAt [AlarmTime clock time2] time]] [$EQ time1 time2]]]]
+formula [0 -1 [$Not [HoldsAt [AlarmOn Clock] 0]]]
+formula [0 -1 [$Not [HoldsAt [Beeping Clock] 0]]]
+formula [0 -1 [HoldsAt [AlarmTime Clock 3] 0]]
+formula [0 -1 [$ForAll [$List clock] [$Not [ReleasedAt [Beeping clock] 0]]]]
+formula [0 -1 [$ForAll [$List clock time] [$Not [ReleasedAt [AlarmTime clock time] 0]]]]
+formula [0 -1 [$ForAll [$List clock] [$Not [ReleasedAt [AlarmOn clock] 0]]]]

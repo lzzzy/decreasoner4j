@@ -1,0 +1,63 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort agent na
+sort aboutevent na
+sort desirability integer
+constant agent Kate
+constant agent Lisa
+constant aboutevent WinLotteryKate
+constant aboutevent WinLotteryLisa
+reified constant fluent Joy boolean agent aboutevent
+reified constant fluent Desirability boolean agent agent aboutevent desirability
+reified constant fluent Believe boolean agent aboutevent
+reified constant fluent Like boolean agent agent
+reified constant fluent HappyFor boolean agent agent aboutevent
+reified constant event WinLottery boolean agent
+reified constant event AddJoy boolean agent aboutevent
+reified constant event AddHappyFor boolean agent agent aboutevent
+completion * Happens
+range time 0 3
+range desirability -1 1
+range offset 1 1
+formula [1 -1 [$ForAll [$List agent aboutevent time] [$Implies [Happens [AddJoy agent aboutevent] time] [$And [HoldsAt [Joy agent aboutevent] [$Plus time 1]] [$Not [ReleasedAt [Joy agent aboutevent] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List agent aboutevent time] [Initiates [AddJoy agent aboutevent] [Joy agent aboutevent] time]]]
+formula [1 -1 [$ForAll [$List agent1 agent2 aboutevent time] [$Implies [Happens [AddHappyFor agent1 agent2 aboutevent] time] [$And [HoldsAt [HappyFor agent1 agent2 aboutevent] [$Plus time 1]] [$Not [ReleasedAt [HappyFor agent1 agent2 aboutevent] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List agent1 agent2 aboutevent time] [Initiates [AddHappyFor agent1 agent2 aboutevent] [HappyFor agent1 agent2 aboutevent] time]]]
+formula [1 -1 [$ForAll [$List agent1 agent2 aboutevent time] [$Implies [$Or [$And [$EQ agent1 Kate] [$EQ aboutevent WinLotteryKate]] [$And [$EQ agent1 Lisa] [$EQ aboutevent WinLotteryLisa]]] [$Implies [Happens [WinLottery agent1] time] [$And [HoldsAt [Believe agent2 aboutevent] [$Plus time 1]] [$Not [ReleasedAt [Believe agent2 aboutevent] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent1 agent2 aboutevent time] [$Implies [$Or [$And [$EQ agent1 Kate] [$EQ aboutevent WinLotteryKate]] [$And [$EQ agent1 Lisa] [$EQ aboutevent WinLotteryLisa]]] [Initiates [WinLottery agent1] [Believe agent2 aboutevent] time]]]]
+formula [0 -1 [$ForAll [$List agent aboutevent desirability time] [$Implies [$And [$And [$And [$Not [HoldsAt [Joy agent aboutevent] time]] [HoldsAt [Desirability agent agent aboutevent desirability] time]] [$EQ desirability 1]] [HoldsAt [Believe agent aboutevent] time]] [Happens [AddJoy agent aboutevent] time]]]]
+formula [0 -1 [$ForAll [$List agent1 agent2 aboutevent desirability1 desirability2 time] [$Implies [$And [$And [$And [$And [$And [$And [$And [$Not [HoldsAt [HappyFor agent1 agent2 aboutevent] time]] [HoldsAt [Desirability agent1 agent2 aboutevent desirability1] time]] [$EQ desirability1 1]] [HoldsAt [Desirability agent1 agent1 aboutevent desirability2] time]] [$EQ desirability2 1]] [HoldsAt [Like agent1 agent2] time]] [HoldsAt [Believe agent1 aboutevent] time]] [$NE agent1 agent2]] [Happens [AddHappyFor agent1 agent2 aboutevent] time]]]]
+formula [0 -1 [Happens [WinLottery Kate] 0]]
+formula [0 -1 [$ForAll [$List agent1 agent2 aboutevent desirability1 desirability2 time] [$Implies [$And [HoldsAt [Desirability agent1 agent2 aboutevent desirability1] time] [HoldsAt [Desirability agent1 agent2 aboutevent desirability2] time]] [$EQ desirability1 desirability2]]]]
+formula [0 -1 [$ForAll [$List agent aboutevent] [$Not [HoldsAt [Joy agent aboutevent] 0]]]]
+formula [0 -1 [$ForAll [$List agent1 agent2 aboutevent] [$Not [HoldsAt [HappyFor agent1 agent2 aboutevent] 0]]]]
+formula [0 -1 [$ForAll [$List aboutevent] [$Not [HoldsAt [Believe Kate aboutevent] 0]]]]
+formula [0 -1 [$ForAll [$List aboutevent] [$Not [HoldsAt [Believe Lisa aboutevent] 0]]]]
+formula [0 -1 [$ForAll [$List agent1 agent2 time] [HoldsAt [Like agent1 agent2] time]]]
+formula [0 -1 [$ForAll [$List time] [HoldsAt [Desirability Lisa Kate WinLotteryKate 1] time]]]
+formula [0 -1 [$ForAll [$List time] [HoldsAt [Desirability Kate Kate WinLotteryKate 1] time]]]
+formula [0 -1 [$ForAll [$List time] [HoldsAt [Desirability Lisa Lisa WinLotteryKate 1] time]]]
+formula [0 -1 [$ForAll [$List time] [HoldsAt [Desirability Kate Kate WinLotteryLisa 0] time]]]
+formula [0 -1 [$ForAll [$List time] [HoldsAt [Desirability Kate Lisa WinLotteryLisa 0] time]]]
+formula [0 -1 [$ForAll [$List time] [HoldsAt [Desirability Kate Kate WinLotteryLisa 0] time]]]
+formula [0 -1 [$ForAll [$List time] [HoldsAt [Desirability Kate Lisa WinLotteryKate 0] time]]]
+formula [0 -1 [$ForAll [$List time] [HoldsAt [Desirability Lisa Lisa WinLotteryLisa 0] time]]]
+formula [0 -1 [$ForAll [$List time] [HoldsAt [Desirability Lisa Kate WinLotteryLisa 1] time]]]
+formula [0 -1 [$ForAll [$List agent aboutevent] [$Not [ReleasedAt [Joy agent aboutevent] 0]]]]
+formula [0 -1 [$ForAll [$List agent1 agent2 aboutevent desirability] [$Not [ReleasedAt [Desirability agent1 agent2 aboutevent desirability] 0]]]]
+formula [0 -1 [$ForAll [$List agent aboutevent] [$Not [ReleasedAt [Believe agent aboutevent] 0]]]]
+formula [0 -1 [$ForAll [$List agent1 agent2] [$Not [ReleasedAt [Like agent1 agent2] 0]]]]
+formula [0 -1 [$ForAll [$List agent1 agent2 aboutevent] [$Not [ReleasedAt [HappyFor agent1 agent2 aboutevent] 0]]]]

@@ -1,0 +1,42 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+reified constant fluent HasTicket boolean 
+reified constant fluent OnRed boolean 
+reified constant fluent OnYellow boolean 
+reified constant event Buy boolean 
+reified constant event Board boolean 
+reified constant event BoardRed boolean 
+reified constant event BoardYellow boolean 
+completion * Happens
+range time 0 2
+range offset 1 1
+formula [0 -1 [$ForAll [$List time] [$Implies [Happens [Board] time] [$Or [Happens [BoardRed] time] [Happens [BoardYellow] time]]]]]
+formula [1 -1 [$ForAll [$List time] [$Implies [Happens [Buy] time] [$And [HoldsAt [HasTicket] [$Plus time 1]] [$Not [ReleasedAt [HasTicket] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List time] [Initiates [Buy] [HasTicket] time]]]
+formula [1 -1 [$ForAll [$List time] [$Implies [HoldsAt [HasTicket] time] [$Implies [Happens [BoardRed] time] [$And [HoldsAt [OnRed] [$Plus time 1]] [$Not [ReleasedAt [OnRed] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List time] [$Implies [HoldsAt [HasTicket] time] [Initiates [BoardRed] [OnRed] time]]]]
+formula [1 -1 [$ForAll [$List time] [$Implies [HoldsAt [HasTicket] time] [$Implies [Happens [BoardYellow] time] [$And [HoldsAt [OnYellow] [$Plus time 1]] [$Not [ReleasedAt [OnYellow] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List time] [$Implies [HoldsAt [HasTicket] time] [Initiates [BoardYellow] [OnYellow] time]]]]
+formula [0 -1 [$ForAll [$List time] [$Not [$And [HoldsAt [OnRed] time] [HoldsAt [OnYellow] time]]]]]
+formula [0 -1 [$ForAll [$List time] [$Implies [HoldsAt [OnRed] time] [HoldsAt [HasTicket] time]]]]
+formula [0 -1 [$ForAll [$List time] [$Implies [HoldsAt [OnYellow] time] [HoldsAt [HasTicket] time]]]]
+formula [0 -1 [HoldsAt [OnRed] 2]]
+formula [0 -1 [$Not [HoldsAt [HasTicket] 0]]]
+formula [0 -1 [Happens [Buy] 0]]
+formula [0 -1 [Happens [Board] 1]]
+formula [0 -1 [$Not [ReleasedAt [HasTicket] 0]]]
+formula [0 -1 [$Not [ReleasedAt [OnRed] 0]]]
+formula [0 -1 [$Not [ReleasedAt [OnYellow] 0]]]

@@ -1,0 +1,61 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort switch na
+sort relay na
+sort light na
+constant switch S1
+constant switch S2
+constant switch S3
+constant relay R
+constant light L
+reified constant event Light boolean light
+reified constant event Unlight boolean light
+reified constant event Close boolean switch
+reified constant event Open boolean switch
+reified constant event Activate boolean relay
+reified constant event Deactivate boolean relay
+reified constant fluent Lit boolean light
+reified constant fluent Closed boolean switch
+reified constant fluent Activated boolean relay
+completion * Happens
+range time 0 4
+range offset 1 1
+formula [0 -1 [$ForAll [$List time] [$Implies [$And [$And [$Not [HoldsAt [Lit L] time]] [HoldsAt [Closed S1] time]] [HoldsAt [Closed S2] time]] [Happens [Light L] time]]]]
+formula [0 -1 [$ForAll [$List time] [$Implies [$And [HoldsAt [Lit L] time] [$Or [$Not [HoldsAt [Closed S1] time]] [$Not [HoldsAt [Closed S2] time]]]] [Happens [Unlight L] time]]]]
+formula [0 -1 [$ForAll [$List time] [$Implies [$And [HoldsAt [Closed S2] time] [HoldsAt [Activated R] time]] [Happens [Open S2] time]]]]
+formula [0 -1 [$ForAll [$List time] [$Implies [$And [$And [$And [$Not [HoldsAt [Activated R] time]] [HoldsAt [Closed S1] time]] [HoldsAt [Closed S2] time]] [HoldsAt [Closed S3] time]] [Happens [Activate R] time]]]]
+formula [0 -1 [$ForAll [$List time] [$Implies [$And [HoldsAt [Activated R] time] [$Or [$Or [$Not [HoldsAt [Closed S1] time]] [$Not [HoldsAt [Closed S2] time]]] [$Not [HoldsAt [Closed S3] time]]]] [Happens [Deactivate R] time]]]]
+formula [1 -1 [$ForAll [$List switch time] [$Implies [Happens [Close switch] time] [$And [HoldsAt [Closed switch] [$Plus time 1]] [$Not [ReleasedAt [Closed switch] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List switch time] [Initiates [Close switch] [Closed switch] time]]]
+formula [1 -1 [$ForAll [$List switch time] [$Implies [Happens [Open switch] time] [$And [$Not [HoldsAt [Closed switch] [$Plus time 1]]] [$Not [ReleasedAt [Closed switch] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List switch time] [Terminates [Open switch] [Closed switch] time]]]
+formula [1 -1 [$ForAll [$List relay time] [$Implies [Happens [Activate relay] time] [$And [HoldsAt [Activated relay] [$Plus time 1]] [$Not [ReleasedAt [Activated relay] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List relay time] [Initiates [Activate relay] [Activated relay] time]]]
+formula [1 -1 [$ForAll [$List relay time] [$Implies [Happens [Deactivate relay] time] [$And [$Not [HoldsAt [Activated relay] [$Plus time 1]]] [$Not [ReleasedAt [Activated relay] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List relay time] [Terminates [Deactivate relay] [Activated relay] time]]]
+formula [1 -1 [$ForAll [$List light time] [$Implies [Happens [Light light] time] [$And [HoldsAt [Lit light] [$Plus time 1]] [$Not [ReleasedAt [Lit light] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List light time] [Initiates [Light light] [Lit light] time]]]
+formula [1 -1 [$ForAll [$List light time] [$Implies [Happens [Unlight light] time] [$And [$Not [HoldsAt [Lit light] [$Plus time 1]]] [$Not [ReleasedAt [Lit light] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List light time] [Terminates [Unlight light] [Lit light] time]]]
+formula [0 -1 [$Not [HoldsAt [Closed S1] 0]]]
+formula [0 -1 [HoldsAt [Closed S2] 0]]
+formula [0 -1 [HoldsAt [Closed S3] 0]]
+formula [0 -1 [$Not [HoldsAt [Activated R] 0]]]
+formula [0 -1 [$Not [HoldsAt [Lit L] 0]]]
+formula [0 -1 [Happens [Close S1] 0]]
+formula [0 -1 [$ForAll [$List light] [$Not [ReleasedAt [Lit light] 0]]]]
+formula [0 -1 [$ForAll [$List switch] [$Not [ReleasedAt [Closed switch] 0]]]]
+formula [0 -1 [$ForAll [$List relay] [$Not [ReleasedAt [Activated relay] 0]]]]

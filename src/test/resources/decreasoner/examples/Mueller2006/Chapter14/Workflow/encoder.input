@@ -1,0 +1,79 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort activity na
+sort condition na
+constant activity A
+constant activity B
+constant activity C1
+constant activity C2
+constant activity C3
+constant activity D
+constant activity E1
+constant activity E2
+constant activity E3
+constant activity F
+constant activity G
+constant condition E1C
+constant condition E2C
+constant condition E3C
+constant condition FC
+reified constant fluent Active boolean activity
+reified constant fluent Completed boolean activity
+reified constant fluent Condition boolean condition
+noninertial Condition
+reified constant event Start boolean activity
+reified constant event End boolean activity
+completion 5 Happens
+range time 0 18
+range offset 1 1
+formula [1 -1 [$ForAll [$List activity time] [$Implies [Happens [Start activity] time] [$And [HoldsAt [Active activity] [$Plus time 1]] [$Not [ReleasedAt [Active activity] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List activity time] [Initiates [Start activity] [Active activity] time]]]
+formula [1 -1 [$ForAll [$List activity time] [$Implies [Happens [Start activity] time] [$And [$Not [HoldsAt [Completed activity] [$Plus time 1]]] [$Not [ReleasedAt [Completed activity] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List activity time] [Terminates [Start activity] [Completed activity] time]]]
+formula [1 -1 [$ForAll [$List activity time] [$Implies [Happens [End activity] time] [$And [HoldsAt [Completed activity] [$Plus time 1]] [$Not [ReleasedAt [Completed activity] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List activity time] [Initiates [End activity] [Completed activity] time]]]
+formula [1 -1 [$ForAll [$List activity time] [$Implies [Happens [End activity] time] [$And [$Not [HoldsAt [Active activity] [$Plus time 1]]] [$Not [ReleasedAt [Active activity] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List activity time] [Terminates [End activity] [Active activity] time]]]
+formula [5 -1 [$ForAll [$List time] [$Implies [$And [$And [$Not [HoldsAt [Active B] time]] [$Not [HoldsAt [Completed A] [$Minus time 1]]]] [HoldsAt [Completed A] time]] [Happens [Start B] time]]]]
+formula [5 -1 [$ForAll [$List time] [$Implies [$And [$And [$Not [HoldsAt [Active C1] time]] [$Not [HoldsAt [Completed B] [$Minus time 1]]]] [HoldsAt [Completed B] time]] [Happens [Start C1] time]]]]
+formula [5 -1 [$ForAll [$List time] [$Implies [$And [$And [$Not [HoldsAt [Active C2] time]] [$Not [HoldsAt [Completed B] [$Minus time 1]]]] [HoldsAt [Completed B] time]] [Happens [Start C2] time]]]]
+formula [5 -1 [$ForAll [$List time] [$Implies [$And [$And [$Not [HoldsAt [Active C3] time]] [$Not [HoldsAt [Completed B] [$Minus time 1]]]] [HoldsAt [Completed B] time]] [Happens [Start C3] time]]]]
+formula [5 -1 [$ForAll [$List time] [$Implies [$And [$And [$And [$And [$Not [HoldsAt [Active D] time]] [$Or [$Or [$And [$Not [HoldsAt [Completed C1] [$Minus time 1]]] [HoldsAt [Completed C1] time]] [$And [$Not [HoldsAt [Completed C2] [$Minus time 1]]] [HoldsAt [Completed C2] time]]] [$And [$Not [HoldsAt [Completed C3] [$Minus time 1]]] [HoldsAt [Completed C3] time]]]] [HoldsAt [Completed C1] time]] [HoldsAt [Completed C2] time]] [HoldsAt [Completed C3] time]] [Happens [Start D] time]]]]
+formula [5 -1 [$ForAll [$List time] [$Implies [$And [$And [$And [$Not [HoldsAt [Active E1] time]] [$Not [HoldsAt [Completed D] [$Minus time 1]]]] [HoldsAt [Completed D] time]] [HoldsAt [Condition E1C] time]] [Happens [Start E1] time]]]]
+formula [5 -1 [$ForAll [$List time] [$Implies [$And [$And [$And [$Not [HoldsAt [Active E2] time]] [$Not [HoldsAt [Completed D] [$Minus time 1]]]] [HoldsAt [Completed D] time]] [HoldsAt [Condition E2C] time]] [Happens [Start E2] time]]]]
+formula [5 -1 [$ForAll [$List time] [$Implies [$And [$And [$And [$Not [HoldsAt [Active E3] time]] [$Not [HoldsAt [Completed D] [$Minus time 1]]]] [HoldsAt [Completed D] time]] [HoldsAt [Condition E3C] time]] [Happens [Start E3] time]]]]
+formula [5 -1 [$ForAll [$List time] [$Implies [$And [$Not [HoldsAt [Active F] time]] [$Or [$Or [$And [$Not [HoldsAt [Completed E1] [$Minus time 1]]] [HoldsAt [Completed E1] time]] [$And [$Not [HoldsAt [Completed E2] [$Minus time 1]]] [HoldsAt [Completed E2] time]]] [$And [$Not [HoldsAt [Completed E3] [$Minus time 1]]] [HoldsAt [Completed E3] time]]]] [Happens [Start F] time]]]]
+formula [5 -1 [$ForAll [$List time] [$Implies [$And [$And [$And [$Not [HoldsAt [Active F] time]] [$Not [HoldsAt [Completed F] [$Minus time 1]]]] [HoldsAt [Completed F] time]] [HoldsAt [Condition FC] time]] [Happens [Start F] time]]]]
+formula [5 -1 [$ForAll [$List time] [$Implies [$And [$And [$And [$Not [HoldsAt [Active G] time]] [$Not [HoldsAt [Completed F] [$Minus time 1]]]] [HoldsAt [Completed F] time]] [$Not [HoldsAt [Condition FC] time]]] [Happens [Start G] time]]]]
+formula [5 -1 [Happens [Start A] 0]]
+formula [5 -1 [Happens [End A] 1]]
+formula [5 -1 [Happens [End B] 3]]
+formula [5 -1 [Happens [End C1] 5]]
+formula [5 -1 [Happens [End C2] 6]]
+formula [5 -1 [Happens [End C3] 7]]
+formula [5 -1 [Happens [End D] 9]]
+formula [5 -1 [Happens [End E2] 11]]
+formula [5 -1 [Happens [End F] 13]]
+formula [5 -1 [Happens [End F] 15]]
+formula [0 -1 [$ForAll [$List activity] [$Not [HoldsAt [Active activity] 0]]]]
+formula [0 -1 [$ForAll [$List activity] [$Not [HoldsAt [Completed activity] 0]]]]
+formula [0 -1 [$ForAll [$List time] [$Equiv [$EQ time 14] [HoldsAt [Condition FC] time]]]]
+formula [0 -1 [$ForAll [$List time] [$Not [HoldsAt [Condition E1C] time]]]]
+formula [0 -1 [$ForAll [$List time] [$Equiv [$EQ time 10] [HoldsAt [Condition E2C] time]]]]
+formula [0 -1 [$ForAll [$List time] [$Not [HoldsAt [Condition E3C] time]]]]
+formula [0 -1 [$ForAll [$List activity] [$Not [ReleasedAt [Active activity] 0]]]]
+formula [0 -1 [$ForAll [$List activity] [$Not [ReleasedAt [Completed activity] 0]]]]
+formula [0 -1 [$ForAll [$List condition time] [ReleasedAt [Condition condition] time]]]

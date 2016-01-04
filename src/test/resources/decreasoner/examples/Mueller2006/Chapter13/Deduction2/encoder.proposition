@@ -1,0 +1,6 @@
+000001 [Happens [WakeUp James] 0]
+000002 [HoldsAt [Awake James] 1]
+000003 [ReleasedAt [Awake James] 1]
+000004 [HoldsAt [Awake James] 0]
+000005 [ReleasedAt [Awake James] 0]
+000006 [Happens [WakeUp James] 1]

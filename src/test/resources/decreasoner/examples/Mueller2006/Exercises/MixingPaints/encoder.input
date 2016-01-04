@@ -1,0 +1,45 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort palette na
+sort color na
+constant palette Palette1
+constant color Red
+constant color Yellow
+constant color Blue
+constant color Green
+reified constant event PlaceOnPalette boolean palette color
+reified constant fluent OnPalette boolean palette color
+completion 5 Happens
+range time 0 5
+range offset 1 1
+formula [1 -1 [$ForAll [$List palette color time] [$Implies [$Or [$Not [Happens [PlaceOnPalette palette Yellow] time]] [$Not [Happens [PlaceOnPalette palette Blue] time]]] [$Implies [Happens [PlaceOnPalette palette color] time] [$And [HoldsAt [OnPalette palette color] [$Plus time 1]] [$Not [ReleasedAt [OnPalette palette color] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List palette color time] [$Implies [$Or [$Not [Happens [PlaceOnPalette palette Yellow] time]] [$Not [Happens [PlaceOnPalette palette Blue] time]]] [Initiates [PlaceOnPalette palette color] [OnPalette palette color] time]]]]
+formula [1 -1 [$ForAll [$List palette color1 color2 time] [$Implies [$And [$And [Happens [PlaceOnPalette palette Yellow] time] [$EQ color1 Blue]] [$EQ color2 Green]] [$Implies [Happens [PlaceOnPalette palette color1] time] [$And [HoldsAt [OnPalette palette color2] [$Plus time 1]] [$Not [ReleasedAt [OnPalette palette color2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List palette color1 color2 time] [$Implies [$And [$And [Happens [PlaceOnPalette palette Yellow] time] [$EQ color1 Blue]] [$EQ color2 Green]] [Initiates [PlaceOnPalette palette color1] [OnPalette palette color2] time]]]]
+formula [1 -1 [$ForAll [$List palette color1 color2 time] [$Implies [$And [$And [$Not [$And [Happens [PlaceOnPalette palette Yellow] time] [Happens [PlaceOnPalette palette Blue] time]]] [HoldsAt [OnPalette palette color1] time]] [$NE color1 color2]] [$Implies [Happens [PlaceOnPalette palette color2] time] [$And [$Not [HoldsAt [OnPalette palette color1] [$Plus time 1]]] [$Not [ReleasedAt [OnPalette palette color1] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List palette color1 color2 time] [$Implies [$And [$And [$Not [$And [Happens [PlaceOnPalette palette Yellow] time] [Happens [PlaceOnPalette palette Blue] time]]] [HoldsAt [OnPalette palette color1] time]] [$NE color1 color2]] [Terminates [PlaceOnPalette palette color2] [OnPalette palette color1] time]]]]
+formula [1 -1 [$ForAll [$List palette color1 color2 time] [$Implies [$And [$And [$And [Happens [PlaceOnPalette palette Yellow] time] [HoldsAt [OnPalette palette color2] time]] [$EQ color1 Blue]] [$NE color2 Green]] [$Implies [Happens [PlaceOnPalette palette color1] time] [$And [$Not [HoldsAt [OnPalette palette color2] [$Plus time 1]]] [$Not [ReleasedAt [OnPalette palette color2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List palette color1 color2 time] [$Implies [$And [$And [$And [Happens [PlaceOnPalette palette Yellow] time] [HoldsAt [OnPalette palette color2] time]] [$EQ color1 Blue]] [$NE color2 Green]] [Terminates [PlaceOnPalette palette color1] [OnPalette palette color2] time]]]]
+formula [0 -1 [$ForAll [$List palette color1 color2 time] [$Implies [$And [HoldsAt [OnPalette palette color1] time] [HoldsAt [OnPalette palette color2] time]] [$EQ color1 color2]]]]
+formula [0 -1 [HoldsAt [OnPalette Palette1 Red] 0]]
+formula [5 -1 [Happens [PlaceOnPalette Palette1 Green] 0]]
+formula [5 -1 [Happens [PlaceOnPalette Palette1 Yellow] 1]]
+formula [5 -1 [Happens [PlaceOnPalette Palette1 Blue] 1]]
+formula [5 -1 [Happens [PlaceOnPalette Palette1 Yellow] 2]]
+formula [5 -1 [Happens [PlaceOnPalette Palette1 Blue] 3]]
+formula [5 -1 [Happens [PlaceOnPalette Palette1 Yellow] 4]]
+formula [5 -1 [Happens [PlaceOnPalette Palette1 Blue] 4]]
+formula [0 -1 [$ForAll [$List palette color] [$Not [ReleasedAt [OnPalette palette color] 0]]]]

@@ -1,0 +1,41 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort agent na
+sort switch na
+sort tv na
+reified constant function TVOf tv switch
+reified constant fluent SwitchOn boolean switch
+reified constant fluent TVOn boolean tv
+reified constant fluent PluggedIn boolean tv
+reified constant event TurnOn boolean agent switch
+reified constant event TurnOff boolean agent switch
+constant agent James
+constant switch Switch1
+constant tv TV1
+range time 0 1
+range offset 1 1
+formula [1 -1 [$ForAll [$List agent switch time] [$Implies [Happens [TurnOn agent switch] time] [$And [HoldsAt [SwitchOn switch] [$Plus time 1]] [$Not [ReleasedAt [SwitchOn switch] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List agent switch time] [Initiates [TurnOn agent switch] [SwitchOn switch] time]]]
+formula [1 -1 [$ForAll [$List agent switch tv time] [$Implies [$And [$EQ [TVOf switch] tv] [HoldsAt [PluggedIn tv] time]] [$Implies [Happens [TurnOn agent switch] time] [$And [HoldsAt [TVOn tv] [$Plus time 1]] [$Not [ReleasedAt [TVOn tv] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent switch tv time] [$Implies [$And [$EQ [TVOf switch] tv] [HoldsAt [PluggedIn tv] time]] [Initiates [TurnOn agent switch] [TVOn tv] time]]]]
+function value TVOf TV1 Switch1
+formula [0 -1 [HoldsAt [PluggedIn TV1] 0]]
+formula [0 -1 [$Not [HoldsAt [SwitchOn Switch1] 0]]]
+formula [0 -1 [$Not [HoldsAt [TVOn TV1] 0]]]
+formula [0 -1 [Happens [TurnOn James Switch1] 0]]
+formula [0 -1 [$ForAll [$List switch] [$Not [ReleasedAt [SwitchOn switch] 0]]]]
+formula [0 -1 [$ForAll [$List tv] [$Not [ReleasedAt [TVOn tv] 0]]]]
+formula [0 -1 [$ForAll [$List tv] [$Not [ReleasedAt [PluggedIn tv] 0]]]]

@@ -1,0 +1,63 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort object na
+sort agent object
+sort physobj object
+sort location na
+reified constant fluent At boolean object location
+reified constant fluent Holding boolean agent physobj
+reified constant event PickUp boolean agent physobj
+reified constant event SetDown boolean agent physobj
+reified constant event Move boolean agent location location
+constant agent James
+constant physobj Coin
+constant location L1
+constant location L2
+constant location L3
+constant location L4
+completion * Happens
+range time 0 9
+range offset 1 1
+formula [0 -1 [$ForAll [$List agent location physobj time] [$Implies [$And [HoldsAt [At agent location] time] [HoldsAt [Holding agent physobj] time]] [HoldsAt [At physobj location] time]]]]
+formula [0 -1 [$ForAll [$List object location1 location2 time] [$Implies [$And [HoldsAt [At object location1] time] [HoldsAt [At object location2] time]] [$EQ location1 location2]]]]
+formula [1 -1 [$ForAll [$List agent location1 location2 time] [$Implies [Happens [Move agent location1 location2] time] [$And [HoldsAt [At agent location2] [$Plus time 1]] [$Not [ReleasedAt [At agent location2] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List agent location1 location2 time] [Initiates [Move agent location1 location2] [At agent location2] time]]]
+formula [1 -1 [$ForAll [$List agent location1 location2 time] [$Implies [Happens [Move agent location1 location2] time] [$And [$Not [HoldsAt [At agent location1] [$Plus time 1]]] [$Not [ReleasedAt [At agent location1] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List agent location1 location2 time] [Terminates [Move agent location1 location2] [At agent location1] time]]]
+formula [1 -1 [$ForAll [$List agent physobj time] [$Implies [Happens [PickUp agent physobj] time] [$And [HoldsAt [Holding agent physobj] [$Plus time 1]] [$Not [ReleasedAt [Holding agent physobj] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List agent physobj time] [Initiates [PickUp agent physobj] [Holding agent physobj] time]]]
+formula [1 -1 [$ForAll [$List agent physobj time] [$Implies [Happens [SetDown agent physobj] time] [$And [$Not [HoldsAt [Holding agent physobj] [$Plus time 1]]] [$Not [ReleasedAt [Holding agent physobj] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List agent physobj time] [Terminates [SetDown agent physobj] [Holding agent physobj] time]]]
+formula [0 -1 [$ForAll [$List agent location1 location2 time] [$Implies [Happens [Move agent location1 location2] time] [HoldsAt [At agent location1] time]]]]
+formula [0 -1 [$ForAll [$List agent physobj time] [$Implies [Happens [PickUp agent physobj] time] [$Exists [$List location] [$And [HoldsAt [At agent location] time] [HoldsAt [At physobj location] time]]]]]]
+formula [1 -1 [$ForAll [$List agent physobj location time] [$Implies [Happens [PickUp agent physobj] time] [ReleasedAt [At physobj location] [$Plus time 1]]]]]
+formula [2 -1 [$ForAll [$List agent physobj location time] [Releases [PickUp agent physobj] [At physobj location] time]]]
+formula [1 -1 [$ForAll [$List agent physobj location time] [$Implies [HoldsAt [At agent location] time] [$Implies [Happens [SetDown agent physobj] time] [$And [HoldsAt [At physobj location] [$Plus time 1]] [$Not [ReleasedAt [At physobj location] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent physobj location time] [$Implies [HoldsAt [At agent location] time] [Initiates [SetDown agent physobj] [At physobj location] time]]]]
+formula [0 -1 [$Not [HoldsAt [Holding James Coin] 0]]]
+formula [0 -1 [HoldsAt [At Coin L4] 0]]
+formula [0 -1 [HoldsAt [At James L1] 0]]
+formula [0 -1 [Happens [Move James L1 L2] 0]]
+formula [0 -1 [Happens [Move James L2 L3] 1]]
+formula [0 -1 [Happens [Move James L3 L4] 2]]
+formula [0 -1 [Happens [PickUp James Coin] 3]]
+formula [0 -1 [Happens [Move James L4 L3] 4]]
+formula [0 -1 [Happens [Move James L3 L2] 5]]
+formula [0 -1 [Happens [SetDown James Coin] 6]]
+formula [0 -1 [Happens [Move James L2 L3] 7]]
+formula [0 -1 [Happens [Move James L3 L4] 8]]
+formula [0 -1 [$ForAll [$List object location] [$Not [ReleasedAt [At object location] 0]]]]
+formula [0 -1 [$ForAll [$List agent physobj] [$Not [ReleasedAt [Holding agent physobj] 0]]]]

@@ -1,0 +1,48 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort object na
+sort location na
+constant object O1
+constant object O2
+constant location L1
+constant location L2
+constant location L3
+constant location L4
+constant location L5
+reified constant predicate Adjacent boolean location location
+reified constant predicate Equal boolean object object
+reified constant fluent At boolean object location
+reified constant event Move boolean object location location
+range time 0 4
+range offset 1 1
+formula [1 -1 [$ForAll [$List object location1 location2 time] [$Implies [$And [HoldsAt [At object location1] time] [Adjacent location1 location2]] [$Implies [Happens [Move object location1 location2] time] [$And [HoldsAt [At object location2] [$Plus time 1]] [$Not [ReleasedAt [At object location2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List object location1 location2 time] [$Implies [$And [HoldsAt [At object location1] time] [Adjacent location1 location2]] [Initiates [Move object location1 location2] [At object location2] time]]]]
+formula [1 -1 [$ForAll [$List object location1 location2 time] [$Implies [$And [HoldsAt [At object location1] time] [Adjacent location1 location2]] [$Implies [Happens [Move object location1 location2] time] [$And [$Not [HoldsAt [At object location1] [$Plus time 1]]] [$Not [ReleasedAt [At object location1] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List object location1 location2 time] [$Implies [$And [HoldsAt [At object location1] time] [Adjacent location1 location2]] [Terminates [Move object location1 location2] [At object location1] time]]]]
+formula [0 -1 [$ForAll [$List object location1 location2 time] [$Implies [$And [HoldsAt [At object location1] time] [HoldsAt [At object location2] time]] [$EQ location1 location2]]]]
+formula [0 -1 [$ForAll [$List object time] [$Exists [$List location] [HoldsAt [At object location] time]]]]
+formula [0 -1 [$ForAll [$List object1 object2 location time] [$Implies [$And [HoldsAt [At object1 location] time] [HoldsAt [At object2 location] time]] [Equal object1 object2]]]]
+formula [0 -1 [$ForAll [$List location1 location2] [$Equiv [Adjacent location1 location2] [Adjacent location2 location1]]]]
+formula [0 -1 [$ForAll [$List object1 object2] [$Equiv [Equal object1 object2] [Equal object2 object1]]]]
+formula [0 -1 [$ForAll [$List location1 location2] [$Equiv [Adjacent location1 location2] [$Or [$Or [$Or [$Or [$Or [$Or [$Or [$And [$EQ location1 L1] [$EQ location2 L2]] [$And [$EQ location1 L2] [$EQ location2 L1]]] [$And [$EQ location1 L2] [$EQ location2 L3]]] [$And [$EQ location1 L3] [$EQ location2 L2]]] [$And [$EQ location1 L3] [$EQ location2 L4]]] [$And [$EQ location1 L4] [$EQ location2 L3]]] [$And [$EQ location1 L4] [$EQ location2 L5]]] [$And [$EQ location1 L5] [$EQ location2 L4]]]]]]
+formula [0 -1 [HoldsAt [At O1 L1] 0]]
+formula [0 -1 [$ForAll [$List object] [$Not [HoldsAt [At object L5] 0]]]]
+formula [0 -1 [HoldsAt [At O2 L5] 4]]
+formula [0 -1 [$ForAll [$List object] [$Not [HoldsAt [At object L1] 4]]]]
+formula [0 -1 [$ForAll [$List object time] [$Not [HoldsAt [At object L3] time]]]]
+formula [0 -1 [$ForAll [$List object location1 location2 time] [$Implies [Happens [Move object location1 location2] time] [$And [HoldsAt [At object location1] time] [Adjacent location1 location2]]]]]
+formula [0 -1 [$ForAll [$List object1 object2 location1 location2 time] [$Implies [$And [Equal object1 object2] [Happens [Move object1 location1 location2] time]] [Happens [Move object2 location1 location2] time]]]]
+formula [0 -1 [$ForAll [$List object location] [$Not [ReleasedAt [At object location] 0]]]]

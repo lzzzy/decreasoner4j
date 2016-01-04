@@ -1,0 +1,83 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort agent na
+constant agent MusicStore
+constant agent Jen
+sort product na
+constant product BritneyCD
+sort f na
+constant f PurchaseRequestedJenMusicStoreBritneyCD1
+constant f DeliveredMusicStoreJenBritneyCD
+constant f EPOSentJenMusicStore1
+sort amount integer
+reified constant fluent C boolean agent agent f
+reified constant fluent CC boolean agent agent f f
+reified constant event CreateC boolean agent agent f
+reified constant event CreateCC boolean agent agent f f
+reified constant event DischargeC boolean agent agent f
+reified constant event DischargeCC boolean agent agent f f
+reified constant fluent QuoteSent boolean agent agent product amount
+reified constant fluent PurchaseRequested boolean agent agent product amount
+reified constant fluent Delivered boolean agent agent product
+reified constant fluent EPOSent boolean agent agent amount
+reified constant event SendQuote boolean agent agent product amount
+reified constant event RequestPurchase boolean agent agent product amount
+reified constant event Deliver boolean agent agent product
+reified constant event SendEPO boolean agent agent amount
+completion 5 Happens
+range time 0 4
+range offset 1 1
+range amount 1 1
+formula [1 -1 [$ForAll [$List agent1 agent2 f time] [$Implies [Happens [CreateC agent1 agent2 f] time] [$And [HoldsAt [C agent1 agent2 f] [$Plus time 1]] [$Not [ReleasedAt [C agent1 agent2 f] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List agent1 agent2 f time] [Initiates [CreateC agent1 agent2 f] [C agent1 agent2 f] time]]]
+formula [1 -1 [$ForAll [$List agent1 agent2 f1 f2 time] [$Implies [Happens [CreateCC agent1 agent2 f1 f2] time] [$And [HoldsAt [CC agent1 agent2 f1 f2] [$Plus time 1]] [$Not [ReleasedAt [CC agent1 agent2 f1 f2] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List agent1 agent2 f1 f2 time] [Initiates [CreateCC agent1 agent2 f1 f2] [CC agent1 agent2 f1 f2] time]]]
+formula [1 -1 [$ForAll [$List agent1 agent2 f time] [$Implies [Happens [DischargeC agent1 agent2 f] time] [$And [$Not [HoldsAt [C agent1 agent2 f] [$Plus time 1]]] [$Not [ReleasedAt [C agent1 agent2 f] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List agent1 agent2 f time] [Terminates [DischargeC agent1 agent2 f] [C agent1 agent2 f] time]]]
+formula [1 -1 [$ForAll [$List agent1 agent2 f1 f2 time] [$Implies [Happens [DischargeCC agent1 agent2 f1 f2] time] [$And [$Not [HoldsAt [CC agent1 agent2 f1 f2] [$Plus time 1]]] [$Not [ReleasedAt [CC agent1 agent2 f1 f2] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List agent1 agent2 f1 f2 time] [Terminates [DischargeCC agent1 agent2 f1 f2] [CC agent1 agent2 f1 f2] time]]]
+formula [1 -1 [$ForAll [$List agent1 agent2 product amount time] [$Implies [Happens [SendQuote agent1 agent2 product amount] time] [$And [HoldsAt [QuoteSent agent1 agent2 product amount] [$Plus time 1]] [$Not [ReleasedAt [QuoteSent agent1 agent2 product amount] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List agent1 agent2 product amount time] [Initiates [SendQuote agent1 agent2 product amount] [QuoteSent agent1 agent2 product amount] time]]]
+formula [1 -1 [$ForAll [$List agent1 agent2 product amount time] [$Implies [Happens [RequestPurchase agent1 agent2 product amount] time] [$And [HoldsAt [PurchaseRequested agent1 agent2 product amount] [$Plus time 1]] [$Not [ReleasedAt [PurchaseRequested agent1 agent2 product amount] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List agent1 agent2 product amount time] [Initiates [RequestPurchase agent1 agent2 product amount] [PurchaseRequested agent1 agent2 product amount] time]]]
+formula [1 -1 [$ForAll [$List agent1 agent2 product time] [$Implies [Happens [Deliver agent1 agent2 product] time] [$And [HoldsAt [Delivered agent1 agent2 product] [$Plus time 1]] [$Not [ReleasedAt [Delivered agent1 agent2 product] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List agent1 agent2 product time] [Initiates [Deliver agent1 agent2 product] [Delivered agent1 agent2 product] time]]]
+formula [1 -1 [$ForAll [$List agent1 agent2 amount time] [$Implies [Happens [SendEPO agent1 agent2 amount] time] [$And [HoldsAt [EPOSent agent1 agent2 amount] [$Plus time 1]] [$Not [ReleasedAt [EPOSent agent1 agent2 amount] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List agent1 agent2 amount time] [Initiates [SendEPO agent1 agent2 amount] [EPOSent agent1 agent2 amount] time]]]
+formula [1 -1 [$ForAll [$List agent1 agent2 product amount f1 f2 time] [$Implies [$And [$And [$And [$And [$And [$EQ agent1 MusicStore] [$EQ agent2 Jen]] [$EQ product BritneyCD]] [$EQ amount 1]] [$EQ f1 PurchaseRequestedJenMusicStoreBritneyCD1]] [$EQ f2 DeliveredMusicStoreJenBritneyCD]] [$Implies [Happens [SendQuote agent1 agent2 product amount] time] [$And [HoldsAt [CC agent1 agent2 f1 f2] [$Plus time 1]] [$Not [ReleasedAt [CC agent1 agent2 f1 f2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent1 agent2 product amount f1 f2 time] [$Implies [$And [$And [$And [$And [$And [$EQ agent1 MusicStore] [$EQ agent2 Jen]] [$EQ product BritneyCD]] [$EQ amount 1]] [$EQ f1 PurchaseRequestedJenMusicStoreBritneyCD1]] [$EQ f2 DeliveredMusicStoreJenBritneyCD]] [Initiates [SendQuote agent1 agent2 product amount] [CC agent1 agent2 f1 f2] time]]]]
+formula [1 -1 [$ForAll [$List agent1 agent2 product amount f1 f2 time] [$Implies [$And [$And [$And [$And [$And [$And [$EQ agent1 Jen] [$EQ agent2 MusicStore]] [$EQ product BritneyCD]] [$EQ amount 1]] [$EQ f1 DeliveredMusicStoreJenBritneyCD]] [$EQ f2 EPOSentJenMusicStore1]] [$Not [HoldsAt [Delivered agent2 agent1 product] time]]] [$Implies [Happens [RequestPurchase agent1 agent2 product amount] time] [$And [HoldsAt [CC agent1 agent2 f1 f2] [$Plus time 1]] [$Not [ReleasedAt [CC agent1 agent2 f1 f2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent1 agent2 product amount f1 f2 time] [$Implies [$And [$And [$And [$And [$And [$And [$EQ agent1 Jen] [$EQ agent2 MusicStore]] [$EQ product BritneyCD]] [$EQ amount 1]] [$EQ f1 DeliveredMusicStoreJenBritneyCD]] [$EQ f2 EPOSentJenMusicStore1]] [$Not [HoldsAt [Delivered agent2 agent1 product] time]]] [Initiates [RequestPurchase agent1 agent2 product amount] [CC agent1 agent2 f1 f2] time]]]]
+formula [5 -1 [$ForAll [$List time] [$Implies [$And [HoldsAt [CC MusicStore Jen PurchaseRequestedJenMusicStoreBritneyCD1 DeliveredMusicStoreJenBritneyCD] time] [HoldsAt [PurchaseRequested Jen MusicStore BritneyCD 1] time]] [Happens [CreateC MusicStore Jen DeliveredMusicStoreJenBritneyCD] time]]]]
+formula [5 -1 [$ForAll [$List time] [$Implies [$And [HoldsAt [CC MusicStore Jen PurchaseRequestedJenMusicStoreBritneyCD1 DeliveredMusicStoreJenBritneyCD] time] [HoldsAt [PurchaseRequested Jen MusicStore BritneyCD 1] time]] [Happens [DischargeCC MusicStore Jen PurchaseRequestedJenMusicStoreBritneyCD1 DeliveredMusicStoreJenBritneyCD] time]]]]
+formula [5 -1 [$ForAll [$List time] [$Implies [$And [HoldsAt [CC Jen MusicStore DeliveredMusicStoreJenBritneyCD EPOSentJenMusicStore1] time] [HoldsAt [Delivered MusicStore Jen BritneyCD] time]] [Happens [CreateC Jen MusicStore EPOSentJenMusicStore1] time]]]]
+formula [5 -1 [$ForAll [$List time] [$Implies [$And [HoldsAt [CC Jen MusicStore DeliveredMusicStoreJenBritneyCD EPOSentJenMusicStore1] time] [HoldsAt [Delivered MusicStore Jen BritneyCD] time]] [Happens [DischargeCC Jen MusicStore DeliveredMusicStoreJenBritneyCD EPOSentJenMusicStore1] time]]]]
+formula [5 -1 [$ForAll [$List time] [$Implies [$And [HoldsAt [C MusicStore Jen DeliveredMusicStoreJenBritneyCD] time] [HoldsAt [Delivered MusicStore Jen BritneyCD] time]] [Happens [DischargeC MusicStore Jen DeliveredMusicStoreJenBritneyCD] time]]]]
+formula [5 -1 [$ForAll [$List time] [$Implies [$And [HoldsAt [C Jen MusicStore EPOSentJenMusicStore1] time] [HoldsAt [EPOSent Jen MusicStore 1] time]] [Happens [DischargeC Jen MusicStore EPOSentJenMusicStore1] time]]]]
+formula [5 -1 [Happens [Deliver MusicStore Jen BritneyCD] 0]]
+formula [5 -1 [Happens [SendEPO Jen MusicStore 1] 2]]
+formula [0 -1 [$ForAll [$List agent1 agent2 product amount] [$Not [HoldsAt [QuoteSent agent1 agent2 product amount] 0]]]]
+formula [0 -1 [$ForAll [$List agent1 agent2 product amount] [$Not [HoldsAt [PurchaseRequested agent1 agent2 product amount] 0]]]]
+formula [0 -1 [$ForAll [$List agent1 agent2 product] [$Not [HoldsAt [Delivered agent1 agent2 product] 0]]]]
+formula [0 -1 [$ForAll [$List agent1 agent2 f] [$Not [HoldsAt [C agent1 agent2 f] 0]]]]
+formula [0 -1 [$ForAll [$List agent1 agent2 f1 f2] [$Not [HoldsAt [CC agent1 agent2 f1 f2] 0]]]]
+formula [0 -1 [$ForAll [$List agent1 agent2 amount] [$Not [HoldsAt [EPOSent agent1 agent2 amount] 0]]]]
+formula [0 -1 [$ForAll [$List agent1 agent2 f] [$Not [ReleasedAt [C agent1 agent2 f] 0]]]]
+formula [0 -1 [$ForAll [$List agent1 agent2 f1 f2] [$Not [ReleasedAt [CC agent1 agent2 f1 f2] 0]]]]
+formula [0 -1 [$ForAll [$List agent1 agent2 product amount] [$Not [ReleasedAt [QuoteSent agent1 agent2 product amount] 0]]]]
+formula [0 -1 [$ForAll [$List agent1 agent2 product amount] [$Not [ReleasedAt [PurchaseRequested agent1 agent2 product amount] 0]]]]
+formula [0 -1 [$ForAll [$List agent1 agent2 product] [$Not [ReleasedAt [Delivered agent1 agent2 product] 0]]]]
+formula [0 -1 [$ForAll [$List agent1 agent2 amount] [$Not [ReleasedAt [EPOSent agent1 agent2 amount] 0]]]]

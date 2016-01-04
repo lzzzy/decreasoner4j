@@ -1,0 +1,171 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+sort position integer
+sort location na
+sort cage location
+sort gate na
+sort animal na
+sort elephant animal
+sort horse animal
+sort dog animal
+sort human animal
+sort species na
+reified constant function Loc location position
+reified constant function Side1 position gate
+reified constant function Side2 position gate
+reified constant function Species species animal
+reified constant predicate Accessible boolean position position time
+reified constant predicate Adult boolean animal
+reified constant predicate Large boolean animal
+reified constant predicate LargeSpecies boolean species
+reified constant predicate Neighbor boolean position position
+reified constant predicate Sides boolean position position gate
+reified constant event Close boolean human gate
+reified constant event GetOff boolean human animal
+reified constant event Mount boolean human animal
+reified constant event Move boolean animal position
+reified constant event Open boolean human gate
+reified constant event ThrowOff boolean animal human
+reified constant fluent AbnormalEncroachment boolean human
+noninertial AbnormalEncroachment
+reified constant fluent DoneBy boolean event animal
+noninertial DoneBy
+reified constant fluent Mounted boolean human animal
+reified constant fluent MountFails boolean human
+noninertial MountFails
+reified constant fluent Moves boolean animal
+noninertial Moves
+reified constant fluent Opened boolean gate
+reified constant fluent Pos boolean animal position
+reified constant fluent PosDeterminingFluent boolean human position
+noninertial PosDeterminingFluent
+reified constant fluent ThrowOffFails boolean animal human
+noninertial ThrowOffFails
+constant species HumanSpecies
+constant species ElephantSpecies
+constant species HorseSpecies
+constant species DogSpecies
+constant location Outside
+constant gate GateAO
+constant cage CageA
+constant human Homer
+constant elephant Jumbo
+range time 0 1
+range position 1 8
+range offset 0 0
+formula [4 -1 [$ForAll [$List fluent time] [$Implies [$And [$And [HoldsAt fluent time] [$Not [ReleasedAt fluent [$Plus time 1]]]] [$Not [$Exists [$List event] [$And [Happens event time] [Terminates event fluent time]]]]] [HoldsAt fluent [$Plus time 1]]]]]
+formula [4 -1 [$ForAll [$List fluent time] [$Implies [$And [$And [$Not [HoldsAt fluent time]] [$Not [ReleasedAt fluent [$Plus time 1]]]] [$Not [$Exists [$List event] [$And [Happens event time] [Initiates event fluent time]]]]] [$Not [HoldsAt fluent [$Plus time 1]]]]]]
+formula [4 -1 [$ForAll [$List fluent time] [$Implies [$And [$Not [ReleasedAt fluent time]] [$Not [$Exists [$List event] [$And [Happens event time] [Releases event fluent time]]]]] [$Not [ReleasedAt fluent [$Plus time 1]]]]]]
+formula [4 -1 [$ForAll [$List fluent time] [$Implies [$And [ReleasedAt fluent time] [$Not [$Exists [$List event] [$And [Happens event time] [$Or [Initiates event fluent time] [Terminates event fluent time]]]]]] [ReleasedAt fluent [$Plus time 1]]]]]
+formula [4 -1 [$ForAll [$List event fluent time] [$Implies [$And [Happens event time] [Initiates event fluent time]] [$And [HoldsAt fluent [$Plus time 1]] [$Not [ReleasedAt fluent [$Plus time 1]]]]]]]
+formula [4 -1 [$ForAll [$List event fluent time] [$Implies [$And [Happens event time] [Terminates event fluent time]] [$And [$Not [HoldsAt fluent [$Plus time 1]]] [$Not [ReleasedAt fluent [$Plus time 1]]]]]]]
+formula [4 -1 [$ForAll [$List event fluent time] [$Implies [$And [Happens event time] [Releases event fluent time]] [ReleasedAt fluent [$Plus time 1]]]]]
+formula [0 -1 [LargeSpecies HumanSpecies]]
+formula [0 -1 [LargeSpecies ElephantSpecies]]
+formula [0 -1 [LargeSpecies HorseSpecies]]
+formula [0 -1 [$Not [LargeSpecies DogSpecies]]]
+formula [0 -1 [$ForAll [$List event animal time] [$Equiv [HoldsAt [DoneBy event animal] time] [$And [Happens event time] [$Or [$Or [$Or [$Or [$Or [$Exists [$List gate] [$EQ event [Close animal gate]]] [$Exists [$List animal1] [$EQ event [GetOff animal animal1]]]] [$Exists [$List animal1] [$EQ event [Mount animal animal1]]]] [$Exists [$List position] [$EQ event [Move animal position]]]] [$Exists [$List gate] [$EQ event [Open animal gate]]]] [$Exists [$List human1] [$EQ event [ThrowOff animal human1]]]]]]]]
+formula [0 -1 [$ForAll [$List event1 event2 animal time] [$Implies [$And [HoldsAt [DoneBy event1 animal] time] [HoldsAt [DoneBy event2 animal] time]] [$EQ event1 event2]]]]
+formula [0 -1 [$ForAll [$List animal] [$Equiv [Large animal] [$And [Adult animal] [LargeSpecies [Species animal]]]]]]
+formula [0 -1 [$ForAll [$List position] [$Exists [$List position1] [$And [$NE position1 position] [Neighbor position position1]]]]]
+formula [0 -1 [$ForAll [$List position] [$Not [Neighbor position position]]]]
+formula [0 -1 [$ForAll [$List position1 position2] [$Implies [Neighbor position1 position2] [Neighbor position2 position1]]]]
+formula [0 -1 [$ForAll [$List cage] [$NE cage Outside]]]
+formula [0 -1 [$ForAll [$List position1 position2 gate] [$Equiv [Sides position1 position2 gate] [$Or [$And [$EQ [Side1 gate] position1] [$EQ [Side2 gate] position2]] [$And [$EQ [Side2 gate] position1] [$EQ [Side1 gate] position2]]]]]]
+formula [0 -1 [$ForAll [$List gate] [$NE [Loc [Side1 gate]] [Loc [Side2 gate]]]]]
+formula [0 -1 [$ForAll [$List position1 position2 gate1 gate2] [$Implies [$And [Sides position1 position2 gate1] [Sides position1 position2 gate2]] [$EQ gate1 gate2]]]]
+formula [0 -1 [$ForAll [$List position1 position2 gate] [$Implies [Sides position1 position2 gate] [Neighbor position1 position2]]]]
+formula [0 -1 [$ForAll [$List position1 position2] [$Implies [$And [$NE [Loc position1] [Loc position2]] [Neighbor position1 position2]] [$Exists [$List gate] [Sides position1 position2 gate]]]]]
+formula [0 -1 [$ForAll [$List animal position1 position2 time] [$Implies [$And [HoldsAt [Pos animal position1] time] [HoldsAt [Pos animal position2] time]] [$EQ position1 position2]]]]
+formula [0 -1 [$ForAll [$List animal time] [$Exists [$List position] [HoldsAt [Pos animal position] time]]]]
+formula [0 -1 [$ForAll [$List animal1 animal2 position time] [$Implies [$And [$And [$And [$And [$NE animal1 animal2] [Large animal1]] [Large animal2]] [HoldsAt [Pos animal1 position] time]] [HoldsAt [Pos animal2 position] time]] [$Or [$Exists [$List human] [$And [$EQ human animal1] [HoldsAt [Mounted human animal2] time]]] [$Exists [$List human] [$And [$EQ human animal2] [HoldsAt [Mounted human animal1] time]]]]]]]
+formula [0 -1 [$ForAll [$List human position1 position2 time] [$Implies [$And [HoldsAt [PosDeterminingFluent human position1] time] [HoldsAt [PosDeterminingFluent human position2] time]] [$EQ position1 position2]]]]
+formula [2 -1 [$ForAll [$List animal position time] [Initiates [Move animal position] [Pos animal position] time]]]
+formula [2 -1 [$ForAll [$List animal position1 position2 time] [$Implies [HoldsAt [Pos animal position1] time] [Terminates [Move animal position2] [Pos animal position1] time]]]]
+formula [0 -1 [$ForAll [$List animal position time] [$Implies [Happens [Move animal position] time] [$Not [HoldsAt [Pos animal position] time]]]]]
+formula [0 -1 [$ForAll [$List human position time] [$Implies [Happens [Move human position] time] [$Not [$Exists [$List animal] [HoldsAt [Mounted human animal] time]]]]]]
+formula [2 -1 [$ForAll [$List human gate time] [Initiates [Open human gate] [Opened gate] time]]]
+formula [0 -1 [$ForAll [$List human gate time] [$Implies [Happens [Open human gate] time] [$And [$And [$Not [HoldsAt [Opened gate] time]] [$Not [$Exists [$List animal] [HoldsAt [Mounted human animal] time]]]] [$Exists [$List position] [$And [$Or [$EQ [Side1 gate] position] [$EQ [Side2 gate] position]] [HoldsAt [Pos human position] time]]]]]]]
+formula [2 -1 [$ForAll [$List human gate time] [Terminates [Close human gate] [Opened gate] time]]]
+formula [0 -1 [$ForAll [$List human gate time] [$Implies [Happens [Close human gate] time] [$And [$And [HoldsAt [Opened gate] time] [$Not [$Exists [$List animal] [HoldsAt [Mounted human animal] time]]]] [$Exists [$List position] [$And [$Or [$EQ [Side1 gate] position] [$EQ [Side2 gate] position]] [HoldsAt [Pos human position] time]]]]]]]
+formula [0 -1 [$ForAll [$List human animal position time] [$Implies [$And [HoldsAt [Mounted human animal] time] [HoldsAt [Pos animal position] time]] [HoldsAt [Pos human position] time]]]]
+formula [0 -1 [$ForAll [$List animal time] [$Equiv [HoldsAt [Moves animal] time] [$Exists [$List position] [$And [HoldsAt [Pos animal position] time] [$Not [HoldsAt [Pos animal position] [$Plus time 1]]]]]]]]
+formula [0 -1 [$ForAll [$List human time] [$Equiv [HoldsAt [MountFails human] time] [$Exists [$List animal] [$And [Happens [Mount human animal] time] [HoldsAt [Moves animal] time]]]]]]
+formula [2 -1 [$ForAll [$List human animal position time] [$Implies [$Not [HoldsAt [Moves animal] time]] [Releases [Mount human animal] [Pos human position] time]]]]
+formula [2 -1 [$ForAll [$List human animal time] [$Implies [$Not [HoldsAt [Moves animal] time]] [Initiates [Mount human animal] [Mounted human animal] time]]]]
+formula [2 -1 [$ForAll [$List human animal position time] [$Implies [$And [HoldsAt [Pos animal position] time] [HoldsAt [Moves animal] time]] [Initiates [Mount human animal] [Pos human position] time]]]]
+formula [2 -1 [$ForAll [$List human animal position time] [$Implies [$And [HoldsAt [Pos human position] time] [HoldsAt [Moves animal] time]] [Terminates [Mount human animal] [Pos human position] time]]]]
+formula [0 -1 [$ForAll [$List human animal time] [$Implies [Happens [Mount human animal] time] [Large animal]]]]
+formula [0 -1 [$ForAll [$List human animal time] [$Implies [HoldsAt [Mounted human animal] time] [Large animal]]]]
+formula [0 -1 [$ForAll [$List human1 human2 time] [$Implies [Happens [Mount human1 human2] time] [$Not [Large human1]]]]]
+formula [0 -1 [$ForAll [$List human1 human2 time] [$Implies [HoldsAt [Mounted human1 human2] time] [$Not [Large human1]]]]]
+formula [0 -1 [$ForAll [$List human animal time] [$Implies [Happens [Mount human animal] time] [$Not [$Exists [$List human1] [$And [$NE human1 human] [HoldsAt [Mounted human1 animal] time]]]]]]]
+formula [0 -1 [$ForAll [$List human1 human2 animal time] [$Implies [$And [HoldsAt [Mounted human1 animal] time] [HoldsAt [Mounted human2 animal] time]] [$EQ human1 human2]]]]
+formula [0 -1 [$ForAll [$List human animal time] [$Implies [Happens [Mount human animal] time] [$Not [$Exists [$List human1] [$And [$NE human1 human] [HoldsAt [Mounted human1 human] time]]]]]]]
+formula [0 -1 [$ForAll [$List human1 human2 time] [$Implies [Happens [Mount human1 human2] time] [$Exists [$List animal] [HoldsAt [Mounted human2 animal] time]]]]]
+formula [0 -1 [$ForAll [$List human1 human2 time] [$Implies [HoldsAt [Mounted human1 human2] time] [$Not [$Exists [$List animal] [HoldsAt [Mounted human2 animal] time]]]]]]
+formula [0 -1 [$ForAll [$List human animal time] [$Implies [Happens [Mount human animal] time] [$Not [$Exists [$List animal1] [HoldsAt [Mounted human animal1] time]]]]]]
+formula [2 -1 [$ForAll [$List human animal time] [$Implies [$Not [HoldsAt [Moves animal] time]] [Terminates [GetOff human animal] [Mounted human animal] time]]]]
+formula [2 -1 [$ForAll [$List human animal position time] [$Implies [$And [$Not [HoldsAt [Moves animal] time]] [HoldsAt [PosDeterminingFluent human position] time]] [Initiates [GetOff human animal] [Pos human position] time]]]]
+formula [2 -1 [$ForAll [$List human animal position time] [$Implies [$And [$Not [HoldsAt [Moves animal] time]] [HoldsAt [Pos human position] time]] [Terminates [GetOff human animal] [Pos human position] time]]]]
+formula [2 -1 [$ForAll [$List human animal position1 position2 time] [$Implies [$And [$And [$Not [HoldsAt [Moves animal] time]] [HoldsAt [Pos human position1] time]] [$NE position1 position2]] [Terminates [GetOff human animal] [Pos human position2] time]]]]
+formula [0 -1 [$ForAll [$List human animal time] [$Implies [Happens [GetOff human animal] time] [HoldsAt [Mounted human animal] time]]]]
+formula [0 -1 [$ForAll [$List animal1 human time] [$Equiv [HoldsAt [ThrowOffFails animal1 human] time] [$Exists [$List position animal2] [$And [$And [$And [$NE animal2 human] [HoldsAt [PosDeterminingFluent human position] time]] [Large animal2]] [HoldsAt [Pos animal2 position] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List animal human position time] [$Implies [$And [HoldsAt [PosDeterminingFluent human position] time] [$Not [HoldsAt [ThrowOffFails animal human] time]]] [Initiates [ThrowOff animal human] [Pos human position] time]]]]
+formula [2 -1 [$ForAll [$List animal human position time] [$Implies [$And [HoldsAt [Pos human position] time] [$Not [HoldsAt [ThrowOffFails animal human] time]]] [Terminates [ThrowOff animal human] [Pos human position] time]]]]
+formula [2 -1 [$ForAll [$List animal human position1 position2 time] [$Implies [$And [$And [$And [$Not [HoldsAt [ThrowOffFails animal human] time]] [HoldsAt [Pos human position1] time]] [$Not [HoldsAt [PosDeterminingFluent human position2] time]]] [$NE position1 position2]] [Terminates [ThrowOff animal human] [Pos human position2] time]]]]
+formula [0 -1 [$ForAll [$List human time] [$Implies [$Not [$Exists [$List animal] [$Or [Happens [ThrowOff animal human] time] [Happens [GetOff human animal] time]]]] [HoldsAt [PosDeterminingFluent human 1] time]]]]
+formula [2 -1 [$ForAll [$List human position animal1 animal2 time] [$Implies [$And [$And [HoldsAt [PosDeterminingFluent human position] time] [HoldsAt [ThrowOffFails animal1 human] time]] [HoldsAt [Pos animal2 position] time]] [Initiates [ThrowOff animal1 human] [Mounted human animal2] time]]]]
+formula [2 -1 [$ForAll [$List human animal time] [$Implies [$Not [HoldsAt [ThrowOffFails animal human] time]] [Terminates [ThrowOff animal human] [Mounted human animal] time]]]]
+formula [0 -1 [$ForAll [$List animal human time] [$Implies [Happens [ThrowOff animal human] time] [HoldsAt [Mounted human animal] time]]]]
+formula [0 -1 [$ForAll [$List animal human time] [$Implies [Happens [ThrowOff animal human] time] [$Not [Happens [GetOff human animal] time]]]]]
+formula [0 -1 [$ForAll [$List animal human time] [$Implies [Happens [GetOff human animal] time] [$Not [Happens [ThrowOff animal human] time]]]]]
+formula [0 -1 [$ForAll [$List position1 position2 time] [$Equiv [Accessible position1 position2 time] [$And [Neighbor position1 position2] [$Not [$Exists [$List gate] [$And [Sides position1 position2 gate] [$Not [HoldsAt [Opened gate] time]]]]]]]]]
+formula [0 -1 [$ForAll [$List animal position1 position2 time] [$Implies [$And [$And [$NE position1 position2] [HoldsAt [Pos animal position1] time]] [HoldsAt [Pos animal position2] [$Plus time 1]]] [Accessible position1 position2 time]]]]
+formula [0 -1 [$ForAll [$List human time] [$Equiv [HoldsAt [AbnormalEncroachment human] time] [$Or [HoldsAt [MountFails human] time] [$Exists [$List position animal1 animal2] [$And [$And [$And [$And [$And [$And [HoldsAt [PosDeterminingFluent human position] time] [$Not [HoldsAt [ThrowOffFails animal2 human] time]]] [Happens [ThrowOff animal2 human] time]] [$NE animal1 human]] [Large animal1]] [HoldsAt [Pos animal1 position] time]] [$Not [HoldsAt [Pos animal1 position] [$Plus time 1]]]]]]]]]
+formula [0 -1 [$ForAll [$List animal1 animal2 position time] [$Implies [$And [$And [$And [HoldsAt [Pos animal1 position] time] [$Not [HoldsAt [Pos animal1 position] [$Plus time 1]]]] [$Not [HoldsAt [Pos animal2 position] time]]] [HoldsAt [Pos animal2 position] [$Plus time 1]]] [$Or [$Or [$Not [Large animal1]] [$Not [Large animal2]]] [$Exists [$List human] [$And [$EQ human animal2] [HoldsAt [AbnormalEncroachment human] time]]]]]]]
+formula [0 -1 [$ForAll [$List animal1 animal2 position1 position2 time] [$Implies [$And [$And [$And [$And [$And [$And [$NE animal1 animal2] [Large animal1]] [Large animal2]] [HoldsAt [Pos animal1 position1] time]] [HoldsAt [Pos animal1 position2] [$Plus time 1]]] [HoldsAt [Pos animal2 position1] time]] [HoldsAt [Pos animal2 position2] [$Plus time 1]]] [$Not [$Exists [$List gate] [Sides position1 position2 gate]]]]]]
+formula [0 -1 [$ForAll [$List animal1 animal2 position1 position2 time] [$Implies [$And [$And [$And [$And [$And [$And [$NE animal1 animal2] [Large animal1]] [Large animal2]] [HoldsAt [Pos animal1 position1] time]] [HoldsAt [Pos animal1 position2] [$Plus time 1]]] [HoldsAt [Pos animal2 position2] time]] [HoldsAt [Pos animal2 position1] [$Plus time 1]]] [$Not [$Exists [$List gate] [Sides position1 position2 gate]]]]]]
+formula [0 -1 [$ForAll [$List gate position1 position2 time] [$Implies [$And [$And [HoldsAt [Opened gate] time] [$Not [HoldsAt [Opened gate] [$Plus time 1]]]] [Sides position1 position2 gate]] [$Not [$Exists [$List animal] [$And [HoldsAt [Pos animal position1] time] [HoldsAt [Pos animal position2] [$Plus time 1]]]]]]]]
+function value Loc CageA 1
+function value Loc CageA 2
+function value Loc CageA 3
+function value Loc CageA 4
+function value Loc Outside 5
+function value Loc Outside 6
+function value Loc Outside 7
+function value Loc Outside 8
+formula [0 -1 [$ForAll [$List position1 position2] [$Equiv [Neighbor position1 position2] [$Or [$Or [$Or [$Or [$Or [$Or [$Or [$Or [$Or [$Or [$Or [$Or [$Or [$Or [$Or [$Or [$Or [$Or [$Or [$Or [$Or [$Or [$Or [$Or [$Or [$And [$EQ position1 1] [$EQ position2 2]] [$And [$EQ position1 1] [$EQ position2 3]]] [$And [$EQ position1 1] [$EQ position2 4]]] [$And [$EQ position1 2] [$EQ position2 3]]] [$And [$EQ position1 2] [$EQ position2 4]]] [$And [$EQ position1 3] [$EQ position2 4]]] [$And [$EQ position1 5] [$EQ position2 6]]] [$And [$EQ position1 5] [$EQ position2 7]]] [$And [$EQ position1 5] [$EQ position2 8]]] [$And [$EQ position1 6] [$EQ position2 7]]] [$And [$EQ position1 6] [$EQ position2 8]]] [$And [$EQ position1 7] [$EQ position2 8]]] [$And [$EQ position2 1] [$EQ position1 2]]] [$And [$EQ position2 1] [$EQ position1 3]]] [$And [$EQ position2 1] [$EQ position1 4]]] [$And [$EQ position2 2] [$EQ position1 3]]] [$And [$EQ position2 2] [$EQ position1 4]]] [$And [$EQ position2 3] [$EQ position1 4]]] [$And [$EQ position2 5] [$EQ position1 6]]] [$And [$EQ position2 5] [$EQ position1 7]]] [$And [$EQ position2 5] [$EQ position1 8]]] [$And [$EQ position2 6] [$EQ position1 7]]] [$And [$EQ position2 6] [$EQ position1 8]]] [$And [$EQ position2 7] [$EQ position1 8]]] [$And [$EQ position1 4] [$EQ position2 7]]] [$And [$EQ position2 4] [$EQ position1 7]]]]]]
+function value Side1 4 GateAO
+function value Side2 7 GateAO
+function value Species HumanSpecies Homer
+formula [0 -1 [Adult Homer]]
+function value Species ElephantSpecies Jumbo
+formula [0 -1 [Adult Jumbo]]
+formula [0 -1 [HoldsAt [Mounted Homer Jumbo] 0]]
+formula [0 -1 [HoldsAt [Pos Jumbo 1] 0]]
+formula [0 -1 [Happens [ThrowOff Jumbo Homer] 0]]
+formula [0 -1 [$ForAll [$List human animal] [$Not [ReleasedAt [Mounted human animal] 0]]]]
+formula [0 -1 [$ForAll [$List gate] [$Not [ReleasedAt [Opened gate] 0]]]]
+formula [0 -1 [$ForAll [$List position] [ReleasedAt [Pos Homer position] 0]]]
+formula [0 -1 [$ForAll [$List position] [$Not [ReleasedAt [Pos Jumbo position] 0]]]]
+formula [0 -1 [$ForAll [$List human] [HoldsAt [PosDeterminingFluent human 1] 1]]]
+formula [0 -1 [$ForAll [$List event animal] [$Not [HoldsAt [DoneBy event animal] 1]]]]
+formula [0 -1 [$ForAll [$List human time] [ReleasedAt [AbnormalEncroachment human] time]]]
+formula [0 -1 [$ForAll [$List event animal time] [ReleasedAt [DoneBy event animal] time]]]
+formula [0 -1 [$ForAll [$List human time] [ReleasedAt [MountFails human] time]]]
+formula [0 -1 [$ForAll [$List animal time] [ReleasedAt [Moves animal] time]]]
+formula [0 -1 [$ForAll [$List human position time] [ReleasedAt [PosDeterminingFluent human position] time]]]
+formula [0 -1 [$ForAll [$List animal human time] [ReleasedAt [ThrowOffFails animal human] time]]]

@@ -1,0 +1,37 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort person na
+reified constant event Feed boolean person
+reified constant event Clothe boolean person
+reified constant fluent Happy boolean person
+reified constant fluent Hungry boolean person
+reified constant fluent Cold boolean person
+noninertial Happy
+constant person Fred
+completion * Happens
+range time 0 2
+range offset 1 1
+formula [0 -1 [$ForAll [$List person time] [$Equiv [HoldsAt [Happy person] time] [$And [$Not [HoldsAt [Hungry person] time]] [$Not [HoldsAt [Cold person] time]]]]]]
+formula [1 -1 [$ForAll [$List person time] [$Implies [Happens [Feed person] time] [$And [$Not [HoldsAt [Hungry person] [$Plus time 1]]] [$Not [ReleasedAt [Hungry person] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List person time] [Terminates [Feed person] [Hungry person] time]]]
+formula [1 -1 [$ForAll [$List person time] [$Implies [Happens [Clothe person] time] [$And [$Not [HoldsAt [Cold person] [$Plus time 1]]] [$Not [ReleasedAt [Cold person] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List person time] [Terminates [Clothe person] [Cold person] time]]]
+formula [0 -1 [HoldsAt [Hungry Fred] 0]]
+formula [0 -1 [$Not [HoldsAt [Cold Fred] 0]]]
+formula [0 -1 [Happens [Feed Fred] 1]]
+formula [0 -1 [$ForAll [$List person time] [ReleasedAt [Happy person] time]]]
+formula [0 -1 [$ForAll [$List person] [$Not [ReleasedAt [Hungry person] 0]]]]
+formula [0 -1 [$ForAll [$List person] [$Not [ReleasedAt [Cold person] 0]]]]

@@ -1,0 +1,5 @@
+000001 [Happens [E O1] 0]
+000002 [HoldsAt [F O1] 1]
+000003 [ReleasedAt [F O1] 1]
+000004 [ReleasedAt [F O1] 0]
+000005 [HoldsAt [F O1] 0]

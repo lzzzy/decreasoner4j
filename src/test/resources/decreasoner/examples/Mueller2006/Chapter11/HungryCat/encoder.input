@@ -1,0 +1,107 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort object na
+sort agent object
+sort food object
+sort surface na
+sort plan na
+reified sort belief na
+constant agent Cat
+constant surface Floor
+constant surface Chair
+constant surface Shelf
+constant surface Table
+constant food Food1
+constant food Food2
+constant plan P1
+constant plan P1a
+constant plan P1b
+constant plan P2
+constant plan P2a
+reified constant predicate SelectedPlan boolean agent belief plan time
+reified constant predicate SoundPlan boolean agent belief plan time
+reified constant fluent On boolean object surface
+reified constant fluent Goal boolean agent belief
+reified constant fluent CanJump boolean surface surface
+reified constant fluent Plan boolean agent belief plan
+reified constant fluent Satiated boolean agent
+reified constant fluent Believe boolean agent belief
+reified constant event AddPlan boolean agent belief plan
+reified constant event DropPlan boolean agent belief plan
+reified constant event Jump boolean agent surface surface
+reified constant event Move boolean surface surface surface
+reified constant event Eat boolean agent food
+reified constant event Wait boolean agent
+reified constant belief BSatiated boolean agent
+reified constant belief BCanJump boolean surface surface
+reified constant belief BOn boolean object surface
+completion * Happens
+range time 0 7
+range offset 1 1
+formula [1 -1 [$ForAll [$List agent belief plan time] [$Implies [Happens [AddPlan agent belief plan] time] [$And [HoldsAt [Plan agent belief plan] [$Plus time 1]] [$Not [ReleasedAt [Plan agent belief plan] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List agent belief plan time] [Initiates [AddPlan agent belief plan] [Plan agent belief plan] time]]]
+formula [1 -1 [$ForAll [$List agent belief plan time] [$Implies [Happens [DropPlan agent belief plan] time] [$And [$Not [HoldsAt [Plan agent belief plan] [$Plus time 1]]] [$Not [ReleasedAt [Plan agent belief plan] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List agent belief plan time] [Terminates [DropPlan agent belief plan] [Plan agent belief plan] time]]]
+formula [1 -1 [$ForAll [$List agent surface1 surface2 time] [$Implies [$And [HoldsAt [On agent surface1] time] [HoldsAt [CanJump surface1 surface2] time]] [$Implies [Happens [Jump agent surface1 surface2] time] [$And [HoldsAt [On agent surface2] [$Plus time 1]] [$Not [ReleasedAt [On agent surface2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent surface1 surface2 time] [$Implies [$And [HoldsAt [On agent surface1] time] [HoldsAt [CanJump surface1 surface2] time]] [Initiates [Jump agent surface1 surface2] [On agent surface2] time]]]]
+formula [1 -1 [$ForAll [$List agent surface1 surface2 time] [$Implies [$And [HoldsAt [On agent surface1] time] [HoldsAt [CanJump surface1 surface2] time]] [$Implies [Happens [Jump agent surface1 surface2] time] [$And [$Not [HoldsAt [On agent surface1] [$Plus time 1]]] [$Not [ReleasedAt [On agent surface1] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent surface1 surface2 time] [$Implies [$And [HoldsAt [On agent surface1] time] [HoldsAt [CanJump surface1 surface2] time]] [Terminates [Jump agent surface1 surface2] [On agent surface1] time]]]]
+formula [1 -1 [$ForAll [$List surface1 surface2 surface3 time] [$Implies [Happens [Move surface1 surface2 surface3] time] [$And [HoldsAt [CanJump surface1 surface3] [$Plus time 1]] [$Not [ReleasedAt [CanJump surface1 surface3] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List surface1 surface2 surface3 time] [Initiates [Move surface1 surface2 surface3] [CanJump surface1 surface3] time]]]
+formula [1 -1 [$ForAll [$List surface1 surface2 surface3 time] [$Implies [Happens [Move surface1 surface2 surface3] time] [$And [$Not [HoldsAt [CanJump surface1 surface2] [$Plus time 1]]] [$Not [ReleasedAt [CanJump surface1 surface2] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List surface1 surface2 surface3 time] [Terminates [Move surface1 surface2 surface3] [CanJump surface1 surface2] time]]]
+formula [1 -1 [$ForAll [$List agent food surface time] [$Implies [$And [HoldsAt [On agent surface] time] [HoldsAt [On food surface] time]] [$Implies [Happens [Eat agent food] time] [$And [HoldsAt [Satiated agent] [$Plus time 1]] [$Not [ReleasedAt [Satiated agent] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent food surface time] [$Implies [$And [HoldsAt [On agent surface] time] [HoldsAt [On food surface] time]] [Initiates [Eat agent food] [Satiated agent] time]]]]
+formula [1 -1 [$ForAll [$List agent food surface time] [$Implies [$And [HoldsAt [On agent surface] time] [HoldsAt [On food surface] time]] [$Implies [Happens [Eat agent food] time] [$And [$Not [HoldsAt [On food surface] [$Plus time 1]]] [$Not [ReleasedAt [On food surface] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent food surface time] [$Implies [$And [HoldsAt [On agent surface] time] [HoldsAt [On food surface] time]] [Terminates [Eat agent food] [On food surface] time]]]]
+formula [1 -1 [$ForAll [$List agent surface1 surface2 belief time] [$Implies [$And [$And [HoldsAt [Believe agent [BOn agent surface1]] time] [HoldsAt [Believe agent [BCanJump surface1 surface2]] time]] [$EQ belief [BOn agent surface2]]] [$Implies [Happens [Jump agent surface1 surface2] time] [$And [HoldsAt [Believe agent belief] [$Plus time 1]] [$Not [ReleasedAt [Believe agent belief] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent surface1 surface2 belief time] [$Implies [$And [$And [HoldsAt [Believe agent [BOn agent surface1]] time] [HoldsAt [Believe agent [BCanJump surface1 surface2]] time]] [$EQ belief [BOn agent surface2]]] [Initiates [Jump agent surface1 surface2] [Believe agent belief] time]]]]
+formula [1 -1 [$ForAll [$List agent surface1 surface2 belief time] [$Implies [$And [$And [HoldsAt [Believe agent [BOn agent surface1]] time] [HoldsAt [Believe agent [BCanJump surface1 surface2]] time]] [$EQ belief [BOn agent surface1]]] [$Implies [Happens [Jump agent surface1 surface2] time] [$And [$Not [HoldsAt [Believe agent belief] [$Plus time 1]]] [$Not [ReleasedAt [Believe agent belief] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent surface1 surface2 belief time] [$Implies [$And [$And [HoldsAt [Believe agent [BOn agent surface1]] time] [HoldsAt [Believe agent [BCanJump surface1 surface2]] time]] [$EQ belief [BOn agent surface1]]] [Terminates [Jump agent surface1 surface2] [Believe agent belief] time]]]]
+formula [1 -1 [$ForAll [$List agent surface1 surface2 surface3 belief time] [$Implies [$EQ belief [BCanJump surface1 surface3]] [$Implies [Happens [Move surface1 surface2 surface3] time] [$And [HoldsAt [Believe agent belief] [$Plus time 1]] [$Not [ReleasedAt [Believe agent belief] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent surface1 surface2 surface3 belief time] [$Implies [$EQ belief [BCanJump surface1 surface3]] [Initiates [Move surface1 surface2 surface3] [Believe agent belief] time]]]]
+formula [1 -1 [$ForAll [$List agent surface1 surface2 surface3 belief time] [$Implies [$EQ belief [BCanJump surface1 surface2]] [$Implies [Happens [Move surface1 surface2 surface3] time] [$And [$Not [HoldsAt [Believe agent belief] [$Plus time 1]]] [$Not [ReleasedAt [Believe agent belief] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent surface1 surface2 surface3 belief time] [$Implies [$EQ belief [BCanJump surface1 surface2]] [Terminates [Move surface1 surface2 surface3] [Believe agent belief] time]]]]
+formula [1 -1 [$ForAll [$List agent food surface belief time] [$Implies [$And [$And [HoldsAt [Believe agent [BOn agent surface]] time] [HoldsAt [Believe agent [BOn food surface]] time]] [$EQ belief [BSatiated agent]]] [$Implies [Happens [Eat agent food] time] [$And [HoldsAt [Believe agent belief] [$Plus time 1]] [$Not [ReleasedAt [Believe agent belief] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent food surface belief time] [$Implies [$And [$And [HoldsAt [Believe agent [BOn agent surface]] time] [HoldsAt [Believe agent [BOn food surface]] time]] [$EQ belief [BSatiated agent]]] [Initiates [Eat agent food] [Believe agent belief] time]]]]
+formula [1 -1 [$ForAll [$List agent food surface belief time] [$Implies [$And [$And [HoldsAt [Believe agent [BOn agent surface]] time] [HoldsAt [Believe agent [BOn food surface]] time]] [$EQ belief [BOn food surface]]] [$Implies [Happens [Eat agent food] time] [$And [$Not [HoldsAt [Believe agent belief] [$Plus time 1]]] [$Not [ReleasedAt [Believe agent belief] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent food surface belief time] [$Implies [$And [$And [HoldsAt [Believe agent [BOn agent surface]] time] [HoldsAt [Believe agent [BOn food surface]] time]] [$EQ belief [BOn food surface]]] [Terminates [Eat agent food] [Believe agent belief] time]]]]
+formula [0 -1 [$ForAll [$List agent belief plan time] [$Implies [$And [$And [$And [HoldsAt [Goal agent belief] time] [$Not [HoldsAt [Believe agent belief] time]]] [SelectedPlan agent belief plan time]] [$Not [$Exists [$List plan1] [HoldsAt [Plan agent belief plan1] time]]]] [Happens [AddPlan agent belief plan] time]]]]
+formula [0 -1 [$ForAll [$List agent belief time] [$Implies [$And [$And [HoldsAt [Plan agent belief P1] time] [$Not [HoldsAt [Believe agent belief] time]]] [SoundPlan agent belief P1 time]] [Happens [Jump Cat Floor Chair] time]]]]
+formula [0 -1 [$ForAll [$List agent belief time] [$Implies [$And [$And [HoldsAt [Plan agent belief P1a] time] [$Not [HoldsAt [Believe agent belief] time]]] [SoundPlan agent belief P1a time]] [Happens [Wait Cat] time]]]]
+formula [0 -1 [$ForAll [$List agent belief time] [$Implies [$And [$And [HoldsAt [Plan agent belief P2] time] [$Not [HoldsAt [Believe agent belief] time]]] [SoundPlan agent belief P2 time]] [Happens [Jump Cat Chair Shelf] time]]]]
+formula [0 -1 [$ForAll [$List agent belief plan time] [$Implies [HoldsAt [Plan agent belief plan] time] [Happens [DropPlan agent belief plan] time]]]]
+formula [0 -1 [$ForAll [$List agent belief time] [$Implies [$And [$And [HoldsAt [Plan agent belief P1] time] [$Not [HoldsAt [Believe agent belief] time]]] [SoundPlan agent belief P1 time]] [Happens [AddPlan agent belief P1a] time]]]]
+formula [0 -1 [$ForAll [$List agent belief time] [$Implies [$And [$And [HoldsAt [Plan agent belief P1a] time] [$Not [HoldsAt [Believe agent belief] time]]] [SoundPlan agent belief P1a time]] [Happens [AddPlan agent belief P1b] time]]]]
+formula [0 -1 [$ForAll [$List agent belief time] [$Implies [$And [$And [HoldsAt [Plan agent belief P2] time] [$Not [HoldsAt [Believe agent belief] time]]] [SoundPlan agent belief P2 time]] [Happens [AddPlan agent belief P2a] time]]]]
+formula [0 -1 [$ForAll [$List agent food surface time] [$Implies [$And [$And [$Not [HoldsAt [Satiated agent] time]] [HoldsAt [On agent surface] time]] [HoldsAt [On food surface] time]] [Happens [Eat agent food] time]]]]
+formula [0 -1 [Happens [Move Chair Table Shelf] 2]]
+formula [0 -1 [$ForAll [$List agent belief plan time] [$Equiv [SelectedPlan agent belief plan time] [$Or [$Exists [$List surface1 surface2 surface3 food] [$And [$And [$And [$And [$And [$And [HoldsAt [Believe agent [BOn agent surface1]] time] [HoldsAt [Believe agent [BCanJump surface1 surface2]] time]] [HoldsAt [Believe agent [BCanJump surface2 surface3]] time]] [HoldsAt [Believe agent [BOn food surface3]] time]] [$EQ belief [BSatiated agent]]] [$EQ plan P1]] [$EQ time 0]]] [$Exists [$List surface1 surface2 surface3 food] [$And [$And [$And [$And [$And [$And [HoldsAt [Believe agent [BOn agent surface1]] time] [HoldsAt [Believe agent [BCanJump surface1 surface2]] time]] [HoldsAt [Believe agent [BCanJump surface2 surface3]] time]] [HoldsAt [Believe agent [BOn food surface3]] time]] [$EQ belief [BSatiated agent]]] [$EQ plan P2]] [$EQ time 4]]]]]]]
+formula [0 -1 [$ForAll [$List agent belief plan time] [$Equiv [SoundPlan agent belief plan time] [$And [$Implies [$EQ plan P1] [$And [HoldsAt [Believe agent [BCanJump Floor Chair]] time] [HoldsAt [Believe agent [BCanJump Chair Table]] time]]] [$Implies [$Or [$EQ plan P1a] [$EQ plan P1b]] [HoldsAt [Believe agent [BCanJump Chair Table]] time]]]]]]
+formula [0 -1 [$ForAll [$List agent belief] [$Equiv [HoldsAt [Goal agent belief] 0] [$And [$EQ agent Cat] [$EQ belief [BSatiated Cat]]]]]]
+formula [0 -1 [$ForAll [$List agent belief plan] [$Not [HoldsAt [Plan agent belief plan] 0]]]]
+formula [0 -1 [$ForAll [$List object surface] [$Equiv [HoldsAt [On object surface] 0] [$Or [$Or [$And [$EQ object Cat] [$EQ surface Floor]] [$And [$EQ object Food1] [$EQ surface Table]]] [$And [$EQ object Food2] [$EQ surface Shelf]]]]]]
+formula [0 -1 [$ForAll [$List surface1 surface2] [$Equiv [HoldsAt [CanJump surface1 surface2] 0] [$Or [$Or [$And [$EQ surface1 Floor] [$EQ surface2 Chair]] [$And [$EQ surface1 Chair] [$EQ surface2 Table]]] [$And [$EQ surface1 Shelf] [$EQ surface2 Table]]]]]]
+formula [0 -1 [$ForAll [$List agent object surface] [$Equiv [HoldsAt [Believe agent [BOn object surface]] 0] [$Or [$And [$And [$EQ agent Cat] [$EQ object Cat]] [$EQ surface Floor]] [$And [$And [$EQ agent Cat] [$EQ object Food1]] [$EQ surface Table]]]]]]
+formula [0 -1 [$ForAll [$List agent surface1 surface2] [$Equiv [HoldsAt [Believe agent [BCanJump surface1 surface2]] 0] [$Or [$Or [$And [$And [$EQ agent Cat] [$EQ surface1 Floor]] [$EQ surface2 Chair]] [$And [$And [$EQ agent Cat] [$EQ surface1 Chair]] [$EQ surface2 Table]]] [$And [$And [$EQ agent Cat] [$EQ surface1 Shelf]] [$EQ surface2 Table]]]]]]
+formula [0 -1 [$Not [HoldsAt [Believe Cat [BSatiated Cat]] 0]]]
+formula [0 -1 [$Not [HoldsAt [Satiated Cat] 0]]]
+formula [0 -1 [$ForAll [$List object surface] [$Not [ReleasedAt [On object surface] 0]]]]
+formula [0 -1 [$ForAll [$List agent belief] [$Not [ReleasedAt [Goal agent belief] 0]]]]
+formula [0 -1 [$ForAll [$List surface1 surface2] [$Not [ReleasedAt [CanJump surface1 surface2] 0]]]]
+formula [0 -1 [$ForAll [$List agent belief plan] [$Not [ReleasedAt [Plan agent belief plan] 0]]]]
+formula [0 -1 [$ForAll [$List agent] [$Not [ReleasedAt [Satiated agent] 0]]]]
+formula [0 -1 [$ForAll [$List agent belief] [$Not [ReleasedAt [Believe agent belief] 0]]]]

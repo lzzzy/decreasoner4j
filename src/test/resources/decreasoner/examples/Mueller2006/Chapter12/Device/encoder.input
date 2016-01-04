@@ -1,0 +1,43 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort agent na
+sort device na
+constant agent Nathan
+constant device Device1
+constant device AntiqueDevice1
+reified constant predicate Ab1 boolean device time
+reified constant fluent On boolean device
+reified constant fluent PluggedIn boolean device
+reified constant fluent BrokenSwitch boolean device
+reified constant event TurnOn boolean agent device
+completion 5 Ab1
+completion * Happens
+range time 0 1
+range offset 1 1
+formula [1 -1 [$ForAll [$List agent device time] [$Implies [$Not [Ab1 device time]] [$Implies [Happens [TurnOn agent device] time] [$And [HoldsAt [On device] [$Plus time 1]] [$Not [ReleasedAt [On device] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent device time] [$Implies [$Not [Ab1 device time]] [Initiates [TurnOn agent device] [On device] time]]]]
+formula [0 -1 [Happens [TurnOn Nathan Device1] 0]]
+formula [5 -1 [$ForAll [$List device time] [$Implies [HoldsAt [BrokenSwitch device] time] [Ab1 device time]]]]
+formula [5 -1 [$ForAll [$List device time] [$Implies [$Not [HoldsAt [PluggedIn device] time]] [Ab1 device time]]]]
+formula [5 -1 [$ForAll [$List time] [Ab1 AntiqueDevice1 time]]]
+formula [0 -1 [$Not [HoldsAt [On Device1] 0]]]
+formula [0 -1 [$Not [HoldsAt [BrokenSwitch Device1] 0]]]
+formula [0 -1 [HoldsAt [PluggedIn Device1] 0]]
+formula [0 -1 [$ForAll [$List time] [$Not [HoldsAt [On AntiqueDevice1] time]]]]
+formula [0 -1 [$ForAll [$List time] [HoldsAt [PluggedIn AntiqueDevice1] time]]]
+formula [0 -1 [$ForAll [$List device] [$Not [ReleasedAt [On device] 0]]]]
+formula [0 -1 [$ForAll [$List device] [$Not [ReleasedAt [PluggedIn device] 0]]]]
+formula [0 -1 [$ForAll [$List device] [$Not [ReleasedAt [BrokenSwitch device] 0]]]]

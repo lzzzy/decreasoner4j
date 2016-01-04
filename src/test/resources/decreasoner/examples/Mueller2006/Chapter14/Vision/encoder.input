@@ -1,0 +1,43 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort object na
+sort shape na
+sort aspect na
+constant object Object1
+constant aspect Aspect1
+constant aspect Aspect2
+constant aspect Aspect3
+constant shape Shape1
+constant shape Shape2
+reified constant predicate Shape boolean object shape
+reified constant predicate Arc boolean shape aspect aspect
+reified constant fluent Aspect boolean object aspect
+reified constant event Change boolean object aspect aspect
+range time 0 1
+range offset 1 1
+formula [1 -1 [$ForAll [$List object aspect1 aspect2 shape time] [$Implies [$And [$And [HoldsAt [Aspect object aspect1] time] [Shape object shape]] [$Or [Arc shape aspect1 aspect2] [Arc shape aspect2 aspect1]]] [$Implies [Happens [Change object aspect1 aspect2] time] [$And [HoldsAt [Aspect object aspect2] [$Plus time 1]] [$Not [ReleasedAt [Aspect object aspect2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List object aspect1 aspect2 shape time] [$Implies [$And [$And [HoldsAt [Aspect object aspect1] time] [Shape object shape]] [$Or [Arc shape aspect1 aspect2] [Arc shape aspect2 aspect1]]] [Initiates [Change object aspect1 aspect2] [Aspect object aspect2] time]]]]
+formula [1 -1 [$ForAll [$List object aspect1 aspect2 shape time] [$Implies [$And [$And [HoldsAt [Aspect object aspect1] time] [Shape object shape]] [$Or [Arc shape aspect1 aspect2] [Arc shape aspect2 aspect1]]] [$Implies [Happens [Change object aspect1 aspect2] time] [$And [$Not [HoldsAt [Aspect object aspect1] [$Plus time 1]]] [$Not [ReleasedAt [Aspect object aspect1] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List object aspect1 aspect2 shape time] [$Implies [$And [$And [HoldsAt [Aspect object aspect1] time] [Shape object shape]] [$Or [Arc shape aspect1 aspect2] [Arc shape aspect2 aspect1]]] [Terminates [Change object aspect1 aspect2] [Aspect object aspect1] time]]]]
+formula [0 -1 [$ForAll [$List object aspect1 aspect2 time] [$Implies [Happens [Change object aspect1 aspect2] time] [HoldsAt [Aspect object aspect1] time]]]]
+formula [0 -1 [$ForAll [$List object aspect1 aspect2 aspect3 time] [$Implies [$And [Happens [Change object aspect1 aspect2] time] [Happens [Change object aspect1 aspect3] time]] [$EQ aspect2 aspect3]]]]
+formula [0 -1 [$ForAll [$List object shape1 shape2] [$Implies [$And [Shape object shape1] [Shape object shape2]] [$EQ shape1 shape2]]]]
+formula [0 -1 [$ForAll [$List object aspect1 aspect2 time] [$Implies [$And [HoldsAt [Aspect object aspect1] time] [HoldsAt [Aspect object aspect2] time]] [$EQ aspect1 aspect2]]]]
+formula [0 -1 [$ForAll [$List aspect1 aspect2] [$Equiv [Arc Shape1 aspect1 aspect2] [$And [$EQ aspect1 Aspect1] [$EQ aspect2 Aspect2]]]]]
+formula [0 -1 [$ForAll [$List aspect1 aspect2] [$Equiv [Arc Shape2 aspect1 aspect2] [$Or [$And [$EQ aspect1 Aspect1] [$EQ aspect2 Aspect3]] [$And [$EQ aspect1 Aspect3] [$EQ aspect2 Aspect2]]]]]]
+formula [0 -1 [HoldsAt [Aspect Object1 Aspect1] 0]]
+formula [0 -1 [HoldsAt [Aspect Object1 Aspect2] 1]]
+formula [0 -1 [$ForAll [$List object aspect] [$Not [ReleasedAt [Aspect object aspect] 0]]]]

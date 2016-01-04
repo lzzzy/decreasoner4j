@@ -1,0 +1,67 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort agent na
+reified constant fluent SunShining boolean 
+reified constant fluent Raining boolean 
+reified constant fluent Outside boolean agent
+reified constant fluent PlaySoccer boolean agent
+reified constant fluent PlayHideAndSeek boolean agent
+reified constant fluent PlayComputerGame boolean agent
+reified constant fluent PlayWithDog boolean agent
+reified constant fluent Win boolean agent
+noninertial Outside PlaySoccer PlayHideAndSeek PlayComputerGame
+noninertial PlayWithDog Win
+constant agent Bob
+constant agent Jilly
+range time 0 1
+range offset 0 0
+formula [0 -1 [$ForAll [$List agent time] [$Implies [HoldsAt [PlaySoccer agent] time] [HoldsAt [Outside agent] time]]]]
+formula [0 -1 [$ForAll [$List agent time] [$Implies [HoldsAt [PlaySoccer agent] time] [$Exists [$List agent1] [$And [$NE agent1 agent] [HoldsAt [PlaySoccer agent1] time]]]]]]
+formula [0 -1 [$ForAll [$List agent time] [$Implies [HoldsAt [PlayHideAndSeek agent] time] [$Exists [$List agent1] [$And [$NE agent1 agent] [HoldsAt [PlayHideAndSeek agent1] time]]]]]]
+formula [0 -1 [$ForAll [$List agent time] [$Implies [HoldsAt [PlayComputerGame agent] time] [$Not [HoldsAt [Outside agent] time]]]]]
+formula [0 -1 [$ForAll [$List agent time] [$Implies [HoldsAt [Win agent] time] [$Or [$Or [HoldsAt [PlaySoccer agent] time] [HoldsAt [PlayHideAndSeek agent] time]] [$And [HoldsAt [PlayComputerGame agent] time] [$Exists [$List agent1] [$And [$NE agent1 agent] [HoldsAt [PlayComputerGame agent1] time]]]]]]]]
+formula [0 -1 [$ForAll [$List agent time] [$Implies [$And [HoldsAt [PlaySoccer agent] time] [HoldsAt [Win agent] time]] [$Not [HoldsAt [PlaySoccer agent] [$Plus time 1]]]]]]
+formula [0 -1 [$ForAll [$List agent time] [$Implies [$And [HoldsAt [PlayHideAndSeek agent] time] [HoldsAt [Win agent] time]] [$Not [HoldsAt [PlayHideAndSeek agent] [$Plus time 1]]]]]]
+formula [0 -1 [$ForAll [$List agent time] [$Implies [$And [HoldsAt [PlayComputerGame agent] time] [HoldsAt [Win agent] time]] [$Not [HoldsAt [PlayComputerGame agent] [$Plus time 1]]]]]]
+formula [0 -1 [$ForAll [$List agent time] [$Implies [HoldsAt [Win agent] time] [$Or [$Or [HoldsAt [PlaySoccer agent] [$Minus time 1]] [HoldsAt [PlayHideAndSeek agent] [$Minus time 1]]] [HoldsAt [PlayComputerGame agent] [$Minus time 1]]]]]]
+formula [0 -1 [$ForAll [$List agent time] [$Implies [HoldsAt [PlaySoccer agent] time] [$Not [HoldsAt [Raining] time]]]]]
+formula [0 -1 [$ForAll [$List agent time] [$Implies [HoldsAt [Win agent] time] [$Not [$Exists [$List agent1] [$And [$NE agent1 agent] [HoldsAt [Win agent1] time]]]]]]]
+formula [0 -1 [$ForAll [$List agent1 agent2 time] [$Implies [$And [HoldsAt [PlayHideAndSeek agent1] time] [HoldsAt [PlayHideAndSeek agent2] time]] [$Or [$And [HoldsAt [Outside agent1] time] [HoldsAt [Outside agent2] time]] [$And [$Not [HoldsAt [Outside agent1] time]] [$Not [HoldsAt [Outside agent2] time]]]]]]]
+formula [0 -1 [$ForAll [$List agent1 time] [$Or [$Not [HoldsAt [PlaySoccer agent1] time]] [$Not [HoldsAt [PlayHideAndSeek agent1] time]]]]]
+formula [0 -1 [$ForAll [$List agent1 time] [$Or [$Not [HoldsAt [PlaySoccer agent1] time]] [$Not [HoldsAt [PlayComputerGame agent1] time]]]]]
+formula [0 -1 [$ForAll [$List agent1 time] [$Or [$Not [HoldsAt [PlaySoccer agent1] time]] [$Not [HoldsAt [PlayWithDog agent1] time]]]]]
+formula [0 -1 [$ForAll [$List agent1 time] [$Or [$Not [HoldsAt [PlayHideAndSeek agent1] time]] [$Not [HoldsAt [PlaySoccer agent1] time]]]]]
+formula [0 -1 [$ForAll [$List agent1 time] [$Or [$Not [HoldsAt [PlayHideAndSeek agent1] time]] [$Not [HoldsAt [PlayComputerGame agent1] time]]]]]
+formula [0 -1 [$ForAll [$List agent1 time] [$Or [$Not [HoldsAt [PlayHideAndSeek agent1] time]] [$Not [HoldsAt [PlayWithDog agent1] time]]]]]
+formula [0 -1 [$ForAll [$List agent1 time] [$Or [$Not [HoldsAt [PlayComputerGame agent1] time]] [$Not [HoldsAt [PlaySoccer agent1] time]]]]]
+formula [0 -1 [$ForAll [$List agent1 time] [$Or [$Not [HoldsAt [PlayComputerGame agent1] time]] [$Not [HoldsAt [PlayHideAndSeek agent1] time]]]]]
+formula [0 -1 [$ForAll [$List agent1 time] [$Or [$Not [HoldsAt [PlayComputerGame agent1] time]] [$Not [HoldsAt [PlayWithDog agent1] time]]]]]
+formula [0 -1 [$ForAll [$List agent1 time] [$Or [$Not [HoldsAt [PlayWithDog agent1] time]] [$Not [HoldsAt [PlaySoccer agent1] time]]]]]
+formula [0 -1 [$ForAll [$List agent1 time] [$Or [$Not [HoldsAt [PlayWithDog agent1] time]] [$Not [HoldsAt [PlayHideAndSeek agent1] time]]]]]
+formula [0 -1 [$ForAll [$List agent1 time] [$Or [$Not [HoldsAt [PlayWithDog agent1] time]] [$Not [HoldsAt [PlayComputerGame agent1] time]]]]]
+formula [0 -1 [$ForAll [$List agent time] [$Or [HoldsAt [PlaySoccer agent] time] [HoldsAt [PlayHideAndSeek agent] time] [HoldsAt [PlayComputerGame agent] time] [HoldsAt [PlayWithDog agent] time]]]]
+formula [0 -1 [$Not [HoldsAt [Raining] 0]]]
+formula [0 -1 [$Not [HoldsAt [SunShining] 0]]]
+formula [0 -1 [$Or [$Or [$And [HoldsAt [PlaySoccer Bob] 1] [HoldsAt [PlaySoccer Jilly] 1]] [$And [HoldsAt [PlayHideAndSeek Bob] 1] [HoldsAt [PlayHideAndSeek Jilly] 1]]] [$And [HoldsAt [PlayComputerGame Bob] 1] [HoldsAt [PlayComputerGame Jilly] 1]]]]
+formula [0 -1 [$Or [HoldsAt [Win Bob] 1] [HoldsAt [Win Jilly] 1]]]
+formula [0 -1 [$Not [ReleasedAt [SunShining] 0]]]
+formula [0 -1 [$Not [ReleasedAt [Raining] 0]]]
+formula [0 -1 [$ForAll [$List agent time] [ReleasedAt [Outside agent] time]]]
+formula [0 -1 [$ForAll [$List agent time] [ReleasedAt [PlaySoccer agent] time]]]
+formula [0 -1 [$ForAll [$List agent time] [ReleasedAt [PlayHideAndSeek agent] time]]]
+formula [0 -1 [$ForAll [$List agent time] [ReleasedAt [PlayComputerGame agent] time]]]
+formula [0 -1 [$ForAll [$List agent time] [ReleasedAt [PlayWithDog agent] time]]]
+formula [0 -1 [$ForAll [$List agent time] [ReleasedAt [Win agent] time]]]

@@ -1,0 +1,41 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort agent na
+sort room na
+sort fact na
+constant agent Teacher
+constant agent Student
+constant room Kitchen
+constant room Classroom
+constant fact Fact1
+constant fact Fact2
+reified constant fluent InRoom boolean agent room
+reified constant fluent ListeningTo boolean agent agent
+reified constant fluent Know boolean agent fact
+reified constant event Tell boolean agent agent fact
+completion * Happens
+range time 0 1
+range offset 1 1
+formula [1 -1 [$ForAll [$List agent1 agent2 fact time] [$Implies [$And [$Exists [$List room] [$And [HoldsAt [InRoom agent1 room] time] [HoldsAt [InRoom agent2 room] time]]] [HoldsAt [ListeningTo agent2 agent1] time]] [$Implies [Happens [Tell agent1 agent2 fact] time] [$And [HoldsAt [Know agent2 fact] [$Plus time 1]] [$Not [ReleasedAt [Know agent2 fact] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent1 agent2 fact time] [$Implies [$And [$Exists [$List room] [$And [HoldsAt [InRoom agent1 room] time] [HoldsAt [InRoom agent2 room] time]]] [HoldsAt [ListeningTo agent2 agent1] time]] [Initiates [Tell agent1 agent2 fact] [Know agent2 fact] time]]]]
+formula [0 -1 [Happens [Tell Teacher Student Fact1] 0]]
+formula [0 -1 [$ForAll [$List agent room1 room2 time] [$Implies [$And [HoldsAt [InRoom agent room1] time] [HoldsAt [InRoom agent room2] time]] [$EQ room1 room2]]]]
+formula [0 -1 [$ForAll [$List agent fact] [$Not [HoldsAt [Know agent fact] 0]]]]
+formula [0 -1 [$ForAll [$List agent1 agent2] [HoldsAt [ListeningTo agent1 agent2] 0]]]
+formula [0 -1 [$ForAll [$List agent] [HoldsAt [InRoom agent Classroom] 0]]]
+formula [0 -1 [$ForAll [$List agent room] [$Not [ReleasedAt [InRoom agent room] 0]]]]
+formula [0 -1 [$ForAll [$List agent1 agent2] [$Not [ReleasedAt [ListeningTo agent1 agent2] 0]]]]
+formula [0 -1 [$ForAll [$List agent fact] [$Not [ReleasedAt [Know agent fact] 0]]]]

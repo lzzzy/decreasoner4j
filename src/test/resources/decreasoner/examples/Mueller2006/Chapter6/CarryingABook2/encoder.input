@@ -1,0 +1,52 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort object na
+sort agent object
+sort room na
+constant object Book
+constant agent Nathan
+constant room LivingRoom
+constant room Kitchen
+reified constant event LetGoOf boolean agent object
+reified constant event PickUp boolean agent object
+reified constant event Walk boolean agent room room
+reified constant fluent InRoom boolean object room
+reified constant fluent Holding boolean agent object
+completion * Happens
+range time 0 2
+range offset 1 1
+formula [1 -1 [$ForAll [$List agent room1 room2 time] [$Implies [Happens [Walk agent room1 room2] time] [$And [HoldsAt [InRoom agent room2] [$Plus time 1]] [$Not [ReleasedAt [InRoom agent room2] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List agent room1 room2 time] [Initiates [Walk agent room1 room2] [InRoom agent room2] time]]]
+formula [1 -1 [$ForAll [$List agent room1 room2 time] [$Implies [$NE room1 room2] [$Implies [Happens [Walk agent room1 room2] time] [$And [$Not [HoldsAt [InRoom agent room1] [$Plus time 1]]] [$Not [ReleasedAt [InRoom agent room1] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent room1 room2 time] [$Implies [$NE room1 room2] [Terminates [Walk agent room1 room2] [InRoom agent room1] time]]]]
+formula [1 -1 [$ForAll [$List agent object room time] [$Implies [$And [HoldsAt [InRoom agent room] time] [HoldsAt [InRoom object room] time]] [$Implies [Happens [PickUp agent object] time] [$And [HoldsAt [Holding agent object] [$Plus time 1]] [$Not [ReleasedAt [Holding agent object] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent object room time] [$Implies [$And [HoldsAt [InRoom agent room] time] [HoldsAt [InRoom object room] time]] [Initiates [PickUp agent object] [Holding agent object] time]]]]
+formula [1 -1 [$ForAll [$List agent object time] [$Implies [HoldsAt [Holding agent object] time] [$Implies [Happens [LetGoOf agent object] time] [$And [$Not [HoldsAt [Holding agent object] [$Plus time 1]]] [$Not [ReleasedAt [Holding agent object] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent object time] [$Implies [HoldsAt [Holding agent object] time] [Terminates [LetGoOf agent object] [Holding agent object] time]]]]
+formula [1 -1 [$ForAll [$List agent object room time] [$Implies [Happens [PickUp agent object] time] [ReleasedAt [InRoom object room] [$Plus time 1]]]]]
+formula [2 -1 [$ForAll [$List agent object room time] [Releases [PickUp agent object] [InRoom object room] time]]]
+formula [1 -1 [$ForAll [$List agent object room time] [$Implies [HoldsAt [InRoom agent room] time] [$Implies [Happens [LetGoOf agent object] time] [$And [HoldsAt [InRoom object room] [$Plus time 1]] [$Not [ReleasedAt [InRoom object room] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent object room time] [$Implies [HoldsAt [InRoom agent room] time] [Initiates [LetGoOf agent object] [InRoom object room] time]]]]
+formula [0 -1 [Happens [PickUp Nathan Book] 0]]
+formula [0 -1 [Happens [Walk Nathan LivingRoom Kitchen] 1]]
+formula [0 -1 [$ForAll [$List object room1 room2 time] [$Implies [$And [HoldsAt [InRoom object room1] time] [HoldsAt [InRoom object room2] time]] [$EQ room1 room2]]]]
+formula [0 -1 [$ForAll [$List agent object room time] [$Implies [$And [HoldsAt [Holding agent object] time] [HoldsAt [InRoom agent room] time]] [HoldsAt [InRoom object room] time]]]]
+formula [0 -1 [HoldsAt [InRoom Nathan LivingRoom] 0]]
+formula [0 -1 [HoldsAt [InRoom Book LivingRoom] 0]]
+formula [0 -1 [$Not [HoldsAt [Holding Nathan Book] 0]]]
+formula [0 -1 [$ForAll [$List agent time] [$Not [HoldsAt [Holding agent agent] time]]]]
+formula [0 -1 [$ForAll [$List object room] [$Not [ReleasedAt [InRoom object room] 0]]]]
+formula [0 -1 [$ForAll [$List agent object] [$Not [ReleasedAt [Holding agent object] 0]]]]

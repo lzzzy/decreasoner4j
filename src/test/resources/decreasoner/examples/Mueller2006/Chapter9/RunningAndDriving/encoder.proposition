@@ -1,0 +1,7 @@
+000001 [Happens [Go James Bookstore] 0]
+000002 [Happens [Run James Bookstore] 0]
+000003 [Happens [Drive James Bookstore] 0]
+000004 [HoldsAt [Tired James] 1]
+000005 [ReleasedAt [Tired James] 1]
+000006 [HoldsAt [Tired James] 0]
+000007 [ReleasedAt [Tired James] 0]

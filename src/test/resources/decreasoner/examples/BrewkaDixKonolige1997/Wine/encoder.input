@@ -1,0 +1,30 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort x na
+constant x Person
+reified constant predicate LikesWine boolean x
+reified constant predicate Italian boolean x
+reified constant predicate French boolean x
+reified constant predicate Ab1 boolean x
+reified constant predicate Ab2 boolean x
+range time 0 0
+range offset 1 1
+completion 5 Ab1
+completion 5 Ab2
+formula [0 -1 [$ForAll [$List x] [$Implies [$And [Italian x] [$Not [Ab1 x]]] [LikesWine x]]]]
+formula [0 -1 [$ForAll [$List x] [$Implies [$And [French x] [$Not [Ab2 x]]] [LikesWine x]]]]
+formula [0 -1 [$ForAll [$List x] [$Implies [Italian x] [$Not [French x]]]]]
+formula [0 -1 [$Or [Italian Person] [French Person]]]

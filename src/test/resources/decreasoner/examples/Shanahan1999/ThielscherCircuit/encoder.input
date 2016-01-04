@@ -1,0 +1,61 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+reified constant predicate Started boolean fluent time
+reified constant predicate Stopped boolean fluent time
+reified constant predicate Initiated boolean fluent time
+reified constant predicate Terminated boolean fluent time
+reified constant event LightOn boolean 
+reified constant event Close1 boolean 
+reified constant event Open2 boolean 
+reified constant event CloseRelay boolean 
+reified constant fluent Light boolean 
+reified constant fluent Switch1 boolean 
+reified constant fluent Switch2 boolean 
+reified constant fluent Switch3 boolean 
+reified constant fluent Relay boolean 
+completion * Happens
+range time 0 1
+range offset 1 1
+formula [1 -1 [$ForAll [$List fluent time] [$Equiv [Started fluent time] [$Or [HoldsAt fluent time] [$Exists [$List event] [$And [Happens event time] [$Implies [Happens event time] [$And [HoldsAt fluent [$Plus time 1]] [$Not [ReleasedAt fluent [$Plus time 1]]]]]]]]]]]
+formula [2 -1 [$ForAll [$List fluent time] [$Equiv [Started fluent time] [$Or [HoldsAt fluent time] [$Exists [$List event] [$And [Happens event time] [Initiates event fluent time]]]]]]]
+formula [1 -1 [$ForAll [$List fluent time] [$Equiv [Stopped fluent time] [$Or [$Not [HoldsAt fluent time]] [$Exists [$List event] [$And [Happens event time] [$Implies [Happens event time] [$And [$Not [HoldsAt fluent [$Plus time 1]]] [$Not [ReleasedAt fluent [$Plus time 1]]]]]]]]]]]
+formula [2 -1 [$ForAll [$List fluent time] [$Equiv [Stopped fluent time] [$Or [$Not [HoldsAt fluent time]] [$Exists [$List event] [$And [Happens event time] [Terminates event fluent time]]]]]]]
+formula [1 -1 [$ForAll [$List fluent time] [$Equiv [Initiated fluent time] [$And [Started fluent time] [$Not [$Exists [$List event] [$And [Happens event time] [$Implies [Happens event time] [$And [$Not [HoldsAt fluent [$Plus time 1]]] [$Not [ReleasedAt fluent [$Plus time 1]]]]]]]]]]]]
+formula [2 -1 [$ForAll [$List fluent time] [$Equiv [Initiated fluent time] [$And [Started fluent time] [$Not [$Exists [$List event] [$And [Happens event time] [Terminates event fluent time]]]]]]]]
+formula [1 -1 [$ForAll [$List fluent time] [$Equiv [Terminated fluent time] [$And [Stopped fluent time] [$Not [$Exists [$List event] [$And [Happens event time] [$Implies [Happens event time] [$And [HoldsAt fluent [$Plus time 1]] [$Not [ReleasedAt fluent [$Plus time 1]]]]]]]]]]]]
+formula [2 -1 [$ForAll [$List fluent time] [$Equiv [Terminated fluent time] [$And [Stopped fluent time] [$Not [$Exists [$List event] [$And [Happens event time] [Initiates event fluent time]]]]]]]]
+formula [0 -1 [$ForAll [$List time] [$Implies [$And [$And [Stopped [Light] time] [Initiated [Switch1] time]] [Initiated [Switch2] time]] [Happens [LightOn] time]]]]
+formula [0 -1 [$ForAll [$List time] [$Implies [$And [Started [Switch2] time] [Initiated [Relay] time]] [Happens [Open2] time]]]]
+formula [0 -1 [$ForAll [$List time] [$Implies [$And [$And [Stopped [Relay] time] [Initiated [Switch1] time]] [Initiated [Switch3] time]] [Happens [CloseRelay] time]]]]
+formula [1 -1 [$ForAll [$List time] [$Implies [Happens [LightOn] time] [$And [HoldsAt [Light] [$Plus time 1]] [$Not [ReleasedAt [Light] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List time] [Initiates [LightOn] [Light] time]]]
+formula [1 -1 [$ForAll [$List time] [$Implies [Happens [Open2] time] [$And [$Not [HoldsAt [Switch2] [$Plus time 1]]] [$Not [ReleasedAt [Switch2] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List time] [Terminates [Open2] [Switch2] time]]]
+formula [1 -1 [$ForAll [$List time] [$Implies [Happens [CloseRelay] time] [$And [HoldsAt [Relay] [$Plus time 1]] [$Not [ReleasedAt [Relay] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List time] [Initiates [CloseRelay] [Relay] time]]]
+formula [1 -1 [$ForAll [$List time] [$Implies [Happens [Close1] time] [$And [HoldsAt [Switch1] [$Plus time 1]] [$Not [ReleasedAt [Switch1] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List time] [Initiates [Close1] [Switch1] time]]]
+formula [0 -1 [$Not [HoldsAt [Switch1] 0]]]
+formula [0 -1 [HoldsAt [Switch2] 0]]
+formula [0 -1 [HoldsAt [Switch3] 0]]
+formula [0 -1 [$Not [HoldsAt [Relay] 0]]]
+formula [0 -1 [$Not [HoldsAt [Light] 0]]]
+formula [0 -1 [Happens [Close1] 0]]
+formula [0 -1 [$Not [ReleasedAt [Light] 0]]]
+formula [0 -1 [$Not [ReleasedAt [Switch1] 0]]]
+formula [0 -1 [$Not [ReleasedAt [Switch2] 0]]]
+formula [0 -1 [$Not [ReleasedAt [Switch3] 0]]]
+formula [0 -1 [$Not [ReleasedAt [Relay] 0]]]

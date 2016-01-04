@@ -1,0 +1,59 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort coord integer
+sort direction integer
+sort robot na
+constant robot Robot1
+reified constant function Sin coord direction
+reified constant function Cos coord direction
+reified constant fluent Direction boolean robot direction
+reified constant fluent Location boolean robot coord coord
+reified constant event MoveLeftWheel boolean robot
+reified constant event MoveRightWheel boolean robot
+completion * Happens
+range time 0 3
+range coord 0 3
+range direction 0 3
+range offset 1 1
+function value Sin 0 0
+function value Sin 1 1
+function value Sin 2 2
+function value Sin 3 3
+function value Cos 1 0
+function value Cos 2 1
+function value Cos 3 2
+function value Cos 4 3
+formula [1 -1 [$ForAll [$List robot direction1 direction2 time] [$Implies [$And [$And [$Not [Happens [MoveRightWheel robot] time]] [HoldsAt [Direction robot direction1] time]] [$EQ direction2 [$Minus direction1 1]]] [$Implies [Happens [MoveLeftWheel robot] time] [$And [HoldsAt [Direction robot direction2] [$Plus time 1]] [$Not [ReleasedAt [Direction robot direction2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List robot direction1 direction2 time] [$Implies [$And [$And [$Not [Happens [MoveRightWheel robot] time]] [HoldsAt [Direction robot direction1] time]] [$EQ direction2 [$Minus direction1 1]]] [Initiates [MoveLeftWheel robot] [Direction robot direction2] time]]]]
+formula [1 -1 [$ForAll [$List robot direction time] [$Implies [$And [$Not [Happens [MoveRightWheel robot] time]] [HoldsAt [Direction robot direction] time]] [$Implies [Happens [MoveLeftWheel robot] time] [$And [$Not [HoldsAt [Direction robot direction] [$Plus time 1]]] [$Not [ReleasedAt [Direction robot direction] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List robot direction time] [$Implies [$And [$Not [Happens [MoveRightWheel robot] time]] [HoldsAt [Direction robot direction] time]] [Terminates [MoveLeftWheel robot] [Direction robot direction] time]]]]
+formula [1 -1 [$ForAll [$List robot direction1 direction2 time] [$Implies [$And [$And [$Not [Happens [MoveLeftWheel robot] time]] [HoldsAt [Direction robot direction1] time]] [$EQ direction2 [$Plus direction1 1]]] [$Implies [Happens [MoveRightWheel robot] time] [$And [HoldsAt [Direction robot direction2] [$Plus time 1]] [$Not [ReleasedAt [Direction robot direction2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List robot direction1 direction2 time] [$Implies [$And [$And [$Not [Happens [MoveLeftWheel robot] time]] [HoldsAt [Direction robot direction1] time]] [$EQ direction2 [$Plus direction1 1]]] [Initiates [MoveRightWheel robot] [Direction robot direction2] time]]]]
+formula [1 -1 [$ForAll [$List robot direction time] [$Implies [$And [$Not [Happens [MoveLeftWheel robot] time]] [HoldsAt [Direction robot direction] time]] [$Implies [Happens [MoveRightWheel robot] time] [$And [$Not [HoldsAt [Direction robot direction] [$Plus time 1]]] [$Not [ReleasedAt [Direction robot direction] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List robot direction time] [$Implies [$And [$Not [Happens [MoveLeftWheel robot] time]] [HoldsAt [Direction robot direction] time]] [Terminates [MoveRightWheel robot] [Direction robot direction] time]]]]
+formula [1 -1 [$ForAll [$List robot direction coord1 coord2 coord3 coord4 time] [$Implies [$And [$And [$And [$And [Happens [MoveLeftWheel robot] time] [HoldsAt [Location robot coord1 coord2] time]] [HoldsAt [Direction robot direction] time]] [$EQ coord3 [$Plus coord1 [Cos direction]]]] [$EQ coord4 [$Plus coord2 [Sin direction]]]] [$Implies [Happens [MoveRightWheel robot] time] [$And [HoldsAt [Location robot coord3 coord4] [$Plus time 1]] [$Not [ReleasedAt [Location robot coord3 coord4] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List robot direction coord1 coord2 coord3 coord4 time] [$Implies [$And [$And [$And [$And [Happens [MoveLeftWheel robot] time] [HoldsAt [Location robot coord1 coord2] time]] [HoldsAt [Direction robot direction] time]] [$EQ coord3 [$Plus coord1 [Cos direction]]]] [$EQ coord4 [$Plus coord2 [Sin direction]]]] [Initiates [MoveRightWheel robot] [Location robot coord3 coord4] time]]]]
+formula [1 -1 [$ForAll [$List robot coord1 coord2 time] [$Implies [$And [Happens [MoveLeftWheel robot] time] [HoldsAt [Location robot coord1 coord2] time]] [$Implies [Happens [MoveRightWheel robot] time] [$And [$Not [HoldsAt [Location robot coord1 coord2] [$Plus time 1]]] [$Not [ReleasedAt [Location robot coord1 coord2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List robot coord1 coord2 time] [$Implies [$And [Happens [MoveLeftWheel robot] time] [HoldsAt [Location robot coord1 coord2] time]] [Terminates [MoveRightWheel robot] [Location robot coord1 coord2] time]]]]
+formula [0 -1 [Happens [MoveRightWheel Robot1] 0]]
+formula [0 -1 [Happens [MoveLeftWheel Robot1] 1]]
+formula [0 -1 [Happens [MoveRightWheel Robot1] 1]]
+formula [0 -1 [$ForAll [$List robot coord1 coord2 coord3 coord4 time] [$Implies [$And [HoldsAt [Location robot coord1 coord2] time] [HoldsAt [Location robot coord3 coord4] time]] [$And [$EQ coord1 coord3] [$EQ coord2 coord4]]]]]
+formula [0 -1 [$ForAll [$List robot direction1 direction2 time] [$Implies [$And [HoldsAt [Direction robot direction1] time] [HoldsAt [Direction robot direction2] time]] [$EQ direction1 direction2]]]]
+formula [0 -1 [HoldsAt [Location Robot1 0 0] 0]]
+formula [0 -1 [HoldsAt [Direction Robot1 0] 0]]
+formula [0 -1 [$ForAll [$List robot direction] [$Not [ReleasedAt [Direction robot direction] 0]]]]
+formula [0 -1 [$ForAll [$List robot coord1 coord2] [$Not [ReleasedAt [Location robot coord1 coord2] 0]]]]

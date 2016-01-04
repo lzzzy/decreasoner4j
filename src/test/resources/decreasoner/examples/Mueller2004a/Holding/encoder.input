@@ -1,0 +1,34 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+sort person na
+sort object na
+reified constant event Hold boolean person object
+reified constant fluent Holding boolean person object
+constant person P1
+constant object O1
+completion * Happens
+range time 0 1
+range offset 1 1
+formula [4 -1 [$ForAll [$List fluent time] [$Implies [$And [$And [HoldsAt fluent time] [$Not [ReleasedAt fluent [$Plus time 1]]]] [$Not [$Exists [$List event] [$And [Happens event time] [Terminates event fluent time]]]]] [HoldsAt fluent [$Plus time 1]]]]]
+formula [4 -1 [$ForAll [$List fluent time] [$Implies [$And [$And [$Not [HoldsAt fluent time]] [$Not [ReleasedAt fluent [$Plus time 1]]]] [$Not [$Exists [$List event] [$And [Happens event time] [Initiates event fluent time]]]]] [$Not [HoldsAt fluent [$Plus time 1]]]]]]
+formula [4 -1 [$ForAll [$List fluent time] [$Implies [$And [$Not [ReleasedAt fluent time]] [$Not [$Exists [$List event] [$And [Happens event time] [Releases event fluent time]]]]] [$Not [ReleasedAt fluent [$Plus time 1]]]]]]
+formula [4 -1 [$ForAll [$List fluent time] [$Implies [$And [ReleasedAt fluent time] [$Not [$Exists [$List event] [$And [Happens event time] [$Or [Initiates event fluent time] [Terminates event fluent time]]]]]] [ReleasedAt fluent [$Plus time 1]]]]]
+formula [4 -1 [$ForAll [$List event fluent time] [$Implies [$And [Happens event time] [Initiates event fluent time]] [$And [HoldsAt fluent [$Plus time 1]] [$Not [ReleasedAt fluent [$Plus time 1]]]]]]]
+formula [4 -1 [$ForAll [$List event fluent time] [$Implies [$And [Happens event time] [Terminates event fluent time]] [$And [$Not [HoldsAt fluent [$Plus time 1]]] [$Not [ReleasedAt fluent [$Plus time 1]]]]]]]
+formula [4 -1 [$ForAll [$List event fluent time] [$Implies [$And [Happens event time] [Releases event fluent time]] [ReleasedAt fluent [$Plus time 1]]]]]
+formula [0 -1 [Happens [Hold P1 O1] 0]]
+formula [2 -1 [$ForAll [$List person object time] [Initiates [Hold person object] [Holding person object] time]]]
+formula [0 -1 [$Not [HoldsAt [Holding P1 O1] 0]]]
+formula [0 -1 [$ForAll [$List person object] [$Not [ReleasedAt [Holding person object] 0]]]]

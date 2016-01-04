@@ -1,0 +1,14 @@
+noninertial Outside PlaySoccer PlayHideAndSeek PlayComputerGame
+noninertial PlayWithDog Win
+formula [0 -1 [$ForAll [$List agent time] [$Implies [HoldsAt [PlaySoccer agent] time] [HoldsAt [Outside agent] time]]]]
+formula [0 -1 [$ForAll [$List agent time] [$Implies [HoldsAt [PlaySoccer agent] time] [$Exists [$List agent1] [$And [$NE agent1 agent] [HoldsAt [PlaySoccer agent1] time]]]]]]
+formula [0 -1 [$ForAll [$List agent time] [$Implies [HoldsAt [PlayHideAndSeek agent] time] [$Exists [$List agent1] [$And [$NE agent1 agent] [HoldsAt [PlayHideAndSeek agent1] time]]]]]]
+formula [0 -1 [$ForAll [$List agent time] [$Implies [HoldsAt [PlayComputerGame agent] time] [$Not [HoldsAt [Outside agent] time]]]]]
+formula [0 -1 [$ForAll [$List agent time] [$Implies [HoldsAt [Win agent] time] [$Or [$Or [HoldsAt [PlaySoccer agent] time] [HoldsAt [PlayHideAndSeek agent] time]] [$And [HoldsAt [PlayComputerGame agent] time] [$Exists [$List agent1] [$And [$NE agent1 agent] [HoldsAt [PlayComputerGame agent1] time]]]]]]]]
+formula [0 -1 [$ForAll [$List agent time] [$Implies [$And [HoldsAt [PlaySoccer agent] time] [HoldsAt [Win agent] time]] [$Not [HoldsAt [PlaySoccer agent] [$Plus time 1]]]]]]
+formula [0 -1 [$ForAll [$List agent time] [$Implies [$And [HoldsAt [PlayHideAndSeek agent] time] [HoldsAt [Win agent] time]] [$Not [HoldsAt [PlayHideAndSeek agent] [$Plus time 1]]]]]]
+formula [0 -1 [$ForAll [$List agent time] [$Implies [$And [HoldsAt [PlayComputerGame agent] time] [HoldsAt [Win agent] time]] [$Not [HoldsAt [PlayComputerGame agent] [$Plus time 1]]]]]]
+formula [0 -1 [$ForAll [$List agent time] [$Implies [HoldsAt [Win agent] time] [$Or [$Or [HoldsAt [PlaySoccer agent] [$Minus time 1]] [HoldsAt [PlayHideAndSeek agent] [$Minus time 1]]] [HoldsAt [PlayComputerGame agent] [$Minus time 1]]]]]]
+formula [0 -1 [$ForAll [$List agent time] [$Implies [HoldsAt [PlaySoccer agent] time] [$Not [HoldsAt [Raining] time]]]]]
+formula [0 -1 [$ForAll [$List agent time] [$Implies [HoldsAt [Win agent] time] [$Not [$Exists [$List agent1] [$And [$NE agent1 agent] [HoldsAt [Win agent1] time]]]]]]]
+formula [0 -1 [$ForAll [$List agent1 agent2 time] [$Implies [$And [HoldsAt [PlayHideAndSeek agent1] time] [HoldsAt [PlayHideAndSeek agent2] time]] [$Or [$And [HoldsAt [Outside agent1] time] [HoldsAt [Outside agent2] time]] [$And [$Not [HoldsAt [Outside agent1] time]] [$Not [HoldsAt [Outside agent2] time]]]]]]]

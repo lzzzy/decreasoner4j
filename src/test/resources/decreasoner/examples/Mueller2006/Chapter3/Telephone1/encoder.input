@@ -1,0 +1,96 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort agent na
+sort phone na
+constant agent Agent1
+constant agent Agent2
+constant phone Phone1
+constant phone Phone2
+reified constant fluent Ringing boolean phone phone
+reified constant fluent DialTone boolean phone
+reified constant fluent BusySignal boolean phone
+reified constant fluent Idle boolean phone
+reified constant fluent Connected boolean phone phone
+reified constant fluent Disconnected boolean phone
+reified constant event PickUp boolean agent phone
+reified constant event SetDown boolean agent phone
+reified constant event Dial boolean agent phone phone
+completion 5 Happens
+range time 0 3
+range offset 1 1
+formula [1 -1 [$ForAll [$List agent phone time] [$Implies [HoldsAt [Idle phone] time] [$Implies [Happens [PickUp agent phone] time] [$And [HoldsAt [DialTone phone] [$Plus time 1]] [$Not [ReleasedAt [DialTone phone] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent phone time] [$Implies [HoldsAt [Idle phone] time] [Initiates [PickUp agent phone] [DialTone phone] time]]]]
+formula [1 -1 [$ForAll [$List agent phone time] [$Implies [HoldsAt [Idle phone] time] [$Implies [Happens [PickUp agent phone] time] [$And [$Not [HoldsAt [Idle phone] [$Plus time 1]]] [$Not [ReleasedAt [Idle phone] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent phone time] [$Implies [HoldsAt [Idle phone] time] [Terminates [PickUp agent phone] [Idle phone] time]]]]
+formula [1 -1 [$ForAll [$List agent phone time] [$Implies [HoldsAt [DialTone phone] time] [$Implies [Happens [SetDown agent phone] time] [$And [HoldsAt [Idle phone] [$Plus time 1]] [$Not [ReleasedAt [Idle phone] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent phone time] [$Implies [HoldsAt [DialTone phone] time] [Initiates [SetDown agent phone] [Idle phone] time]]]]
+formula [1 -1 [$ForAll [$List agent phone time] [$Implies [HoldsAt [DialTone phone] time] [$Implies [Happens [SetDown agent phone] time] [$And [$Not [HoldsAt [DialTone phone] [$Plus time 1]]] [$Not [ReleasedAt [DialTone phone] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent phone time] [$Implies [HoldsAt [DialTone phone] time] [Terminates [SetDown agent phone] [DialTone phone] time]]]]
+formula [1 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [$And [HoldsAt [DialTone phone1] time] [HoldsAt [Idle phone2] time]] [$Implies [Happens [Dial agent phone1 phone2] time] [$And [HoldsAt [Ringing phone1 phone2] [$Plus time 1]] [$Not [ReleasedAt [Ringing phone1 phone2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [$And [HoldsAt [DialTone phone1] time] [HoldsAt [Idle phone2] time]] [Initiates [Dial agent phone1 phone2] [Ringing phone1 phone2] time]]]]
+formula [1 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [$And [HoldsAt [DialTone phone1] time] [HoldsAt [Idle phone2] time]] [$Implies [Happens [Dial agent phone1 phone2] time] [$And [$Not [HoldsAt [DialTone phone1] [$Plus time 1]]] [$Not [ReleasedAt [DialTone phone1] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [$And [HoldsAt [DialTone phone1] time] [HoldsAt [Idle phone2] time]] [Terminates [Dial agent phone1 phone2] [DialTone phone1] time]]]]
+formula [1 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [$And [HoldsAt [DialTone phone1] time] [HoldsAt [Idle phone2] time]] [$Implies [Happens [Dial agent phone1 phone2] time] [$And [$Not [HoldsAt [Idle phone2] [$Plus time 1]]] [$Not [ReleasedAt [Idle phone2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [$And [HoldsAt [DialTone phone1] time] [HoldsAt [Idle phone2] time]] [Terminates [Dial agent phone1 phone2] [Idle phone2] time]]]]
+formula [1 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [$And [HoldsAt [DialTone phone1] time] [$Not [HoldsAt [Idle phone2] time]]] [$Implies [Happens [Dial agent phone1 phone2] time] [$And [HoldsAt [BusySignal phone1] [$Plus time 1]] [$Not [ReleasedAt [BusySignal phone1] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [$And [HoldsAt [DialTone phone1] time] [$Not [HoldsAt [Idle phone2] time]]] [Initiates [Dial agent phone1 phone2] [BusySignal phone1] time]]]]
+formula [1 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [$And [HoldsAt [DialTone phone1] time] [$Not [HoldsAt [Idle phone2] time]]] [$Implies [Happens [Dial agent phone1 phone2] time] [$And [$Not [HoldsAt [DialTone phone1] [$Plus time 1]]] [$Not [ReleasedAt [DialTone phone1] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [$And [HoldsAt [DialTone phone1] time] [$Not [HoldsAt [Idle phone2] time]]] [Terminates [Dial agent phone1 phone2] [DialTone phone1] time]]]]
+formula [1 -1 [$ForAll [$List agent phone time] [$Implies [HoldsAt [BusySignal phone] time] [$Implies [Happens [SetDown agent phone] time] [$And [HoldsAt [Idle phone] [$Plus time 1]] [$Not [ReleasedAt [Idle phone] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent phone time] [$Implies [HoldsAt [BusySignal phone] time] [Initiates [SetDown agent phone] [Idle phone] time]]]]
+formula [1 -1 [$ForAll [$List agent phone time] [$Implies [HoldsAt [BusySignal phone] time] [$Implies [Happens [SetDown agent phone] time] [$And [$Not [HoldsAt [BusySignal phone] [$Plus time 1]]] [$Not [ReleasedAt [BusySignal phone] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent phone time] [$Implies [HoldsAt [BusySignal phone] time] [Terminates [SetDown agent phone] [BusySignal phone] time]]]]
+formula [1 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [HoldsAt [Ringing phone1 phone2] time] [$Implies [Happens [SetDown agent phone1] time] [$And [HoldsAt [Idle phone1] [$Plus time 1]] [$Not [ReleasedAt [Idle phone1] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [HoldsAt [Ringing phone1 phone2] time] [Initiates [SetDown agent phone1] [Idle phone1] time]]]]
+formula [1 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [HoldsAt [Ringing phone1 phone2] time] [$Implies [Happens [SetDown agent phone1] time] [$And [HoldsAt [Idle phone2] [$Plus time 1]] [$Not [ReleasedAt [Idle phone2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [HoldsAt [Ringing phone1 phone2] time] [Initiates [SetDown agent phone1] [Idle phone2] time]]]]
+formula [1 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [HoldsAt [Ringing phone1 phone2] time] [$Implies [Happens [SetDown agent phone1] time] [$And [$Not [HoldsAt [Ringing phone1 phone2] [$Plus time 1]]] [$Not [ReleasedAt [Ringing phone1 phone2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [HoldsAt [Ringing phone1 phone2] time] [Terminates [SetDown agent phone1] [Ringing phone1 phone2] time]]]]
+formula [1 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [HoldsAt [Ringing phone1 phone2] time] [$Implies [Happens [PickUp agent phone2] time] [$And [HoldsAt [Connected phone1 phone2] [$Plus time 1]] [$Not [ReleasedAt [Connected phone1 phone2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [HoldsAt [Ringing phone1 phone2] time] [Initiates [PickUp agent phone2] [Connected phone1 phone2] time]]]]
+formula [1 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [HoldsAt [Ringing phone1 phone2] time] [$Implies [Happens [PickUp agent phone2] time] [$And [$Not [HoldsAt [Ringing phone1 phone2] [$Plus time 1]]] [$Not [ReleasedAt [Ringing phone1 phone2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [HoldsAt [Ringing phone1 phone2] time] [Terminates [PickUp agent phone2] [Ringing phone1 phone2] time]]]]
+formula [1 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [HoldsAt [Connected phone1 phone2] time] [$Implies [Happens [SetDown agent phone1] time] [$And [HoldsAt [Idle phone1] [$Plus time 1]] [$Not [ReleasedAt [Idle phone1] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [HoldsAt [Connected phone1 phone2] time] [Initiates [SetDown agent phone1] [Idle phone1] time]]]]
+formula [1 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [HoldsAt [Connected phone1 phone2] time] [$Implies [Happens [SetDown agent phone1] time] [$And [HoldsAt [Disconnected phone2] [$Plus time 1]] [$Not [ReleasedAt [Disconnected phone2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [HoldsAt [Connected phone1 phone2] time] [Initiates [SetDown agent phone1] [Disconnected phone2] time]]]]
+formula [1 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [HoldsAt [Connected phone1 phone2] time] [$Implies [Happens [SetDown agent phone1] time] [$And [$Not [HoldsAt [Connected phone1 phone2] [$Plus time 1]]] [$Not [ReleasedAt [Connected phone1 phone2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [HoldsAt [Connected phone1 phone2] time] [Terminates [SetDown agent phone1] [Connected phone1 phone2] time]]]]
+formula [1 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [HoldsAt [Connected phone1 phone2] time] [$Implies [Happens [SetDown agent phone2] time] [$And [HoldsAt [Idle phone2] [$Plus time 1]] [$Not [ReleasedAt [Idle phone2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [HoldsAt [Connected phone1 phone2] time] [Initiates [SetDown agent phone2] [Idle phone2] time]]]]
+formula [1 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [HoldsAt [Connected phone1 phone2] time] [$Implies [Happens [SetDown agent phone2] time] [$And [HoldsAt [Disconnected phone1] [$Plus time 1]] [$Not [ReleasedAt [Disconnected phone1] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [HoldsAt [Connected phone1 phone2] time] [Initiates [SetDown agent phone2] [Disconnected phone1] time]]]]
+formula [1 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [HoldsAt [Connected phone1 phone2] time] [$Implies [Happens [SetDown agent phone2] time] [$And [$Not [HoldsAt [Connected phone1 phone2] [$Plus time 1]]] [$Not [ReleasedAt [Connected phone1 phone2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent phone1 phone2 time] [$Implies [HoldsAt [Connected phone1 phone2] time] [Terminates [SetDown agent phone2] [Connected phone1 phone2] time]]]]
+formula [1 -1 [$ForAll [$List agent phone time] [$Implies [HoldsAt [Disconnected phone] time] [$Implies [Happens [SetDown agent phone] time] [$And [HoldsAt [Idle phone] [$Plus time 1]] [$Not [ReleasedAt [Idle phone] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent phone time] [$Implies [HoldsAt [Disconnected phone] time] [Initiates [SetDown agent phone] [Idle phone] time]]]]
+formula [1 -1 [$ForAll [$List agent phone time] [$Implies [HoldsAt [Disconnected phone] time] [$Implies [Happens [SetDown agent phone] time] [$And [$Not [HoldsAt [Disconnected phone] [$Plus time 1]]] [$Not [ReleasedAt [Disconnected phone] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent phone time] [$Implies [HoldsAt [Disconnected phone] time] [Terminates [SetDown agent phone] [Disconnected phone] time]]]]
+formula [5 -1 [Happens [PickUp Agent1 Phone1] 0]]
+formula [5 -1 [Happens [Dial Agent1 Phone1 Phone2] 1]]
+formula [5 -1 [Happens [PickUp Agent2 Phone2] 2]]
+formula [0 -1 [$ForAll [$List phone] [HoldsAt [Idle phone] 0]]]
+formula [0 -1 [$ForAll [$List phone] [$Not [HoldsAt [DialTone phone] 0]]]]
+formula [0 -1 [$ForAll [$List phone] [$Not [HoldsAt [BusySignal phone] 0]]]]
+formula [0 -1 [$ForAll [$List phone1 phone2] [$Not [HoldsAt [Ringing phone1 phone2] 0]]]]
+formula [0 -1 [$ForAll [$List phone1 phone2] [$Not [HoldsAt [Connected phone1 phone2] 0]]]]
+formula [0 -1 [$ForAll [$List phone] [$Not [HoldsAt [Disconnected phone] 0]]]]
+formula [0 -1 [$ForAll [$List phone1 phone2] [$Not [ReleasedAt [Ringing phone1 phone2] 0]]]]
+formula [0 -1 [$ForAll [$List phone] [$Not [ReleasedAt [DialTone phone] 0]]]]
+formula [0 -1 [$ForAll [$List phone] [$Not [ReleasedAt [BusySignal phone] 0]]]]
+formula [0 -1 [$ForAll [$List phone] [$Not [ReleasedAt [Idle phone] 0]]]]
+formula [0 -1 [$ForAll [$List phone1 phone2] [$Not [ReleasedAt [Connected phone1 phone2] 0]]]]
+formula [0 -1 [$ForAll [$List phone] [$Not [ReleasedAt [Disconnected phone] 0]]]]

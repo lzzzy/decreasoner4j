@@ -1,0 +1,68 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort object na
+sort xcoord integer
+sort ycoord integer
+sort grid na
+sort shape na
+sort color na
+constant shape Round
+constant shape Square
+constant color Red
+constant color Green
+reified constant predicate Equal boolean object object
+reified constant predicate Shape boolean object shape
+reified constant predicate Color boolean object color
+reified constant fluent Location boolean grid object xcoord ycoord
+reified constant event Move boolean grid object xcoord ycoord xcoord ycoord
+constant grid G1
+constant object X
+constant object Y
+constant object Screen1
+constant object Screen2
+range time 0 4
+range xcoord 0 5
+range ycoord 0 1
+range offset 0 0
+formula [0 -1 [$ForAll [$List object1 object2] [$Implies [Equal object1 object2] [Equal object2 object1]]]]
+formula [0 -1 [$ForAll [$List object shape1 shape2] [$Implies [$And [Shape object shape1] [Shape object shape2]] [$EQ shape1 shape2]]]]
+formula [0 -1 [$ForAll [$List object color1 color2] [$Implies [$And [Color object color1] [Color object color2]] [$EQ color1 color2]]]]
+formula [0 -1 [$ForAll [$List object1 object2] [$Implies [Equal object1 object2] [$Exists [$List shape] [$And [Shape object1 shape] [Shape object2 shape]]]]]]
+formula [0 -1 [$ForAll [$List object1 object2] [$Implies [Equal object1 object2] [$Exists [$List color] [$And [Color object1 color] [Color object2 color]]]]]]
+formula [0 -1 [$ForAll [$List grid object1 object2 xcoord1 ycoord1 xcoord2 ycoord2 time] [$Implies [Equal object1 object2] [$Implies [$And [HoldsAt [Location grid object1 xcoord1 ycoord1] time] [HoldsAt [Location grid object2 xcoord2 ycoord2] time]] [$And [$EQ xcoord1 xcoord2] [$EQ ycoord1 ycoord2]]]]]]
+formula [0 -1 [$ForAll [$List grid object xcoord1 ycoord1 xcoord2 ycoord2 time] [$Implies [$And [HoldsAt [Location grid object xcoord1 ycoord1] time] [HoldsAt [Location grid object xcoord2 ycoord2] time]] [$And [$EQ xcoord1 xcoord2] [$EQ ycoord1 ycoord2]]]]]
+formula [0 -1 [$ForAll [$List grid object time] [$Exists [$List xcoord ycoord] [HoldsAt [Location grid object xcoord ycoord] time]]]]
+formula [0 -1 [$ForAll [$List grid object1 object2 xcoord1 ycoord1 time] [$Implies [$And [HoldsAt [Location grid object1 xcoord1 ycoord1] time] [HoldsAt [Location grid object2 xcoord1 ycoord1] time]] [Equal object1 object2]]]]
+formula [1 -1 [$ForAll [$List grid object xcoord1 ycoord1 xcoord2 ycoord2 time] [$Implies [Happens [Move grid object xcoord1 ycoord1 xcoord2 ycoord2] time] [$And [HoldsAt [Location grid object xcoord2 ycoord2] [$Plus time 1]] [$Not [ReleasedAt [Location grid object xcoord2 ycoord2] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List grid object xcoord1 ycoord1 xcoord2 ycoord2 time] [Initiates [Move grid object xcoord1 ycoord1 xcoord2 ycoord2] [Location grid object xcoord2 ycoord2] time]]]
+formula [1 -1 [$ForAll [$List grid object xcoord1 ycoord1 xcoord2 ycoord2 time] [$Implies [Happens [Move grid object xcoord1 ycoord1 xcoord2 ycoord2] time] [$And [$Not [HoldsAt [Location grid object xcoord1 ycoord1] [$Plus time 1]]] [$Not [ReleasedAt [Location grid object xcoord1 ycoord1] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List grid object xcoord1 ycoord1 xcoord2 ycoord2 time] [Terminates [Move grid object xcoord1 ycoord1 xcoord2 ycoord2] [Location grid object xcoord1 ycoord1] time]]]
+formula [0 -1 [$ForAll [$List grid object xcoord1 ycoord1 xcoord2 ycoord2 time] [$Implies [Happens [Move grid object xcoord1 ycoord1 xcoord2 ycoord2] time] [$And [HoldsAt [Location grid object xcoord1 ycoord1] time] [$Or [$And [$EQ xcoord1 xcoord2] [$Or [$EQ ycoord1 [$Plus ycoord2 1]] [$EQ ycoord1 [$Minus ycoord2 1]]]] [$And [$EQ ycoord1 ycoord2] [$Or [$EQ xcoord1 [$Plus xcoord2 1]] [$EQ xcoord1 [$Minus xcoord2 1]]]]]]]]]
+formula [0 -1 [Shape X Round]]
+formula [0 -1 [Color X Red]]
+formula [0 -1 [Shape Y Round]]
+formula [0 -1 [Color Y Red]]
+formula [0 -1 [Shape Screen1 Square]]
+formula [0 -1 [Color Screen1 Green]]
+formula [0 -1 [Shape Screen2 Square]]
+formula [0 -1 [Color Screen2 Green]]
+formula [0 -1 [$ForAll [$List time] [HoldsAt [Location G1 Screen1 2 0] time]]]
+formula [0 -1 [$ForAll [$List time] [HoldsAt [Location G1 Screen2 4 0] time]]]
+formula [0 -1 [HoldsAt [Location G1 X 1 1] 0]]
+formula [0 -1 [HoldsAt [Location G1 Y 5 1] 4]]
+formula [0 -1 [$ForAll [$List xcoord ycoord time] [$Implies [$And [$And [$NE xcoord 2] [$NE xcoord 4]] [$Not [$And [$And [$EQ xcoord 1] [$EQ ycoord 1]] [$EQ time 0]]]] [$Or [$Not [HoldsAt [Location G1 X xcoord ycoord] time]] [$And [$And [$And [$EQ xcoord 5] [$EQ ycoord 1]] [$EQ time 4]] [Equal X Y]]]]]]
+formula [0 -1 [$ForAll [$List xcoord ycoord time] [$Implies [$And [$And [$NE xcoord 2] [$NE xcoord 4]] [$Not [$And [$And [$EQ xcoord 5] [$EQ ycoord 1]] [$EQ time 4]]]] [$Or [$Not [HoldsAt [Location G1 Y xcoord ycoord] time]] [$And [$And [$And [$EQ xcoord 1] [$EQ ycoord 1]] [$EQ time 0]] [Equal X Y]]]]]]
+formula [0 -1 [$ForAll [$List grid object xcoord ycoord] [$Not [ReleasedAt [Location grid object xcoord ycoord] 0]]]]

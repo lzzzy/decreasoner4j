@@ -1,0 +1,8 @@
+000001 [Happens [WakeUp Nathan] 0]
+000002 [HoldsAt [Awake Nathan] 1]
+000003 [ReleasedAt [Awake Nathan] 1]
+000004 [Happens [FallAsleep Nathan] 0]
+000005 [HoldsAt [Awake Nathan] 0]
+000006 [ReleasedAt [Awake Nathan] 0]
+000007 [Happens [WakeUp Nathan] 1]
+000008 [Happens [FallAsleep Nathan] 1]

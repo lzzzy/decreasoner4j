@@ -1,0 +1,29 @@
+c Instance is: /tmp/solver.input.6140.867
+c Reading instance.....done.
+c Random number seed: 1
+c Pre-processing level: 1
+c Post-processing level: 3
+c Output instance filename: timeout.cnf
+c Status update interval: 10 seconds.
+c Processing instance: sorting clauses...
+c   removing redundancies...65 redundant clauses eliminated.
+c   unit reducing...15 unary clauses identified.
+c   resolving...542 resolutions performed.
+c   unit reducing...0 unary clauses identified.
+c   resolving...0 resolutions performed.
+c Processing phase stats: 
+c   Initial clause count       : 922
+c   New clause count           : 312
+c   Seconds elapsed (real time): 0 seconds.
+c Learn order: 3
+c Fudge factor: 0.9
+c Solution phase timeout after: 43200 seconds.
+c Finding up to 10 solutions...
+Solution 1: 6 7 8 9 11 13 14 17 18 19 21 23 26 28 29 31 40 41 42 44 45 46 47 48 49 50 51 53 61 62 63 64 66 67 68 69 70 71 72 73 74 75 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 95 96 98 101 102 104 105 106 107 108 109 110 111 113 121 122 123 124 126 127 128 129 130 131 132 133 135 144 146 154 155 156 157 158 159 160 161 163 165 166 168 170 171 174 182 183 185 186 187 188 189 190 191 192 193 196 204 205 207 208 209 210 211 212 213 214 215 216 218 219 220 221 222 223 224 225 226 227 228 229 230 231 232 233 235 238 240 243 245 246 247 248 249 250 251 252 253 256 264 265 267 268 269 270 271 272 273 274 275 278 286 289 297 298 299 300 301 302 303 
+c   All solutions found.
+c Solution phase stats: 
+c   Variable Assignments        : 312
+c   Branch Selections           : 0
+c   Contradictions Discovered   : 0
+c   Seconds Elapsed (real time) : 0
+SAT

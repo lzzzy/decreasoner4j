@@ -1,0 +1,30 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort agent na
+constant agent Nathan
+reified constant fluent Awake boolean agent
+reified constant event WakeUp boolean agent
+reified constant event FallAsleep boolean agent
+range time 0 3
+range offset 1 1
+formula [1 -1 [$ForAll [$List agent time] [$Implies [Happens [WakeUp agent] time] [$And [HoldsAt [Awake agent] [$Plus time 1]] [$Not [ReleasedAt [Awake agent] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List agent time] [Initiates [WakeUp agent] [Awake agent] time]]]
+formula [1 -1 [$ForAll [$List agent time] [$Implies [Happens [FallAsleep agent] time] [$And [$Not [HoldsAt [Awake agent] [$Plus time 1]]] [$Not [ReleasedAt [Awake agent] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List agent time] [Terminates [FallAsleep agent] [Awake agent] time]]]
+formula [5 -1 [Happens [WakeUp Nathan] 1]]
+formula [0 -1 [Happens [FallAsleep Nathan] 2]]
+formula [0 -1 [$Not [HoldsAt [Awake Nathan] 0]]]
+formula [0 -1 [$ForAll [$List agent] [$Not [ReleasedAt [Awake agent] 0]]]]

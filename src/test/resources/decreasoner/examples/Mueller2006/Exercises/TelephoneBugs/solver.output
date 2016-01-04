@@ -1,0 +1,29 @@
+c Instance is: /tmp/solver.input.6140.741
+c Reading instance.....done.
+c Random number seed: 1
+c Pre-processing level: 1
+c Post-processing level: 3
+c Output instance filename: timeout.cnf
+c Status update interval: 10 seconds.
+c Processing instance: sorting clauses...
+c   removing redundancies...2340 redundant clauses eliminated.
+c   unit reducing...0 unary clauses identified.
+c   resolving...1590 resolutions performed.
+c   unit reducing...0 unary clauses identified.
+c   resolving...0 resolutions performed.
+c Processing phase stats: 
+c   Initial clause count       : 5818
+c   New clause count           : 863
+c   Seconds elapsed (real time): 0 seconds.
+c Learn order: 3
+c Fudge factor: 0.9
+c Solution phase timeout after: 43200 seconds.
+c Finding up to 10 solutions...
+Solution 1: 1 6 11 12 13 16 18 20 41 42 43 46 56 58 60 89 92 108 109 140 141 189 190 205 207 341 346 351 356 358 361 364 366 371 376 381 386 391 396 397 416 431 450 465 484 499 502 518 522 533 552 567 586 601 602 603 604 605 606 607 608 609 610 611 612 613 614 615 620 625 630 635 640 645 650 655 660 665 667 670 675 676 679 682 683 685 687 688 691 694 697 700 701 703 706 709 711 712 713 716 719 722 725 728 731 734 737 740 743 746 749 752 755 758 761 764 767 770 773 776 779 782 785 786 787 788 789 790 791 792 793 794 795 796 797 798 799 800 801 802 803 804 805 806 807 808 809 810 811 812 813 814 815 816 817 818 819 820 821 822 823 824 825 826 827 828 829 830 831 832 833 834 835 836 837 838 839 840 841 842 843 844 845 846 847 848 849 850 851 852 853 854 855 856 857 858 859 860 861 862 863 
+c   All solutions found.
+c Solution phase stats: 
+c   Variable Assignments        : 863
+c   Branch Selections           : 0
+c   Contradictions Discovered   : 0
+c   Seconds Elapsed (real time) : 0
+SAT

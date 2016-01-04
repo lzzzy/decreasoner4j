@@ -1,0 +1,53 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort counter na
+constant counter Counter1
+reified constant event FalseToTrue boolean counter
+reified constant event TrueToFalse boolean counter
+reified constant fluent Count boolean counter integer
+reified constant fluent True boolean counter
+reified constant fluent InputLine boolean counter
+noninertial InputLine
+completion * Happens
+range integer 0 6
+range time 0 10
+range offset 1 1
+formula [5 -1 [$ForAll [$List counter time] [$Implies [$And [$Not [HoldsAt [True counter] time]] [HoldsAt [InputLine counter] time]] [Happens [FalseToTrue counter] time]]]]
+formula [5 -1 [$ForAll [$List counter time] [$Implies [$And [HoldsAt [True counter] time] [$Not [HoldsAt [InputLine counter] time]]] [Happens [TrueToFalse counter] time]]]]
+formula [1 -1 [$ForAll [$List counter time] [$Implies [Happens [FalseToTrue counter] time] [$And [HoldsAt [True counter] [$Plus time 1]] [$Not [ReleasedAt [True counter] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List counter time] [Initiates [FalseToTrue counter] [True counter] time]]]
+formula [1 -1 [$ForAll [$List counter time] [$Implies [Happens [TrueToFalse counter] time] [$And [$Not [HoldsAt [True counter] [$Plus time 1]]] [$Not [ReleasedAt [True counter] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List counter time] [Terminates [TrueToFalse counter] [True counter] time]]]
+formula [1 -1 [$ForAll [$List counter integer1 integer2 time] [$Implies [$And [HoldsAt [Count counter integer1] time] [$EQ integer2 [$Plus integer1 1]]] [$Implies [Happens [FalseToTrue counter] time] [$And [HoldsAt [Count counter integer2] [$Plus time 1]] [$Not [ReleasedAt [Count counter integer2] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List counter integer1 integer2 time] [$Implies [$And [HoldsAt [Count counter integer1] time] [$EQ integer2 [$Plus integer1 1]]] [Initiates [FalseToTrue counter] [Count counter integer2] time]]]]
+formula [1 -1 [$ForAll [$List counter integer time] [$Implies [HoldsAt [Count counter integer] time] [$Implies [Happens [FalseToTrue counter] time] [$And [$Not [HoldsAt [Count counter integer] [$Plus time 1]]] [$Not [ReleasedAt [Count counter integer] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List counter integer time] [$Implies [HoldsAt [Count counter integer] time] [Terminates [FalseToTrue counter] [Count counter integer] time]]]]
+formula [0 -1 [$ForAll [$List counter integer1 integer2 time] [$Implies [$And [HoldsAt [Count counter integer1] time] [HoldsAt [Count counter integer2] time]] [$EQ integer1 integer2]]]]
+formula [0 -1 [$Not [HoldsAt [True Counter1] 0]]]
+formula [0 -1 [$Not [HoldsAt [InputLine Counter1] 0]]]
+formula [0 -1 [HoldsAt [InputLine Counter1] 1]]
+formula [0 -1 [HoldsAt [InputLine Counter1] 2]]
+formula [0 -1 [HoldsAt [InputLine Counter1] 3]]
+formula [0 -1 [$Not [HoldsAt [InputLine Counter1] 4]]]
+formula [0 -1 [$Not [HoldsAt [InputLine Counter1] 5]]]
+formula [0 -1 [$Not [HoldsAt [InputLine Counter1] 6]]]
+formula [0 -1 [HoldsAt [InputLine Counter1] 7]]
+formula [0 -1 [HoldsAt [InputLine Counter1] 8]]
+formula [0 -1 [HoldsAt [InputLine Counter1] 9]]
+formula [0 -1 [HoldsAt [Count Counter1 0] 0]]
+formula [0 -1 [$ForAll [$List counter integer] [$Not [ReleasedAt [Count counter integer] 0]]]]
+formula [0 -1 [$ForAll [$List counter] [$Not [ReleasedAt [True counter] 0]]]]
+formula [0 -1 [$ForAll [$List counter time] [ReleasedAt [InputLine counter] time]]]

@@ -1,0 +1,58 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort object na
+sort agent object
+sort device object
+sort tv device
+sort room na
+constant agent Nathan
+constant tv TV
+constant room LivingRoom
+constant room Kitchen
+reified constant event TurnOn boolean agent device
+reified constant event Walk boolean agent room room
+reified constant fluent InRoom boolean object room
+reified constant fluent On boolean device
+reified constant fluent PluggedIn boolean device
+reified constant fluent BrokenSwitch boolean device
+reified constant predicate Ab1 boolean device time
+reified constant predicate Ab2 boolean room time
+completion 5 Ab1
+completion 5 Ab2
+range time 0 2
+range offset 1 1
+formula [1 -1 [$ForAll [$List agent room1 room2 time] [$Implies [Happens [Walk agent room1 room2] time] [$And [HoldsAt [InRoom agent room2] [$Plus time 1]] [$Not [ReleasedAt [InRoom agent room2] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List agent room1 room2 time] [Initiates [Walk agent room1 room2] [InRoom agent room2] time]]]
+formula [1 -1 [$ForAll [$List agent room1 room2 time] [$Implies [$NE room1 room2] [$Implies [Happens [Walk agent room1 room2] time] [$And [$Not [HoldsAt [InRoom agent room1] [$Plus time 1]]] [$Not [ReleasedAt [InRoom agent room1] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent room1 room2 time] [$Implies [$NE room1 room2] [Terminates [Walk agent room1 room2] [InRoom agent room1] time]]]]
+formula [1 -1 [$ForAll [$List agent device time] [$Implies [$Not [Ab1 device time]] [$Implies [Happens [TurnOn agent device] time] [$And [HoldsAt [On device] [$Plus time 1]] [$Not [ReleasedAt [On device] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List agent device time] [$Implies [$Not [Ab1 device time]] [Initiates [TurnOn agent device] [On device] time]]]]
+formula [0 -1 [$ForAll [$List agent room1 room2 time] [$Implies [Happens [Walk agent room1 room2] time] [$And [$NE room1 room2] [HoldsAt [InRoom agent room1] time]]]]]
+formula [0 -1 [$ForAll [$List agent device time] [$Implies [Happens [TurnOn agent device] time] [$Exists [$List room] [$And [HoldsAt [InRoom agent room] time] [HoldsAt [InRoom device room] time]]]]]]
+formula [0 -1 [$ForAll [$List event1 event2 time] [$Implies [$And [Happens event1 time] [Happens event2 time]] [$EQ event1 event2]]]]
+formula [5 -1 [$ForAll [$List device time] [$Implies [HoldsAt [BrokenSwitch device] time] [Ab1 device time]]]]
+formula [5 -1 [$ForAll [$List device time] [$Implies [$Not [HoldsAt [PluggedIn device] time]] [Ab1 device time]]]]
+formula [0 -1 [$ForAll [$List object room1 room2 time] [$Implies [$And [HoldsAt [InRoom object room1] time] [HoldsAt [InRoom object room2] time]] [$EQ room1 room2]]]]
+formula [0 -1 [$ForAll [$List tv] [$Not [HoldsAt [On tv] 0]]]]
+formula [0 -1 [$ForAll [$List tv] [$Not [HoldsAt [BrokenSwitch tv] 0]]]]
+formula [0 -1 [$ForAll [$List tv] [HoldsAt [PluggedIn tv] 0]]]
+formula [0 -1 [HoldsAt [InRoom Nathan Kitchen] 0]]
+formula [0 -1 [$ForAll [$List time] [$Implies [$Not [Ab2 LivingRoom time]] [$Exists [$List tv] [HoldsAt [InRoom tv LivingRoom] time]]]]]
+formula [0 -1 [$Exists [$List tv] [Happens [TurnOn Nathan tv] 1]]]
+formula [0 -1 [$ForAll [$List object room] [$Not [ReleasedAt [InRoom object room] 0]]]]
+formula [0 -1 [$ForAll [$List device] [$Not [ReleasedAt [On device] 0]]]]
+formula [0 -1 [$ForAll [$List device] [$Not [ReleasedAt [PluggedIn device] 0]]]]
+formula [0 -1 [$ForAll [$List device] [$Not [ReleasedAt [BrokenSwitch device] 0]]]]

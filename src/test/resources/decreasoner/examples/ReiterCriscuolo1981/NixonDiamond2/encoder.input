@@ -1,0 +1,31 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort x na
+reified constant predicate Republican boolean x
+reified constant predicate Quaker boolean x
+reified constant predicate Pacifist boolean x
+reified constant predicate Ab1 boolean x
+reified constant predicate Ab2 boolean x
+constant x John
+range time 0 0
+range offset 1 1
+completion 5 Ab1
+completion 5 Ab2
+formula [0 -1 [Republican John]]
+formula [0 -1 [Quaker John]]
+formula [0 -1 [$ForAll [$List x] [$Implies [$And [Republican x] [$Not [Ab1 x]]] [$Not [Pacifist x]]]]]
+formula [0 -1 [$ForAll [$List x] [$Implies [$And [Quaker x] [$Not [Ab2 x]]] [Pacifist x]]]]
+formula [5 -1 [$ForAll [$List x] [$Implies [Republican x] [Ab2 x]]]]

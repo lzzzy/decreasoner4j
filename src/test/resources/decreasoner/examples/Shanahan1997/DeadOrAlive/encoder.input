@@ -1,0 +1,40 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+reified constant event Load boolean 
+reified constant event Shoot boolean 
+reified constant event Sneeze boolean 
+reified constant fluent Loaded boolean 
+reified constant fluent Alive boolean 
+reified constant fluent Dead boolean 
+noninertial Dead
+completion * Happens
+range time 0 3
+range offset 1 1
+formula [1 -1 [$ForAll [$List time] [$Implies [Happens [Load] time] [$And [HoldsAt [Loaded] [$Plus time 1]] [$Not [ReleasedAt [Loaded] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List time] [Initiates [Load] [Loaded] time]]]
+formula [1 -1 [$ForAll [$List time] [$Implies [HoldsAt [Loaded] time] [$Implies [Happens [Shoot] time] [$And [$Not [HoldsAt [Alive] [$Plus time 1]]] [$Not [ReleasedAt [Alive] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List time] [$Implies [HoldsAt [Loaded] time] [Terminates [Shoot] [Alive] time]]]]
+formula [1 -1 [$ForAll [$List time] [$Implies [Happens [Shoot] time] [$And [$Not [HoldsAt [Loaded] [$Plus time 1]]] [$Not [ReleasedAt [Loaded] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List time] [Terminates [Shoot] [Loaded] time]]]
+formula [0 -1 [$ForAll [$List time] [$Equiv [HoldsAt [Dead] time] [$Not [HoldsAt [Alive] time]]]]]
+formula [0 -1 [HoldsAt [Alive] 0]]
+formula [0 -1 [$Not [HoldsAt [Loaded] 0]]]
+formula [0 -1 [Happens [Load] 0]]
+formula [0 -1 [Happens [Sneeze] 1]]
+formula [0 -1 [Happens [Shoot] 2]]
+formula [0 -1 [$Not [ReleasedAt [Loaded] 0]]]
+formula [0 -1 [$Not [ReleasedAt [Alive] 0]]]
+formula [0 -1 [$ForAll [$List time] [ReleasedAt [Dead] time]]]

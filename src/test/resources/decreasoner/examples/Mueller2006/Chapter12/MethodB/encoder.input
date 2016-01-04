@@ -1,0 +1,30 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+sort object na
+constant object A
+constant object B
+reified constant fluent P boolean object
+reified constant fluent Q boolean object
+reified constant predicate Ab boolean object time
+range time 0 0
+range offset 1 1
+completion 5 Ab
+formula [0 -1 [$ForAll [$List object time] [$Implies [$And [HoldsAt [P object] time] [$Not [Ab object time]]] [HoldsAt [Q object] time]]]]
+formula [0 -1 [HoldsAt [P A] 0]]
+formula [0 -1 [HoldsAt [P B] 0]]
+formula [5 -1 [Ab A 0]]
+formula [0 -1 [$ForAll [$List object] [$Not [ReleasedAt [P object] 0]]]]
+formula [0 -1 [$ForAll [$List object] [$Not [ReleasedAt [Q object] 0]]]]

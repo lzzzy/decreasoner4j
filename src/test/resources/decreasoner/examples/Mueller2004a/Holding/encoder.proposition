@@ -1,0 +1,6 @@
+000001 [Happens [Hold P1 O1] 0]
+000002 [HoldsAt [Holding P1 O1] 0]
+000003 [ReleasedAt [Holding P1 O1] 0]
+000004 [Happens [Hold P1 O1] 1]
+000005 [ReleasedAt [Holding P1 O1] 1]
+000006 [HoldsAt [Holding P1 O1] 1]

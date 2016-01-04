@@ -1,0 +1,41 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+reified constant event Close1 boolean 
+reified constant event Close2 boolean 
+reified constant event Start boolean 
+reified constant fluent Blocked1 boolean 
+reified constant fluent Blocked2 boolean 
+reified constant fluent Stuffy boolean 
+noninertial Stuffy
+completion * Happens
+range time 0 2
+range offset 1 1
+formula [1 -1 [$ForAll [$List time] [$Implies [Happens [Close1] time] [$And [HoldsAt [Blocked1] [$Plus time 1]] [$Not [ReleasedAt [Blocked1] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List time] [Initiates [Close1] [Blocked1] time]]]
+formula [1 -1 [$ForAll [$List time] [$Implies [Happens [Close2] time] [$And [HoldsAt [Blocked2] [$Plus time 1]] [$Not [ReleasedAt [Blocked2] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List time] [Initiates [Close2] [Blocked2] time]]]
+formula [0 -1 [$ForAll [$List time] [$Equiv [HoldsAt [Stuffy] time] [$And [HoldsAt [Blocked1] time] [HoldsAt [Blocked2] time]]]]]
+formula [1 -1 [$ForAll [$List time] [$Implies [Happens [Start] time] [$And [HoldsAt [Blocked1] [$Plus time 1]] [$Not [ReleasedAt [Blocked1] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List time] [Initiates [Start] [Blocked1] time]]]
+formula [1 -1 [$ForAll [$List time] [$Implies [Happens [Start] time] [$And [$Not [HoldsAt [Blocked2] [$Plus time 1]]] [$Not [ReleasedAt [Blocked2] [$Plus time 1]]]]]]]
+formula [2 -1 [$ForAll [$List time] [Terminates [Start] [Blocked2] time]]]
+formula [0 -1 [$Not [HoldsAt [Blocked1] 0]]]
+formula [0 -1 [$Not [HoldsAt [Blocked2] 0]]]
+formula [0 -1 [Happens [Start] 0]]
+formula [0 -1 [Happens [Close2] 1]]
+formula [0 -1 [$Not [ReleasedAt [Blocked1] 0]]]
+formula [0 -1 [$Not [ReleasedAt [Blocked2] 0]]]
+formula [0 -1 [$ForAll [$List time] [ReleasedAt [Stuffy] time]]]

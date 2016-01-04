@@ -1,0 +1,52 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Clipped boolean time fluent time
+reified constant predicate Declipped boolean time fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+reified constant predicate AntiTrajectory boolean fluent time fluent offset
+sort balloon na
+sort agent na
+sort height integer
+constant agent Nathan
+constant balloon Balloon
+reified constant fluent HeaterOn boolean balloon
+reified constant fluent Height boolean balloon height
+noninertial Height
+reified constant event TurnOnHeater boolean agent balloon
+reified constant event TurnOffHeater boolean agent balloon
+completion 5 Happens
+range time 0 3
+range height 0 2
+range offset 1 2
+formula [4 -1 [$ForAll [$List fluent time] [$Implies [$And [$And [HoldsAt fluent time] [$Not [ReleasedAt fluent [$Plus time 1]]]] [$Not [$Exists [$List event] [$And [Happens event time] [Terminates event fluent time]]]]] [HoldsAt fluent [$Plus time 1]]]]]
+formula [4 -1 [$ForAll [$List fluent time] [$Implies [$And [$And [$Not [HoldsAt fluent time]] [$Not [ReleasedAt fluent [$Plus time 1]]]] [$Not [$Exists [$List event] [$And [Happens event time] [Initiates event fluent time]]]]] [$Not [HoldsAt fluent [$Plus time 1]]]]]]
+formula [4 -1 [$ForAll [$List fluent time] [$Implies [$And [$Not [ReleasedAt fluent time]] [$Not [$Exists [$List event] [$And [Happens event time] [Releases event fluent time]]]]] [$Not [ReleasedAt fluent [$Plus time 1]]]]]]
+formula [4 -1 [$ForAll [$List fluent time] [$Implies [$And [ReleasedAt fluent time] [$Not [$Exists [$List event] [$And [Happens event time] [$Or [Initiates event fluent time] [Terminates event fluent time]]]]]] [ReleasedAt fluent [$Plus time 1]]]]]
+formula [4 -1 [$ForAll [$List event fluent time] [$Implies [$And [Happens event time] [Initiates event fluent time]] [$And [HoldsAt fluent [$Plus time 1]] [$Not [ReleasedAt fluent [$Plus time 1]]]]]]]
+formula [4 -1 [$ForAll [$List event fluent time] [$Implies [$And [Happens event time] [Terminates event fluent time]] [$And [$Not [HoldsAt fluent [$Plus time 1]]] [$Not [ReleasedAt fluent [$Plus time 1]]]]]]]
+formula [4 -1 [$ForAll [$List event fluent time] [$Implies [$And [Happens event time] [Releases event fluent time]] [ReleasedAt fluent [$Plus time 1]]]]]
+formula [4 -1 [$ForAll [$List event fluent fluent2 offset time] [$Implies [$And [$And [$And [$And [Happens event time] [Initiates event fluent time]] [$LT 0 offset]] [Trajectory fluent time fluent2 offset]] [$Not [Clipped time fluent [$Plus time offset]]]] [HoldsAt fluent2 [$Plus time offset]]]]]
+formula [4 -1 [$ForAll [$List event fluent fluent2 offset time] [$Implies [$And [$And [$And [$And [Happens event time] [Terminates event fluent time]] [$LT 0 offset]] [AntiTrajectory fluent time fluent2 offset]] [$Not [Declipped time fluent [$Plus time offset]]]] [HoldsAt fluent2 [$Plus time offset]]]]]
+formula [2 -1 [$ForAll [$List agent balloon time] [Initiates [TurnOnHeater agent balloon] [HeaterOn balloon] time]]]
+formula [2 -1 [$ForAll [$List agent balloon time] [Terminates [TurnOffHeater agent balloon] [HeaterOn balloon] time]]]
+formula [5 -1 [Happens [TurnOnHeater Nathan Balloon] 0]]
+formula [5 -1 [Happens [TurnOffHeater Nathan Balloon] 2]]
+formula [0 -1 [$ForAll [$List balloon height1 height2 time] [$Implies [$And [HoldsAt [Height balloon height1] time] [HoldsAt [Height balloon height2] time]] [$EQ height1 height2]]]]
+formula [3 -1 [$ForAll [$List balloon height1 height2 offset time] [$Implies [$And [HoldsAt [Height balloon height1] time] [$EQ height2 [$Plus height1 offset]]] [Trajectory [HeaterOn balloon] time [Height balloon height2] offset]]]]
+formula [3 -1 [$ForAll [$List balloon height1 height2 offset time] [$Implies [$And [HoldsAt [Height balloon height1] time] [$EQ height2 [$Minus height1 offset]]] [AntiTrajectory [HeaterOn balloon] time [Height balloon height2] offset]]]]
+formula [0 -1 [HoldsAt [Height Balloon 0] 0]]
+formula [0 -1 [$Not [HoldsAt [HeaterOn Balloon] 0]]]
+formula [0 -1 [$ForAll [$List balloon] [$Not [ReleasedAt [HeaterOn balloon] 0]]]]
+formula [0 -1 [$ForAll [$List balloon height time] [ReleasedAt [Height balloon height] time]]]

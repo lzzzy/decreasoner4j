@@ -1,0 +1,51 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+reified constant event Push boolean 
+reified constant event Pull boolean 
+reified constant fluent Forwards boolean 
+reified constant fluent Backwards boolean 
+reified constant fluent Spinning boolean 
+completion * Happens
+range time 0 12
+range offset 1 1
+formula [1 -1 [$ForAll [$List time] [$Implies [$Not [Happens [Pull] time]] [$Implies [Happens [Push] time] [$And [HoldsAt [Forwards] [$Plus time 1]] [$Not [ReleasedAt [Forwards] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List time] [$Implies [$Not [Happens [Pull] time]] [Initiates [Push] [Forwards] time]]]]
+formula [1 -1 [$ForAll [$List time] [$Implies [$Not [Happens [Pull] time]] [$Implies [Happens [Push] time] [$And [$Not [HoldsAt [Backwards] [$Plus time 1]]] [$Not [ReleasedAt [Backwards] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List time] [$Implies [$Not [Happens [Pull] time]] [Terminates [Push] [Backwards] time]]]]
+formula [1 -1 [$ForAll [$List time] [$Implies [$Not [Happens [Push] time]] [$Implies [Happens [Pull] time] [$And [HoldsAt [Backwards] [$Plus time 1]] [$Not [ReleasedAt [Backwards] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List time] [$Implies [$Not [Happens [Push] time]] [Initiates [Pull] [Backwards] time]]]]
+formula [1 -1 [$ForAll [$List time] [$Implies [$Not [Happens [Push] time]] [$Implies [Happens [Pull] time] [$And [$Not [HoldsAt [Forwards] [$Plus time 1]]] [$Not [ReleasedAt [Forwards] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List time] [$Implies [$Not [Happens [Push] time]] [Terminates [Pull] [Forwards] time]]]]
+formula [1 -1 [$ForAll [$List time] [$Implies [Happens [Push] time] [$Implies [Happens [Pull] time] [$And [HoldsAt [Spinning] [$Plus time 1]] [$Not [ReleasedAt [Spinning] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List time] [$Implies [Happens [Push] time] [Initiates [Pull] [Spinning] time]]]]
+formula [1 -1 [$ForAll [$List time] [$Implies [Happens [Push] time] [$Implies [Happens [Pull] time] [$And [$Not [HoldsAt [Forwards] [$Plus time 1]]] [$Not [ReleasedAt [Forwards] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List time] [$Implies [Happens [Push] time] [Terminates [Pull] [Forwards] time]]]]
+formula [1 -1 [$ForAll [$List time] [$Implies [Happens [Push] time] [$Implies [Happens [Pull] time] [$And [$Not [HoldsAt [Backwards] [$Plus time 1]]] [$Not [ReleasedAt [Backwards] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List time] [$Implies [Happens [Push] time] [Terminates [Pull] [Backwards] time]]]]
+formula [1 -1 [$ForAll [$List time] [$Implies [$Not [Happens [Pull] time]] [$Implies [Happens [Push] time] [$And [$Not [HoldsAt [Spinning] [$Plus time 1]]] [$Not [ReleasedAt [Spinning] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List time] [$Implies [$Not [Happens [Pull] time]] [Terminates [Push] [Spinning] time]]]]
+formula [1 -1 [$ForAll [$List time] [$Implies [$Not [Happens [Push] time]] [$Implies [Happens [Pull] time] [$And [$Not [HoldsAt [Spinning] [$Plus time 1]]] [$Not [ReleasedAt [Spinning] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List time] [$Implies [$Not [Happens [Push] time]] [Terminates [Pull] [Spinning] time]]]]
+formula [0 -1 [$Not [HoldsAt [Forwards] 0]]]
+formula [0 -1 [$Not [HoldsAt [Backwards] 0]]]
+formula [0 -1 [$Not [HoldsAt [Spinning] 0]]]
+formula [0 -1 [Happens [Push] 5]]
+formula [0 -1 [Happens [Pull] 5]]
+formula [0 -1 [Happens [Pull] 10]]
+formula [0 -1 [Happens [Push] 10]]
+formula [0 -1 [$Not [ReleasedAt [Forwards] 0]]]
+formula [0 -1 [$Not [ReleasedAt [Backwards] 0]]]
+formula [0 -1 [$Not [ReleasedAt [Spinning] 0]]]

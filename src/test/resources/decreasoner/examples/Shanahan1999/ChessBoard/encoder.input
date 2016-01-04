@@ -1,0 +1,40 @@
+sort boolean na
+sort integer na
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
+reified constant predicate Happens boolean event time
+reified constant predicate HoldsAt boolean fluent time
+reified constant predicate ReleasedAt boolean fluent time
+reified constant predicate Initiates boolean event fluent time
+reified constant predicate Terminates boolean event fluent time
+reified constant predicate Releases boolean event fluent time
+reified constant predicate Trajectory boolean fluent time fluent offset
+reified constant event Throw boolean 
+reified constant fluent ItsBlack boolean 
+reified constant fluent ItsWhite boolean 
+reified constant fluent OnBlack boolean 
+reified constant fluent OnWhite boolean 
+noninertial ItsBlack ItsWhite
+completion * Happens
+range time 0 2
+range offset 1 1
+formula [1 -1 [$ForAll [$List time] [$Implies [HoldsAt [ItsWhite] time] [$Implies [Happens [Throw] time] [$And [HoldsAt [OnWhite] [$Plus time 1]] [$Not [ReleasedAt [OnWhite] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List time] [$Implies [HoldsAt [ItsWhite] time] [Initiates [Throw] [OnWhite] time]]]]
+formula [1 -1 [$ForAll [$List time] [$Implies [HoldsAt [ItsBlack] time] [$Implies [Happens [Throw] time] [$And [HoldsAt [OnBlack] [$Plus time 1]] [$Not [ReleasedAt [OnBlack] [$Plus time 1]]]]]]]]
+formula [2 -1 [$ForAll [$List time] [$Implies [HoldsAt [ItsBlack] time] [Initiates [Throw] [OnBlack] time]]]]
+formula [0 -1 [$ForAll [$List time] [$Or [HoldsAt [ItsWhite] time] [HoldsAt [ItsBlack] time]]]]
+formula [0 -1 [$Not [HoldsAt [OnWhite] 0]]]
+formula [0 -1 [$Not [HoldsAt [OnBlack] 0]]]
+formula [0 -1 [Happens [Throw] 1]]
+formula [0 -1 [HoldsAt [ItsWhite] 0]]
+formula [0 -1 [HoldsAt [ItsBlack] 0]]
+formula [0 -1 [HoldsAt [ItsWhite] 2]]
+formula [0 -1 [HoldsAt [ItsBlack] 2]]
+formula [0 -1 [$ForAll [$List time] [ReleasedAt [ItsBlack] time]]]
+formula [0 -1 [$ForAll [$List time] [ReleasedAt [ItsWhite] time]]]
+formula [0 -1 [$Not [ReleasedAt [OnBlack] 0]]]
+formula [0 -1 [$Not [ReleasedAt [OnWhite] 0]]]
