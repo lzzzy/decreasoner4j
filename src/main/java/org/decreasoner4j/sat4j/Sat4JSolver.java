@@ -17,9 +17,8 @@ public class Sat4JSolver {
 	
 	public static void main(String[] args) {
 		ISolver solver = SolverFactory.newDefault();
-		ModelIterator mi = new ModelIterator(solver);
 		solver.setTimeout(3600); // 1 hour timeout
-		Reader reader = new InstanceReader(mi);
+		Reader reader = new InstanceReader(new ModelIterator(solver));
 		PrintWriter sysout = new PrintWriter(System.out);
 
 		try {
