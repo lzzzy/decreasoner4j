@@ -1,8 +1,10 @@
 package org.decreasoner4j.sat4j;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.Set;
+import java.util.TreeSet;
 
+import org.decreasoner4j.Model;
 import org.sat4j.minisat.SolverFactory;
 import org.sat4j.reader.InstanceReader;
 import org.sat4j.reader.ParseFormatException;
@@ -14,35 +16,35 @@ import org.sat4j.specs.TimeoutException;
 import org.sat4j.tools.ModelIterator;
 
 public class Sat4JSolver {
-	
-	public static void main(String[] args) {
+
+	public static Model[] satModels(String fileName) {
+
+		Set<Model> result = new TreeSet<Model>();
+
 		ISolver solver = SolverFactory.newDefault();
 		solver.setTimeout(3600); // 1 hour timeout
 		Reader reader = new InstanceReader(new ModelIterator(solver));
-		PrintWriter sysout = new PrintWriter(System.out);
 
 		try {
-			// CNF filename is given on the command line
-			IProblem problem = reader.parseInstance(args[0]);
-			int solutions = 0;
+			IProblem problem = reader.parseInstance(fileName);
 			while (problem.isSatisfiable()) {
-				if (solutions++ == 0) {
-					sysout.println("c Satisfiable!");
-				}
-				reader.decode(problem.model(), sysout);
-				sysout.println();
-			}
-			if (solutions == 0) {
-				sysout.println("c Unsatisfiable!");
+				result.add(Model.fromSat4j(problem.model()));
 			}
 		} catch (ParseFormatException | IOException e) {
 			e.printStackTrace(System.err);
 		} catch (ContradictionException e) {
-			sysout.println("c Unsatisfiable (trivial)!");
+			System.err.println("c Unsatisfiable (trivial)!");
 		} catch (TimeoutException e) {
-			sysout.println("c Timeout, sorry!");
-		} finally {
-			sysout.close();
+			System.err.println("c Timeout, sorry!");
+		}
+
+		return result.toArray(new Model[result.size()]);
+
+	}
+
+	public static void main(String[] args) throws IOException {
+		for (Model each : satModels(args[0])) {
+			System.out.println(each);
 		}
 	}
 
