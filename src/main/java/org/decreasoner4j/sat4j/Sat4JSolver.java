@@ -1,6 +1,7 @@
 package org.decreasoner4j.sat4j;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -19,7 +20,7 @@ public class Sat4JSolver {
 
 	public static Model[] satModels(String fileName) {
 
-		Set<Model> result = new TreeSet<Model>();
+		Set<Model> result = new TreeSet<Model>(new ModelComparator());
 
 		ISolver solver = SolverFactory.newDefault();
 		solver.setTimeout(3600); // 1 hour timeout
@@ -45,6 +46,13 @@ public class Sat4JSolver {
 	public static void main(String[] args) throws IOException {
 		for (Model each : satModels(args[0])) {
 			System.out.println(each);
+		}
+	}
+
+	private static class ModelComparator implements Comparator<Model> {
+		@Override
+		public int compare(Model m1, Model m2) {
+			return m1.toString().compareTo(m2.toString());
 		}
 	}
 

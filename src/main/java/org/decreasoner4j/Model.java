@@ -3,7 +3,7 @@ package org.decreasoner4j;
 import java.util.Arrays;
 import static java.util.stream.Collectors.joining;
 
-public class Model implements Comparable<Model> {
+public class Model {
 
 	private int numberVariables;
 	private int[] sortedTrueVariables;
@@ -50,10 +50,4 @@ public class Model implements Comparable<Model> {
 	public String toString() {
 		return Arrays.stream(sortedTrueVariables).mapToObj(Integer::toString).collect(joining(" "));
 	}
-
-	@Override
-	public int compareTo(Model that) {
-		return toString().compareTo(that.toString());
-	}
-
 }
