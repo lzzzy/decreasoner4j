@@ -27,7 +27,7 @@ public class Sat4JSolverTest {
 			{ "decreasoner/examples/BrewkaDixKonolige1997/", "Wine" },
 			
 			{ "decreasoner/examples/Cassimatis2002/", "OneScreen" },
-			{ "decreasoner/examples/Cassimatis2002/", "PolySpace" },
+//			{ "decreasoner/examples/Cassimatis2002/", "PolySpace" },
 			{ "decreasoner/examples/Cassimatis2002/", "TwoScreens" },
 
 			//{ "decreasoner/examples/FrankEtAl2003/", "FrankEtAl" },
