@@ -27,7 +27,7 @@ public class Sat4JSolverTest {
 			{ "decreasoner/examples/BrewkaDixKonolige1997/", "Wine" },
 			
 			{ "decreasoner/examples/Cassimatis2002/", "OneScreen" },
-//			{ "decreasoner/examples/Cassimatis2002/", "PolySpace" },
+			{ "decreasoner/examples/Cassimatis2002/", "PolySpace" },
 			{ "decreasoner/examples/Cassimatis2002/", "TwoScreens" },
 
 			//{ "decreasoner/examples/FrankEtAl2003/", "FrankEtAl" },
@@ -145,7 +145,7 @@ public class Sat4JSolverTest {
 			String path = problem[0];
 			String name = problem[1];
 			
-			System.out.println("testSatModels: " + path + name);
+			System.out.println("**** testSatModels: " + path + name);
 
 			String solverInput = "/" + path + name + "/solver.input";
 			String solverOutput = "/" + path + name + "/solver.output";
@@ -161,9 +161,9 @@ public class Sat4JSolverTest {
 				relsatModels = Model.fromRelsat(input, output);
 			}
 			
-			
 			int numberSolutions = relsatModels.size();
 			sat4jModels.retainAll(relsatModels);
+			
 			
 			assertEquals(sat4jModels.size(), numberSolutions);
 		}

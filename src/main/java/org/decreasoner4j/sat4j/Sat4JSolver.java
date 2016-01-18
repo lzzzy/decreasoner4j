@@ -38,12 +38,18 @@ public class Sat4JSolver {
 			while (problem.isSatisfiable()) {
 				result.add(Model.fromSat4j(problem.model()));
 			}
-		} catch (ParseFormatException | IOException e) {
-			e.printStackTrace(System.err);
 		} catch (ContradictionException e) {
+			System.err.println(e);
 			System.err.println("c Unsatisfiable (trivial)!");
 		} catch (TimeoutException e) {
+			System.err.println(e);
 			System.err.println("c Timeout, sorry!");
+		} catch (AssertionError e) {
+			System.err.println(e);
+			System.err.println("c AssertionError: " + e.getMessage());
+		} catch (ParseFormatException | IOException e) {
+			System.err.println(e);
+			System.err.println("c Error reading the input: " + e.getMessage());
 		}
 
 		return result;
