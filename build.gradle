@@ -1,7 +1,22 @@
 apply plugin: 'java'
+apply plugin: 'antlr'
+
 
 repositories {
     jcenter()
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.12'
+    compile 'org.ow2.sat4j:org.ow2.sat4j.core:2.3.4'
+    antlr "org.antlr:antlr4:4.5"
+    testCompile 'junit:junit:4.12'
+}
+
+generateGrammarSource {
+    outputDirectory = new File("${project.buildDir}/generated-src/antlr/main/org/decreasoner4j/antlr/encoder".toString())
+    maxHeapSize = "64m"
+    arguments += ["-visitor", "-long-messages"]
 }
 
 test {
@@ -12,8 +27,3 @@ tasks.withType(Test) {
     enableAssertions = true
 }
 
-dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.12'
-    compile 'org.ow2.sat4j:org.ow2.sat4j.core:2.3.4'
-    testCompile 'junit:junit:4.12'
-}

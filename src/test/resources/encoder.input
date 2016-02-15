@@ -1,0 +1,8 @@
+range time 0 1
+range offset 1 1
+reified sort predicate na
+reified sort function na
+sort time integer
+sort offset integer
+reified sort fluent na
+reified sort event na
