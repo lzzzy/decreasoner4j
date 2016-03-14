@@ -24,7 +24,7 @@ rangeLine : Range sortId minInt maxInt (NewLine | EOF) ;
 sortNonreifiedLine : Sort sortId parentSortId (NewLine | EOF) ;
 sortReifiedLine : Reified Sort sortId parentSortId (NewLine | EOF) ;  
 noninertialLine : Noninertial constantId* (NewLine | EOF) ;
-completionLine : Completion String String? (NewLine | EOF) ;
+completionLine : Completion label pred (NewLine | EOF) ;
 constantNonreifiedLine : Constant sortId constantId* (NewLine | EOF) ;
 constantReifiedLine : Reified Constant sortId constantId resultSortId argSortId* (NewLine | EOF) ;
 functionValueLine : FunctionValue functionId value argument* (NewLine | EOF) ;
@@ -60,7 +60,7 @@ LPAREN : '[' ;
 RPAREN : ']' ;
 
 String
-  :  ~(' ' | '\t' | '\r' | '\n' | '[' | ']')*
+  :  ~(' ' | '\t' | '\r' | '\n' | '[' | ']' )*
   ;
 
 NewLine

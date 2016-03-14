@@ -19,9 +19,9 @@ import org.decreasoner4j.antlr.encoder.EncoderParser.SortNonreifiedLineContext;
 import org.decreasoner4j.antlr.encoder.EncoderParser.SortReifiedLineContext;
 
 public class EchoEncoderVisitor extends EncoderVisitor<String> {
-	
+
 	private EchoEncoder encoder = new EchoEncoder();
-	
+
 	@Override
 	public Encoder encoder() {
 		return encoder;
@@ -80,13 +80,7 @@ public class EchoEncoderVisitor extends EncoderVisitor<String> {
 
 	@Override
 	public String visitCompletionLine(CompletionLineContext ctx) {
-		if (ctx.String().size() == 1) {
-			// pred
-			return toString(ctx.Completion(), ctx.String().get(0));
-		} else {
-			// label pred
-			return toString(ctx.Completion(), ctx.String().get(0), ctx.String().get(1));
-		}
+		return toString(ctx.Completion(), ctx.label(), ctx.pred());
 	}
 
 	@Override
@@ -101,13 +95,13 @@ public class EchoEncoderVisitor extends EncoderVisitor<String> {
 
 	@Override
 	public String visitFormulaLine(FormulaLineContext ctx) {
-		//System.out.println(ctx.Formula() + " " + this.visit(ctx.formula()));
+		// System.out.println(ctx.Formula() + " " + this.visit(ctx.formula()));
 		return ctx.Formula() + " " + this.visit(ctx.formula());
 	}
 
 	@Override
 	public String visitFormula(FormulaContext ctx) {
-		
+
 		List<String> nodeList = new ArrayList<>();
 		for (ParseTree p : ctx.children) {
 			if (p instanceof FormulaContext) {
@@ -115,9 +109,9 @@ public class EchoEncoderVisitor extends EncoderVisitor<String> {
 			} else {
 				nodeList.add(p.getText());
 			}
-			
+
 		}
-		
+
 		return nodeList.stream().collect(Collectors.joining(" ")).replace("[ ", "[").replace(" ]", "]");
 	}
 

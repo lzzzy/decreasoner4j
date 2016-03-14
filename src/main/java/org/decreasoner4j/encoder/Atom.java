@@ -1,8 +1,10 @@
 package org.decreasoner4j.encoder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Atom {
 
@@ -16,8 +18,14 @@ public class Atom {
 	int integer;
 	List<Atom> list = new ArrayList<>();
 
-	public Atom() {
+	Atom(Atom... atoms) {
 		type = Type.LIST;
+		list.addAll(Arrays.asList(atoms));
+	}
+	
+	Atom(List<String> atomNames) {
+		type = Type.LIST;
+		list.addAll(atomNames.stream().map(Atom::new).collect(Collectors.toList()));
 	}
 
 	Atom(String s) {
@@ -30,6 +38,7 @@ public class Atom {
 		integer = i;
 	}
 
+	// List *AtomCreate(char *s)
 	static Atom atomCreate(String s, Map<String, Atom> atomDict) {
 
 		Atom l;
