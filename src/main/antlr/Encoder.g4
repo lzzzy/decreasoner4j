@@ -12,42 +12,55 @@ line
   :  rangeLine
   | sortNonreifiedLine
   | sortReifiedLine
-//  | noninertial
-//  | completion
+  | noninertialLine
+  | completionLine
   | constantNonreifiedLine
   | constantReifiedLine
-//  | functionValue
-//  | formula
+  | functionValueLine
+  | formulaLine
   ;	
 
 rangeLine : Range sortId minInt maxInt (NewLine | EOF) ;
-
-sortReifiedLine : Reified Sort sortId parentSortId (NewLine | EOF) ;  
 sortNonreifiedLine : Sort sortId parentSortId (NewLine | EOF) ;
-
-constantReifiedLine : Reified Constant sortId constantId* (NewLine | EOF) ;
+sortReifiedLine : Reified Sort sortId parentSortId (NewLine | EOF) ;  
+noninertialLine : Noninertial constantId* (NewLine | EOF) ;
+completionLine : Completion String String? (NewLine | EOF) ;
 constantNonreifiedLine : Constant sortId constantId* (NewLine | EOF) ;
+constantReifiedLine : Reified Constant sortId constantId resultSortId argSortId* (NewLine | EOF) ;
+functionValueLine : FunctionValue functionId value argument* (NewLine | EOF) ;
+formulaLine : Formula formula (NewLine | EOF) ;
 
-sortId : Identifier ;
-parentSortId : Identifier ; 
-constantId : Identifier ;
-minInt : Integer ;
-maxInt : Integer ;
-
-
+formula : LPAREN sourceCode ( term | formula )* RPAREN ; 
+sortId : String ;
+resultSortId : String ;
+argSortId : String ;
+label : String ;
+pred : String ;
+parentSortId : String ; 
+constantId : String ;
+functionId : String ;
+argument : String ;
+value : String ;
+term : String ;
+sourceCode : String;
+minInt : String ;
+maxInt : String ;
 
 Range : 'range' ;
 Sort : 'sort' ;
 Reified : 'reified' ;
 Constant : 'constant' ;
+Noninertial : 'noninertial' ;
+Completion : 'completion' ;
+FunctionValue : 'function value' ;
+Formula : 'formula' ; 
 
+LPAREN : '[' ;
 
-Identifier
-  :  ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*
-  ;
+RPAREN : ']' ;
 
-Integer
-  :  '0'..'9'+
+String
+  :  ~(' ' | '\t' | '\r' | '\n' | '[' | ']')*
   ;
 
 NewLine

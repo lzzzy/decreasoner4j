@@ -6,3 +6,5 @@ sort time integer
 sort offset integer
 reified sort fluent na
 reified sort event na
+completion label pred
+completion pred
